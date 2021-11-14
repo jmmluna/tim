@@ -1,0 +1,18 @@
+strong {
+	font-weight: 700;
+	background-color: yellow;
+}
+
+p {
+	font-family: sans-serif;
+}
+
+/* .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th */
+/* 	{ */
+/* 	background-color: red; Choose your own color here */
+/* } */
+.table-hover tbody tr:hover td {
+    background: #57575a;
+    color: white;
+
+}
