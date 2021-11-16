@@ -21,6 +21,8 @@ public class HomeController {
 	private EmployeeService employeeService;
 	@GetMapping
 	public String home(Model model) {
+		model.addAttribute("path","dashboard");
+		
 		model.addAttribute("employees", employeeService.getAll());		
 		
 		List<Employee> employees = employeeService.getAll();

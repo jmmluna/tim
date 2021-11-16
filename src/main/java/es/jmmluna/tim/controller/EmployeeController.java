@@ -18,6 +18,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	@GetMapping
 	public String getEmployees(Model model) {
+		model.addAttribute("path","employees");
 		model.addAttribute("employees", employeeService.getAll());					
 		return "employee/employeeList";
 	}
