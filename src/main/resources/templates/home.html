@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}">
 <head>
-<meta charset="utf-8">
-
+  <title>Home</title>
+  <script src="content-script.js"></script>
 </head>
 <body>
-	<div th:replace="fragments/layout-header"></div>
-	
-	
-					<div class="home-tab">otro contenido aquí</div>
-	
-
-
-	<div th:replace="fragments/layout-footer"></div>
+  <section layout:fragment="content">
+    <p>Home page</p>
+    <a th:href="@{employees}">ir a empleados</a>
+  </section>  
 </body>
-
 </html>
-
