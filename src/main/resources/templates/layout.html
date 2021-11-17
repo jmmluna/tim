@@ -22,7 +22,11 @@
     <!-- Custom styles for this template-->       
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet" />
 	
-	
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+    
 
 </head>
 
@@ -64,14 +68,16 @@
             <li class="nav-item"  th:classappend="${path =='employees'} ? 'active' : ''">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-user fa-cog"></i>
+<!--                     <i class="fas fa-user fa-cog"></i> -->
+                    <i class="fas fa-fw fa-users"></i>
+                    
                     <span>Empleados</span>
                 </a>
-                <div id="collapseTwo" class="collapse" th:classappend="${path =='employees'} ? 'show' : ''"  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" th:classappend="${isEmployees} ? 'show' : ''"  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Personal de empresa:</h6>
-                        <a class="collapse-item"  th:classappend="${path =='employees'} ? 'active' : ''" th:href="@{employees}">Listado</a>                         
-                        <a class="collapse-item" href="cards.html">Nuevo</a>
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isEmployeeList}? 'active' : ''" th:href="@{/employees}"><i class="fas fa-fw fa-table"></i> Listado</a>                         
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isAddEmployee} ? 'active' : ''" th:href="@{/employees/add}"><i class="fas fa-fw fa-user-plus"></i> Nuevo</a>
                     </div>
                 </div>
             </li>
@@ -165,19 +171,30 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+<!--                     <form -->
+<!--                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> -->
+<!--                         <div class="input-group"> -->
+<!--                             <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." -->
+<!--                                 aria-label="Search" aria-describedby="basic-addon2"> -->
+<!--                             <div class="input-group-append"> -->
+<!--                                 <button class="btn btn-primary" type="button"> -->
+<!--                                     <i class="fas fa-search fa-sm"></i> -->
+<!--                                 </button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </form> -->
+
+					<form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                            
+                            <div class="input-group-append">                            
+                            	<span class="font-weight-bold font-italic">Tu trabajo en un click!! <i class="fas fa-mouse-pointer fa-sm"></i></span>
+                                    
+                            
                             </div>
                         </div>
                     </form>
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -425,15 +442,14 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    
+<!--     <script th:src="@{/vendor/jquery/jquery.min.js}"></script> -->
+<!--     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script> -->
+<!--     <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script> -->
+<!--     <script th:src="@{/js/sb-admin-2.min.js}"></script> -->
+<!--     <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script> -->
+<!--     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script> -->
+<!--     <script type="text/javascript" th:src="@{/js/demo/datatables-demo.js}"></script> -->
 
 </body>
 

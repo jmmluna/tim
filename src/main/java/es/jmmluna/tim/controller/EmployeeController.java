@@ -18,8 +18,17 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	@GetMapping
 	public String getEmployees(Model model) {
-		model.addAttribute("path","employees");
+		model.addAttribute("isEmployees",true);
+		model.addAttribute("isEmployeeList",true);
 		model.addAttribute("employees", employeeService.getAll());					
 		return "employee/employeeList";
+	}
+	
+	@GetMapping("add")
+	public String newEmployee(Model model) {
+		model.addAttribute("isEmployees",true);
+		model.addAttribute("isAddEmployee",true);
+							
+		return "employee/employee-add";
 	}
 }
