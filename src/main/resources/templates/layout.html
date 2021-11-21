@@ -39,7 +39,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -50,7 +50,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item " th:classappend="${path =='dashboard'} ? 'active' : ''">
+            <li class="nav-item " th:classappend="${isDashboard} ? 'active' : ''">
                 <a class="nav-link" th:href="@{/}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>                                        
@@ -65,7 +65,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item"  th:classappend="${path =='employees'} ? 'active' : ''">
+            <li class="nav-item"  th:classappend="${isEmployees} ? 'active' : ''">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
 <!--                     <i class="fas fa-user fa-cog"></i> -->
@@ -76,8 +76,8 @@
                 <div id="collapseTwo" class="collapse" th:classappend="${isEmployees} ? 'show' : ''"  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Personal de empresa:</h6>
-                        <a class="collapse-item" th:classappend="${isEmployees} and ${isEmployeeList}? 'active' : ''" th:href="@{/employees}"><i class="fas fa-fw fa-table"></i> Listado</a>                         
-                        <a class="collapse-item" th:classappend="${isEmployees} and ${isAddEmployee} ? 'active' : ''" th:href="@{/employees/add}"><i class="fas fa-fw fa-user-plus"></i> Nuevo</a>
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isEmployeeList}? 'active' : ''" th:href="@{/employees/list}"><i class="fas fa-fw fa-table"></i> Listado</a>                         
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isAddEmployee} ? 'active' : ''" th:href="@{/employees/add/form}"><i class="fas fa-fw fa-user-plus"></i> Nuevo</a>
                     </div>
                 </div>
             </li>
@@ -189,7 +189,7 @@
                         <div class="input-group">
                             
                             <div class="input-group-append">                            
-                            	<span class="font-weight-bold font-italic">Tu trabajo en un click!! <i class="fas fa-mouse-pointer fa-sm"></i></span>
+                            	<span class="font-weight-bold font-italic"><h3>Hola, <b>Tomás</b>.</h3> Tu trabajo en un click!! <i class="fas fa-mouse-pointer fa-sm"></i></span>
                                     
                             
                             </div>
@@ -347,13 +347,13 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Tomás Alcudia</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/tomas_profile.jpg">
+                                    th:src="@{/img/tomas_profile.jpg}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <img class="img-profile rounded-circle"
-                                    src="img/tomas_profile.jpg">
+                                    th:src="@{/img/tomas_profile.jpg}">
 
 								<div class="text-center">
                                     <p class="mb-1 mt-3 font-weight-semibold">Tomás Alcudia Carrillo</p>

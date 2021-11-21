@@ -1,5 +1,7 @@
 package es.jmmluna.tim.repository;
 
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 //
 //	@Query("from #{#entityName} ")
 //	List<Employee> get2();
+	
+//	long countByExpirationDate(Date expirationDate);
 
 }

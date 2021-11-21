@@ -2,10 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layout}">
 <head>
+<meta charset="utf-8">
   <title>Nuevo empleado</title>
+  <link th:href="@{/css/app.css}" rel="stylesheet" />
 	<script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/demo/datatables-demo.js}"></script>
+    <script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
 </head>
 <body>
   <section layout:fragment="content">
@@ -14,49 +17,55 @@
      Nuevo empleado 
 </h1>
     
-    <form>
+    <form action="#" th:action="@{/employees/add}" th:object="${employee}" method="post">
+
       <div class="card shadow mb-4">
 	      	<div class="card-header py-3">
 	        	<h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-file-text-o" aria-hidden="true"></i>
-	        	 <i class="fa fa-address-card" aria-hidden="true"></i> Formulario de alta para un nuevo trabajador</h6>
+	        	 <i class="fa fa-address-card" aria-hidden="true"></i> Formulario de alta</h6>
 	        </div>
 	       <div class="card-body">
 			  <div class="form-row">
-			    <div class="col-md-6 mb-3">
-			      <label for="validationDefault01">First name</label>
-			      <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+			  
+			  
+			  
+			    <div class="col-md-5 mb-3">
+			      <label for="name">Nombre</label>
+			      <input type="text" class="form-control" th:field="*{name}"  id="name" >
 			    </div>
 			    <div class="col-md-6 mb-3">
-			      <label for="validationDefault02">Last name</label>
-			      <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
+			      <label for="surnames">Apellidos</label>
+			      <input type="text" class="form-control" th:field="*{surnames}" id="surnames" value="" required>
 			    </div>
+			    			   			  	
+			    
+			    <div class="col-md-2 mb-3">
+			      <label for="customerHourPrice">Precio/hora cliente </label>
+			      
+			      <div class="input-group">
+					  <input id="customerHourPrice" th:field="*{customerHourPrice}" type="number" class="form-control" aria-label="Precio/hora cliente" onkeypress="return onlyNumberKey(event)">
+					  <div class="input-group-append">
+					    <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
+					    <span class="input-group-text">0.00</span>
+					  </div>
+				  </div>			      			      			   	      			      			       
+			    </div>
+			    
+			   
+			     <div class="col-md-2 mb-3">
+			      <label for="employeeHourPrice">Precio/hora trabajador </label>
+			      
+			      <div class="input-group">
+					  <input id="employeeHourPrice" th:field="*{employeeHourPrice}" type="number" class="form-control" aria-label="Precio/hora trabajador" onkeypress="return onlyNumberKey(event)">
+					  <div class="input-group-append">
+					    <span class="input-group-text"><i class="fas fa-euro-sign"></i></span>
+					    <span class="input-group-text">0.00</span>
+					  </div>
+				  </div>			      			         			      			      			      
+			    </div>			        			  
 			  </div>
-			  <div class="form-row">
-			    <div class="col-md-6 mb-3">
-			      <label for="validationDefault03">City</label>
-			      <input type="text" class="form-control" id="validationDefault03" required>
-			    </div>
-			    <div class="col-md-3 mb-3">
-			      <label for="validationDefault04">State</label>
-			      <select class="custom-select" id="validationDefault04" required>
-			        <option selected disabled value="">Choose...</option>
-			        <option>...</option>
-			      </select>
-			    </div>
-			    <div class="col-md-3 mb-3">
-			      <label for="validationDefault05">Zip</label>
-			      <input type="text" class="form-control" id="validationDefault05" required>
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <div class="form-check">
-			      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-			      <label class="form-check-label" for="invalidCheck2">
-			        Agree to terms and conditions
-			      </label>
-			    </div>
-			  </div>
-			  <button class="btn btn-primary" type="submit">Submit form</button>
+			 
+			  <button class="btn btn-primary float-right" type="submit">Crear</button>
 			</div>
 		</div>
 	</form>
