@@ -37,8 +37,7 @@ public class Employee {
 
 	@Column(name="EMPLOYEE_HOUR_PRICE")
 	private Double employeeHourPrice;
-	
-	
+		
 	@Column(name="EXPIRATION_DATE")
 	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	@Temporal(TemporalType.DATE)
