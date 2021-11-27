@@ -9,4 +9,6 @@ public interface EmployeeService {
 	public List<Employee> getAll();
 	public void save(Employee employee);
 	public long getCount();
+	public Employee get(Long id);
+	public void delete(Long id);
 }

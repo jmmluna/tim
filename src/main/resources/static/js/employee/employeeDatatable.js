@@ -26,13 +26,26 @@ $(document).ready(function() {
 					className: "text-right",
 					render: $.fn.dataTable.render.number(',', '.', 2)
 				},
-				{
+				{//state column
 					"targets": [5],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
-					orderable: false
-					
+					orderable: false					
+				},
+				{//edit column
+					"targets": [6],
+					"visible": true,
+					"searchable": false,
+					className: "text-center",
+					orderable: false					
+				},
+				{//delete column
+					"targets": [7],
+					"visible": true,
+					"searchable": false,
+					className: "text-center",
+					orderable: false					
 				}
 
 

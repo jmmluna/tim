@@ -18,25 +18,26 @@
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/dataTables.select.min.js}"></script>
 <!-- 	<script type="text/javascript" th:src="@{/js/demo/datatables-demo.js}"></script> -->
-<script type="text/javascript" th:src="@{/js/employee/employeeDatatable.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/employee/employeeDatatable.js}"></script>
 </head>
 <body>
 	<section layout:fragment="content">
-	
-	
-	
+
+
+
 
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h1 class="h3 mb-2 text-gray-800">
 				<i class="fas fa-fw fa-users"></i> Empleados
 			</h1>
 
-			<div
-				class="align-items-right ">
-				<button class="btn btn-outline-success" onclick="showSwal('auto-close')">Activos</button>
+			<div class="align-items-right ">
+				<button class="btn btn-outline-success"
+					onclick="showSwal('auto-close')">Activos</button>
 				<a th:href="@{/employees/print}"
 					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
-				</a> <a th:href="@{/employees/add/form}"
+				</a> <a th:href="@{/employees/save}"
 					class="btn btn-primary btn-circle btn"> <i
 					class="fas fa-user-plus"></i>
 				</a>
@@ -69,7 +70,8 @@
 								<th class="text-center">Precio/trabajador <i
 									class="fas fa-euro-sign"></i></th>
 								<th class="text-center">Estado</th>
-<!-- 								<th>Acciones</th> -->
+								<th class="text-center">Editar</th>
+								<th class="text-center">Eliminar</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,25 +85,33 @@
 								<td class="align-middle" th:text="${employee.surnames}"></td>
 								<td class="align-middle" th:text="${employee.customerHourPrice}"></td>
 								<td class="align-middle" th:text="${employee.employeeHourPrice}"></td>
-<!-- 								<td class="align-middle " th:text="${employee.expirationDate}"></td> -->
 
-<!-- <td class="align-middle " th:text="${#dates.format(employee.expirationDate, 'dd-MM-yyyy')}" ></td> -->
+								<td
+									th:title="${#dates.format(employee.expirationDate, 'dd-MM-yyyy')}"
+									class="align-middle text-danger"
+									th:if="${employee.expirationDate}"><i
+									class="fas fa-user-times"></i></td>
+								<td class="align-middle text-success"
+									th:unless="${employee.expirationDate}"><i
+									class="fas fa-user"></i></td>
 
-						<td th:title="${#dates.format(employee.expirationDate, 'dd-MM-yyyy')}" class="align-middle text-danger" th:if="${employee.expirationDate}"><i class="fas fa-user-times"></i></td>
-						<td class="align-middle text-success" th:unless="${employee.expirationDate}"><i class="fas fa-user"></i></td>
-						
-						
-						
-						
-<!-- 								<td class="align-middle" > <a th:href="@{/employees/add/form}" -->
-<!-- 					class="btn btn-primary btn-circle btn"> <i -->
-<!-- 					class="fas fa-user-plus"></i> -->
-<!-- 				</a></td> -->
+								<td class="align-middle">								
+								<a class="btn btn-info" th:href="@{/employees/save/{id}(id=${employee.id})}"><i class="fas fa-user-edit ml-2"></i></a>
 								
+								</td>
 								
+								<td class="align-middle" th:if="${employee.expirationDate}">								
+
+								&nbsp
 								
+								</td>
+								<td class="align-middle" th:unless="${employee.expirationDate}">								
+
+								<a class="btn btn-danger"  th:href="@{/employees/delete/{id}(id=${employee.id})}"><i class="fas fa-user-times ml-2"></i></a>
 								
+								</td>
 								
+
 							</tr>
 						</tbody>
 					</table>

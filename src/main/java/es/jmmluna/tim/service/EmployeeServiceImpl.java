@@ -1,5 +1,6 @@
 package es.jmmluna.tim.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,6 +32,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	public long getCount() {
 		return employeeRepository.count();
+	}
+
+	@Override
+	public Employee get(Long id) {
+		return employeeRepository.getById(id);
+	}
+
+	@Override
+	public void delete(Long id) {
+		Employee employee = this.get(id);
+		employee.setExpirationDate(new Date());
+		employeeRepository.save(employee);
+		
 	}
 
 }

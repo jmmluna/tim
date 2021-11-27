@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="utf-8">
+<title>Nuevo empleado</title>
+<link th:href="@{/css/app.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/demo/datatables-demo.js}"></script>
+<script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+
+		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditEmployee}">
+			<i class="fas fa-user-edit ml-2" aria-hidden="true"></i> Editar
+			empleado
+		</h1>
+		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditEmployee}">
+			<i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo empleado
+		</h1>
+
+		<form action="#" th:action="@{/employees/save}"
+			th:object="${employee}" method="post">
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						<i class="fa fa-file-text-o" aria-hidden="true"></i> <i
+							class="fa fa-address-card" aria-hidden="true"
+							th:text="${isEditEmployee}?'Formulario de edición':'Formulario de alta'"></i>
+					</h6>
+				</div>
+				<div class="card-body">
+					<div class="form-row">
+
+
+						<input type="hidden" class="form-control" th:field="*{id}" id="id">
+
+
+
+						<div class="col-md-5 mb-3">
+							<label for="name">Nombre</label> <input type="text"
+								class="form-control" th:field="*{name}" id="name" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="surnames">Apellidos</label> <input type="text"
+								class="form-control" th:field="*{surnames}" id="surnames"
+								value="" required>
+						</div>
+
+
+						<div class="col-md-2 mb-3">
+							<label for="customerHourPrice">Precio/hora cliente </label>
+
+							<div class="input-group">
+								<input id="customerHourPrice" th:field="*{customerHourPrice}"
+									type="number" class="form-control"
+									aria-label="Precio/hora cliente"
+									onkeypress="return onlyNumberKey(event)">
+								<div class="input-group-append">
+									<span class="input-group-text"><i
+										class="fas fa-euro-sign"></i></span> <span class="input-group-text">0.00</span>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-2 mb-3">
+							<label for="employeeHourPrice">Precio/hora trabajador </label>
+
+							<div class="input-group">
+								<input id="employeeHourPrice" th:field="*{employeeHourPrice}"
+									type="number" class="form-control"
+									aria-label="Precio/hora trabajador"
+									onkeypress="return onlyNumberKey(event)">
+								<div class="input-group-append">
+									<span class="input-group-text"><i
+										class="fas fa-euro-sign"></i></span> <span class="input-group-text">0.00</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6 mb-3 text-danger" th:if="*{expirationDate}">
+							<label for="surnames">Fecha de baja</label>
+							<div class="input-group">
+
+								<input type="text" class="form-control"
+									th:field="*{expirationDate}" id="expirationDate" value=""
+									>
+								<button class="btn bg-transparent"
+									style="margin-left: -40px; z-index: 100;">
+									<i class="fa fa-times"></i>
+								</button>
+							</div>
+						</div>
+
+					</div>
+
+					<button class="btn btn-primary float-right" type="submit">Guardar</button>
+				</div>
+			</div>
+		</form>
+
+	</section>
+
+</body>
+</html>
