@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -60,7 +61,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("add")
-    public String addEmployee( Employee employee, BindingResult result, Model model) {
+    public String addEmployee( Employee employee, BindingResult result, Model model, RedirectAttributes redirAttrs) {
         if (result.hasErrors()) {
         	return "employee/employee-add";
         }

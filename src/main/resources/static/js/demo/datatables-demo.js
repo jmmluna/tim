@@ -13,30 +13,34 @@ $(document).ready(function() {
 					"visible": false,
 					"searchable": false
 				}
-				,{
+				, {
 					name: "pppp",
 					"targets": [3],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					render: $.fn.dataTable.render.number( ',', '.', 2 )
+					render: $.fn.dataTable.render.number(',', '.', 2)
 				}
-				,{
+				, {
 					"targets": [4],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					render: $.fn.dataTable.render.number( ',', '.', 2 )
+					render: $.fn.dataTable.render.number(',', '.', 2)
 				}
-				
-				
-				
+
+
+
 			],
 			select: true,
 			"language": {
+				select: {
+					//					rows: "%d filas seleccionadas"
+					rows: "",
+				},
 				"lengthMenu": "Mostrar _MENU_ registros por página",
 				"zeroRecords": "No se encontró nada, lo siento ",
-//				"info": "Total: _TOTAL_ registros.",
+				//				"info": "Total: _TOTAL_ registros.",
 				"info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
 				"infoEmpty": "No hay registros disponibles",
 				"infoFiltered": "(filtrado desde _MAX_ total registros)",
@@ -57,16 +61,16 @@ $(document).ready(function() {
 		}
 	);
 
-		table
-			.on('select', (e, dt, type, indexes) => {
-				var id = dt.rows({ selected: true }).data();
-				alert(id[0])
-			})
+	table
+		.on('select', (e, dt, type, indexes) => {
+			var id = dt.rows({ selected: true }).data();
+//			alert(id[0])
+		})
 
 
 
 
-	
+
 
 });
 
