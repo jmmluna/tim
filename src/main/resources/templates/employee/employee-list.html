@@ -3,6 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout}">
 <head>
+<meta charset="utf-8">
 <title>Empleados</title>
 <link th:href="@{/css/app.css}" rel="stylesheet" />
 <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
@@ -33,13 +34,15 @@
 			</h1>
 
 			<div class="align-items-right ">
-				<a class="btn " th:classappend="${isActiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list/actives}">Activos</a> <a
-					class="btn " th:classappend="${isInactiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
+				<a class="btn "
+					th:classappend="${isActiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/employees/list/actives}">Activos</a> <a class="btn "
+					th:classappend="${isInactiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
 					th:href="@{/employees/list/inactives}">Inactivos</a> <a
-					class="btn " th:classappend="${isAllEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list}">Todos</a>
-				<a th:href="@{/employees/print}"
+					class="btn "
+					th:classappend="${isAllEmployeeList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/employees/list}">Todos</a> <a
+					th:href="@{/employees/print}"
 					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
 				</a> <a th:href="@{/employees/save}"
 					class="btn btn-primary btn-circle btn"> <i
@@ -114,11 +117,42 @@
 									&nbsp</td>
 								<td class="align-middle" th:unless="${employee.expirationDate}">
 
-									<a class="btn btn-danger"
-									th:href="@{/employees/delete/{id}(id=${employee.id})}"><i
+<!-- 							   <a class="btn btn-danger" th:href="@{/employees/delete/{id}(id=${employee.id})}"><i -->
+<!-- 																			class="fas fa-user-times ml-2"></i></a>  -->
+									  
+									
+									<a
+									class="btn btn-danger" data-toggle="modal"
+									data-target="#staticBackdrop"><i
 										class="fas fa-user-times ml-2"></i></a>
-
 								</td>
+
+
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static"
+			data-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title font-italic font-weight-bold" id="staticBackdropLabel">Confirmación de borrado</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body font-weight-bold" th:text="'¿Estás seguro de borrar el empleado ' + ${employee.name} + '?'">¿Estás seguro de borrar el empleado ?
+					
+					
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Cancelar</button>
+						<a type="button" class="btn btn-primary" th:href="@{/employees/delete/{id}(id=${employee.id})}">Borrar</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 							</tr>
@@ -127,6 +161,43 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- 		<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+		<!--                 <div class="modal-header"> -->
+		<!--                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
+		<!--                     <h3 id="myModalLabel">Delete Confirmation</h3> -->
+		<!--                 </div> -->
+		<!--                 <div class="modal-body"> -->
+		<!--                     <p class="error-text">Are you sure you want to delete the user?</p> -->
+		<!--                 </div> -->
+		<!--                 <div class="modal-footer"> -->
+		<!--                     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button> -->
+		<!--                     <button class="btn btn-danger" data-dismiss="modal">Delete</button> -->
+		<!--                 </div> -->
+		<!--             </div> -->
+
+		<!-- <div id="myModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" -->
+		<!--      aria-hidden="true" data-bs-backdrop="static" -->
+		<!-- 		data-bs-keyboard="false"> -->
+		<!--     <div class="modal-dialog"> -->
+		<!--         <div class="modal-content"> -->
+		<!--             <div class="modal-header"> -->
+		<!--                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>                 -->
+		<!--                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+		<!--             </div> -->
+		<!--             <div class="modal-body"> -->
+		<!--                 Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, -->
+		<!--                 egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. -->
+		<!--             </div> -->
+		<!--             <div class="modal-footer"> -->
+		<!--                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+		<!--                 <button type="button" class="btn btn-primary">Save changes</button> -->
+		<!--             </div> -->
+		<!--         </div> -->
+		<!--     </div> -->
+		<!-- </div> -->
+
+		
 	</section>
 
 
