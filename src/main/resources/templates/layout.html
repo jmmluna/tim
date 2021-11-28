@@ -76,8 +76,10 @@
                 <div id="collapseTwo" class="collapse" th:classappend="${isEmployees} ? 'show' : ''"  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Personal de empresa:</h6>
-                        <a class="collapse-item" th:classappend="${isEmployees} and ${isEmployeeList}? 'active' : ''" th:href="@{/employees/list}"><i class="fas fa-fw fa-table"></i> Listado</a>                         
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isEmployeeList}? 'active' : ''" th:href="@{/employees/list/actives}"><i class="fas fa-fw fa-table"></i> Listado</a>                         
                         <a class="collapse-item" th:classappend="${isEmployees} and ${isAddEmployee} ? 'active' : ''" th:href="@{/employees/save}"><i class="fas fa-fw fa-user-plus"></i> Nuevo</a>
+                        <a class="collapse-item" th:classappend="${isEmployees} and ${isHourEmployee} ? 'active' : ''" th:href="@{/employees/hour}"><i class="fas fa-fw fa-user-clock" aria-hidden="true"></i>
+ Horas</a>
                     </div>
                 </div>
             </li>

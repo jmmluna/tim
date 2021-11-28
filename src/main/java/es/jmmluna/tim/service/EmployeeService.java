@@ -11,4 +11,6 @@ public interface EmployeeService {
 	public long getCount();
 	public Employee get(Long id);
 	public void delete(Long id);
+	List<Employee> getActives();
+	List<Employee> getInactives();
 }

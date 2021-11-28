@@ -23,6 +23,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getAll() {
 		return employeeRepository.findAll();		
 	}
+	
+	@Override
+	public List<Employee> getActives() {
+		return employeeRepository.findByExpirationDate(null);
+	}
+	
+	@Override
+	public List<Employee> getInactives() {
+		return employeeRepository.findByExpirationDateIsNotNull();
+	}
 
 	@Override
 	public void save(Employee employee) {

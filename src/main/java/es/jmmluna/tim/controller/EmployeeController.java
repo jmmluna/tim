@@ -2,10 +2,11 @@ package es.jmmluna.tim.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
@@ -44,13 +41,38 @@ public class EmployeeController {
 	@Autowired
 	private SpringTemplateEngine templateEngine;
 
-	@GetMapping("list")
+	@GetMapping("/list")
 	public String getEmployees(Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEmployeeList", true);
+		model.addAttribute("isAllEmployeeList", true);
 		model.addAttribute("employees", employeeService.getAll());
 		return "employee/employee-list";
 	}
+	
+	@GetMapping("/list/{filter}")
+	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
+		List<Employee> employees = new ArrayList<Employee>();
+		switch(filter) {
+		
+		case "actives":
+			employees = employeeService.getActives();
+			model.addAttribute("isActiveEmployeeList", true);
+			break;
+		case "inactives":
+			employees = employeeService.getInactives();
+			model.addAttribute("isInactiveEmployeeList", true);
+			break;	
+		}
+		
+		
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isEmployeeList", true);
+		model.addAttribute("employees", employees);
+
+		return "employee/employee-list";
+	}
+
 
 	@GetMapping("/save/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
@@ -70,7 +92,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("save")
-	public String save(Employee employee, BindingResult result, Model model, RedirectAttributes redirAttrs) {
+	public String save(Employee employee, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "employee/employee-save";
 		}
@@ -153,34 +175,4 @@ public class EmployeeController {
 		}
 
 	}
-
-//	@GetMapping("edit/{id}")
-//    public String showUpdateForm(@PathVariable("id") long id, Model model) {
-//        Student student = studentRepository.findById(id)
-//            .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
-//        model.addAttribute("student", student);
-//        return "update-student";
-//    }
-//
-//    @PostMapping("update/{id}")
-//    public String updateStudent(@PathVariable("id") long id, @Valid Student student, BindingResult result,
-//        Model model) {
-//        if (result.hasErrors()) {
-//            student.setId(id);
-//            return "update-student";
-//        }
-//
-//        studentRepository.save(student);
-//        model.addAttribute("students", studentRepository.findAll());
-//        return "index";
-//    }
-//
-//    @GetMapping("delete/{id}")
-//    public String deleteStudent(@PathVariable("id") long id, Model model) {
-//        Student student = studentRepository.findById(id)
-//            .orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + id));
-//        studentRepository.delete(student);
-//        model.addAttribute("students", studentRepository.findAll());
-//        return "index";
-//    }
 }
