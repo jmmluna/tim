@@ -123,13 +123,15 @@
 									
 									<a
 									class="btn btn-danger" data-toggle="modal"
-									data-target="#staticBackdrop"><i
+									th:attr="data-target='#deleteConfirm'+${employee.id }"
+									><i
 										class="fas fa-user-times ml-2"></i></a>
+<!-- 										data-target="#deleteConfirm" -->
 								</td>
 
 
 
-<div class="modal fade" id="staticBackdrop" data-backdrop="static"
+<div class="modal fade" th:id="'deleteConfirm' + ${employee.id}" data-backdrop="static"
 			data-keyboard="false" tabindex="-1"
 			aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
