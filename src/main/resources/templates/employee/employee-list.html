@@ -116,17 +116,12 @@
 
 									&nbsp</td>
 								<td class="align-middle" th:unless="${employee.expirationDate}">
-
-<!-- 							   <a class="btn btn-danger" th:href="@{/employees/delete/{id}(id=${employee.id})}"><i -->
-<!-- 																			class="fas fa-user-times ml-2"></i></a>  -->
-									  
-									
 									<a
 									class="btn btn-danger" data-toggle="modal"
 									th:attr="data-target='#deleteConfirm'+${employee.id }"
 									><i
 										class="fas fa-user-times ml-2"></i></a>
-<!-- 										data-target="#deleteConfirm" -->
+
 								</td>
 
 
