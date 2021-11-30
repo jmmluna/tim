@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 
 import es.jmmluna.tim.model.Employee;
 import es.jmmluna.tim.repository.EmployeeRepository;
+import lombok.extern.slf4j.Slf4j;
 
 
-
+@Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+//	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
@@ -26,6 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public List<Employee> getActives() {
+//		log.info("get activos");
 		return employeeRepository.findByExpirationDate(null);
 	}
 	
