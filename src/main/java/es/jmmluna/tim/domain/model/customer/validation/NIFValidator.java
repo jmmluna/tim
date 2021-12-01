@@ -1,4 +1,4 @@
-package es.jmmluna.tim.domain.model.customer;
+package es.jmmluna.tim.domain.model.customer.validation;
 
 import java.util.regex.Pattern;
 

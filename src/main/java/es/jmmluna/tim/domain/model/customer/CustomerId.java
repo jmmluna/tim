@@ -2,6 +2,8 @@ package es.jmmluna.tim.domain.model.customer;
 
 import java.util.Objects;
 
+import es.jmmluna.tim.domain.model.customer.validation.InvalidDNIException;
+
 public class CustomerId {
 
 	private String dni;
