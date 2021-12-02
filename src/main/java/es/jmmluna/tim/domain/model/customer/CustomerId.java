@@ -7,14 +7,23 @@ import es.jmmluna.tim.domain.model.customer.validation.InvalidDNIException;
 public class CustomerId {
 
 	private String dni;
-
-	public CustomerId(String dni) throws InvalidDNIException {
-		if (!this.isValid(dni))
-			throw new InvalidDNIException();
-		this.dni = dni;
+	private boolean valid = true;
+	
+	public CustomerId() {
+		
 	}
 
-	public static CustomerId create(String dni) throws InvalidDNIException {
+	public CustomerId(String dni)  {
+		if (!this.isValid(dni))
+			valid = false;
+		this.dni = dni;
+	}
+	
+	public boolean isValid() {
+		return valid;
+	}
+
+	public static CustomerId of(String dni)  {
 		return new CustomerId(dni);
 	}
 

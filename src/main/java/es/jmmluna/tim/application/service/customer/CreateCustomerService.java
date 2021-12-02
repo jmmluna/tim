@@ -2,8 +2,8 @@ package es.jmmluna.tim.application.service.customer;
 
 import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
-import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 import es.jmmluna.tim.domain.model.customer.validation.InvalidDNIException;
+import es.jmmluna.tim.domainl.port.CustomerRepository;
 
 public class CreateCustomerService implements ApplicationService {
 	
@@ -15,9 +15,9 @@ public class CreateCustomerService implements ApplicationService {
 
 	@Override
 	public void execute() throws InvalidDNIException {
-		Customer customer = new Customer(CustomerId.create("30"));
-		customer.setName("José María");
-		this.repository.add(customer);
+//		Customer customer = new Customer(CustomerId.of("30"));
+//		customer.setName("José María");
+//		this.repository.save(customer);
 		
 	}
 

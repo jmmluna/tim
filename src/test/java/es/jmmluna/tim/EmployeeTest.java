@@ -1,25 +1,18 @@
 package es.jmmluna.tim;
 
 
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.assertj.core.api.Assertions.assertThat;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import es.jmmluna.tim.model.Employee;
 import es.jmmluna.tim.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
 public class EmployeeTest {
@@ -46,4 +39,15 @@ public class EmployeeTest {
         log.info("Running When Case1: test1_1");
         assertThat(employeeService.getAll()).isNotEmpty();
     }
+	
+//	@Test
+//	public void givenSubclasses_whenQuerySuperclass_thenOk() {
+//	    Book book = new Book(1, "1984", "George Orwell");
+//	    session.save(book);
+//	    Pen pen = new Pen(2, "my pen", "blue");
+//	    session.save(pen);
+//
+//	    assertThat(session.createQuery("from MyProduct")
+//	      .getResultList()).hasSize(2);
+//	}
 }

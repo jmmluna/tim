@@ -1,22 +1,19 @@
-package es.jmmluna.tim.domain.model.customer;
+package es.jmmluna.tim.application.service.customer;
 
-import java.util.Date;
+public class CustomerDTO {
 
-public class Customer {
-	
-	private CustomerId customerId;
+	private String id;
 	private String name;
 	private String surnames;
 	private String address;
 	private String phone;
-	private Date expirationDate;
-	
-	public Customer(CustomerId customerId) {
-		this.customerId = customerId;
+
+	public String getId() {
+		return id;
 	}
 
-	public CustomerId getCustomerId() {
-		return customerId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -50,13 +47,4 @@ public class Customer {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-	
 }
