@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import es.jmmluna.tim.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 
-//@RunWith(SpringRunner.class)
+
 @SpringBootTest
 @Slf4j
 public class EmployeeTest {

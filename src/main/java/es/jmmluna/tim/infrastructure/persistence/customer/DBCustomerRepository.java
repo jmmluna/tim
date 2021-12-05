@@ -1,4 +1,4 @@
-package es.jmmluna.tim.infrastructure.repository;
+package es.jmmluna.tim.infrastructure.persistence.customer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 
 import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
-import es.jmmluna.tim.domainl.port.CustomerRepository;
-import es.jmmluna.tim.infrastructure.entity.JpaCustomerEntity;
+import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
 @Component
 public class DBCustomerRepository implements CustomerRepository{
@@ -20,8 +19,7 @@ public class DBCustomerRepository implements CustomerRepository{
 	
 	@Override
 	public void save(Customer customer) {
-		// TODO Auto-generated method stub
-		
+		customerRepository.save(JpaCustomerEntity.toEntity(customer));		
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.jmmluna.tim.model.Employee;
+import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
 import es.jmmluna.tim.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,23 +21,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	@Override
-	public List<Employee> getAll() {
+	public List<JpaEmployeeEntity> getAll() {
 		return employeeRepository.findAll();		
 	}
 	
 	@Override
-	public List<Employee> getActives() {
+	public List<JpaEmployeeEntity> getActives() {
 //		log.info("get activos");
 		return employeeRepository.findByExpirationDate(null);
 	}
 	
 	@Override
-	public List<Employee> getInactives() {
+	public List<JpaEmployeeEntity> getInactives() {
 		return employeeRepository.findByExpirationDateIsNotNull();
 	}
 
 	@Override
-	public void save(Employee employee) {
+	public void save(JpaEmployeeEntity employee) {
 		 employeeRepository.save(employee);
 		
 	}
@@ -47,13 +47,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee get(Long id) {
+	public JpaEmployeeEntity get(Long id) {
 		return employeeRepository.getById(id);
 	}
 
 	@Override
 	public void delete(Long id) {
-		Employee employee = this.get(id);
+		JpaEmployeeEntity employee = this.get(id);
 		employee.setExpirationDate(new Date());
 		employeeRepository.save(employee);
 		

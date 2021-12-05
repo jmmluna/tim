@@ -1,4 +1,4 @@
-package es.jmmluna.tim.controller;
+package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,7 +28,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
 
-import es.jmmluna.tim.model.Employee;
+import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
 import es.jmmluna.tim.service.EmployeeService;
 
 @Controller
@@ -52,7 +52,7 @@ public class EmployeeController {
 	
 	@GetMapping("/list/{filter}")
 	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
-		List<Employee> employees = new ArrayList<Employee>();
+		List<JpaEmployeeEntity> employees = new ArrayList<JpaEmployeeEntity>();
 		switch(filter) {
 		
 		case "actives":
@@ -78,7 +78,7 @@ public class EmployeeController {
 	public String edit(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEditEmployee", true);
-		model.addAttribute("employee", id != null && id != 0 ? employeeService.get(id) : new Employee());
+		model.addAttribute("employee", id != null && id != 0 ? employeeService.get(id) : new JpaEmployeeEntity());
 		return "employee/employee-save";
 	}
 
@@ -86,13 +86,13 @@ public class EmployeeController {
 	public String create(Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isAddEmployee", true);
-		model.addAttribute("employee", new Employee());
+		model.addAttribute("employee", new JpaEmployeeEntity());
 
 		return "employee/employee-save";
 	}
 
 	@PostMapping("save")
-	public String save(Employee employee, BindingResult result, Model model) {
+	public String save(JpaEmployeeEntity employee, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "employee/employee-save";
 		}

@@ -3,14 +3,24 @@ package es.jmmluna.tim.domain.model.customer;
 import java.util.Date;
 
 public class Customer {
-	
+
 	private CustomerId customerId;
 	private String name;
 	private String surnames;
 	private String address;
 	private String phone;
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	private Date expirationDate;
-	
+
 	public Customer(CustomerId customerId) {
 		this.customerId = customerId;
 	}
@@ -58,5 +68,5 @@ public class Customer {
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	
+
 }

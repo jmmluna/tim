@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>			
 			<version>3.0.0</version>
 		</dependency>
 		<dependency>
@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.0</version>
+<!-- 			<version>5.7.0</version> -->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

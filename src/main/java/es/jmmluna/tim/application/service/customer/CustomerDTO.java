@@ -2,18 +2,19 @@ package es.jmmluna.tim.application.service.customer;
 
 public class CustomerDTO {
 
-	private String id;
+	private String dni;
 	private String name;
 	private String surnames;
 	private String address;
 	private String phone;
+	private String email;
 
-	public String getId() {
-		return id;
+	public CustomerDTO(String dni) {
+		this.dni = dni;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getDni() {
+		return dni;
 	}
 
 	public String getName() {
@@ -46,5 +47,13 @@ public class CustomerDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

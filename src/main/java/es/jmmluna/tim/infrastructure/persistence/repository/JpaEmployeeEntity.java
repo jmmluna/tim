@@ -1,4 +1,4 @@
-package es.jmmluna.tim.model;
+package es.jmmluna.tim.infrastructure.persistence.repository;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ import lombok.Data;
 @Table(name = "TIM_EMPLOYEES", schema = "TIM")
 @Data
 
-public class Employee {
+public class JpaEmployeeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

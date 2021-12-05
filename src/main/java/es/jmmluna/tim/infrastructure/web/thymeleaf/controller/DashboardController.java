@@ -1,4 +1,4 @@
-package es.jmmluna.tim.controller;
+package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import es.jmmluna.tim.model.Dashboard;
+import es.jmmluna.tim.domain.model.dashboard.Dashboard;
 import es.jmmluna.tim.service.EmployeeService;
 
 @Controller

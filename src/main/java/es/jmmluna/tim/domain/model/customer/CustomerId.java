@@ -2,25 +2,18 @@ package es.jmmluna.tim.domain.model.customer;
 
 import java.util.Objects;
 
-import es.jmmluna.tim.domain.model.customer.validation.InvalidDNIException;
-
 public class CustomerId {
-
 	private String dni;
 	private boolean valid = true;
-	
-	public CustomerId() {
-		
-	}
 
 	public CustomerId(String dni)  {
 		if (!this.isValid(dni))
-			valid = false;
+			this.valid = false;
 		this.dni = dni;
 	}
 	
 	public boolean isValid() {
-		return valid;
+		return this.valid;
 	}
 
 	public static CustomerId of(String dni)  {

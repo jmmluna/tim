@@ -1,4 +1,4 @@
-package es.jmmluna.tim.controller;
+package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
