@@ -1,53 +1,73 @@
 package es.jmmluna.tim;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
-import es.jmmluna.tim.service.EmployeeService;
+import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.employee.EmployeeDTO;
+import es.jmmluna.tim.application.service.employee.EmployeeListingService;
+import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
+import es.jmmluna.tim.domain.model.employee.EmployeeId;
+import es.jmmluna.tim.domain.model.employee.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
-
 
 @SpringBootTest
 @Slf4j
+@DisplayName("Employee test")
+@ActiveProfiles("test")
 public class EmployeeTest {
 
 	@Autowired
-	EmployeeService employeeService;
+	private EmployeeSaveService employeeSaveService;
 	
+	@Autowired
+	private EmployeeListingService employeeListingService;
+
+	@Autowired
+	private EmployeeRepository employeeRepository;
+
 	@Test
-	@DisplayName("Tests get all employees")
-    public void testGetAllEmployees() {
-//		List<Employee> employees = employeeService.getAll();
-//		assertThat(employees, not(new ArrayList<Employee>()));
+	@Sql("classpath:employee-test-data.sql")
+	@DisplayName("Initialize employees")
+	public void shouldSaveEmployeesThroughSqlFile() {
+		var employee = employeeRepository.getById(EmployeeId.of(1L));
+		assertNotNull(employee);
 		
-//		assertThat(employees).isNotNull();
-//		assertEquals(2, 2);
-//		log.info("Hay " + employees.size() + " empleados");
-//		assumeTrue(employees.size() > 1);
-		assumeTrue(2 > 1);
-		
+	}
+
+	@Test
+	@DisplayName("Customer creation")
+	public void testCustomerCreation() {
+		var employeeDTO = getExternalEmployee();
+		employeeSaveService.execute(employeeDTO);
+		var employee = employeeRepository.getByName("José María");
+		assertNotNull(employee);
 	}
 	
 	@Test
-    void whenGetAll_thenemployeeListIsNotEmpty() {
-        log.info("Running When Case1: test1_1");
-        assertThat(employeeService.getAll()).isNotEmpty();
-    }
-	
-//	@Test
-//	public void givenSubclasses_whenQuerySuperclass_thenOk() {
-//	    Book book = new Book(1, "1984", "George Orwell");
-//	    session.save(book);
-//	    Pen pen = new Pen(2, "my pen", "blue");
-//	    session.save(pen);
-//
-//	    assertThat(session.createQuery("from MyProduct")
-//	      .getResultList()).hasSize(2);
-//	}
+	@DisplayName("Customer listing")
+	public void testCustomerListing() {		
+		List<EmployeeDTO> employees= employeeListingService.execute(EElementList.ACTIVE);		
+		assertTrue(employees.size() == 5);
+	}
+
+
+	private EmployeeDTO getExternalEmployee() {
+		var employeeDTO = new EmployeeDTO(301L);
+		employeeDTO.setName("José María");
+		employeeDTO.setSurnames("Martínez Luna");
+		employeeDTO.setCustomerHourPrice(10D);
+		employeeDTO.setEmployeeHourPrice(15D);
+
+		return employeeDTO;
+	}
 }

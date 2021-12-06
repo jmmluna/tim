@@ -2,7 +2,7 @@ package es.jmmluna.tim.service;
 
 import java.util.List;
 
-import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
+import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
 
 public interface EmployeeService {
 

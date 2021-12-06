@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
+import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
 
-@Repository
+//@Repository
 public interface EmployeeRepository extends JpaRepository<JpaEmployeeEntity, Long> {
 
 	public List<JpaEmployeeEntity> findByExpirationDate(Date expirationDate);

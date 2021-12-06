@@ -1,27 +1,31 @@
-package es.jmmluna.tim.domain.model.employee;
+package es.jmmluna.tim.application.service.employee;
 
 import java.util.Date;
 
-public class Employee {
+public class EmployeeDTO {
 
-	private EmployeeId employeeId;
-
+	private Long id;
 	private String name;
-
 	private String surnames;
-
 	private Double customerHourPrice;
-
 	private Double employeeHourPrice;
-
 	private Date expirationDate;
 
-	public Employee(EmployeeId employeeId) {
-		this.employeeId = employeeId;
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	public EmployeeDTO(Long id) {
+		this.id = id;
+	}
+	public Long getId() {
+		return id;
 	}
 
-	public EmployeeId getEmployeeId() {
-		return employeeId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -55,13 +59,5 @@ public class Employee {
 	public void setEmployeeHourPrice(Double employeeHourPrice) {
 		this.employeeHourPrice = employeeHourPrice;
 	}
-
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
+	
 }

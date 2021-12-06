@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
+import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
 import es.jmmluna.tim.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 

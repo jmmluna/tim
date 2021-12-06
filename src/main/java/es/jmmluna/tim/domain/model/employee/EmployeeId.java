@@ -6,7 +6,6 @@ public class EmployeeId {
 	private Long id;
 
 	public EmployeeId(Long id) {
-
 		this.id = id;
 	}
 

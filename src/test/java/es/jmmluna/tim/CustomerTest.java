@@ -21,9 +21,8 @@ import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
-@DisplayName("Customer test")
 @Slf4j
-//@DataJpaTest
+@DisplayName("Customer test")
 @ActiveProfiles("test")
 public class CustomerTest {
 

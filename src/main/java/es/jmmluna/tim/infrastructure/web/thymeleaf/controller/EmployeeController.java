@@ -28,7 +28,11 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
 
-import es.jmmluna.tim.infrastructure.persistence.repository.JpaEmployeeEntity;
+import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.employee.EmployeeDTO;
+import es.jmmluna.tim.application.service.employee.EmployeeListingService;
+import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
+import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
 import es.jmmluna.tim.service.EmployeeService;
 
 @Controller
@@ -37,6 +41,13 @@ public class EmployeeController {
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private EmployeeSaveService employeeSaveService;
+	
+	@Autowired
+	private EmployeeListingService employeeListingService;
+	
 
 	@Autowired
 	private SpringTemplateEngine templateEngine;
@@ -46,21 +57,21 @@ public class EmployeeController {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEmployeeList", true);
 		model.addAttribute("isAllEmployeeList", true);
-		model.addAttribute("employees", employeeService.getAll());
+		model.addAttribute("employees", employeeListingService.execute(EElementList.ALL));//employeeService.getAll());
 		return "employee/employee-list";
 	}
 	
 	@GetMapping("/list/{filter}")
 	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
-		List<JpaEmployeeEntity> employees = new ArrayList<JpaEmployeeEntity>();
+		List<EmployeeDTO> employees = new ArrayList<EmployeeDTO>();
 		switch(filter) {
 		
 		case "actives":
-			employees = employeeService.getActives();
+			employees = employeeListingService.execute(EElementList.ACTIVE); //employeeService.getActives();
 			model.addAttribute("isActiveEmployeeList", true);
 			break;
 		case "inactives":
-			employees = employeeService.getInactives();
+			employees = employeeListingService.execute(EElementList.INACTIVE); //employeeService.getInactives();
 			model.addAttribute("isInactiveEmployeeList", true);
 			break;	
 		}
@@ -91,15 +102,28 @@ public class EmployeeController {
 		return "employee/employee-save";
 	}
 
+//	@PostMapping("save")
+//	public String save(JpaEmployeeEntity employee, BindingResult result, Model model) {
+//		if (result.hasErrors()) {
+//			return "employee/employee-save";
+//		}
+//
+//		employeeService.save(employee);
+//		return "redirect:/employees/list";
+//	}
+	
+	
 	@PostMapping("save")
-	public String save(JpaEmployeeEntity employee, BindingResult result, Model model) {
+	public String save(EmployeeDTO employeeDTO, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "employee/employee-save";
 		}
 
-		employeeService.save(employee);
+		employeeSaveService.execute(employeeDTO);
 		return "redirect:/employees/list";
 	}
+	
+	
 	
 	@GetMapping("/delete/{id}")
 	 public String delete(@PathVariable Long id, Model model) {
