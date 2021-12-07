@@ -2,6 +2,8 @@ package es.jmmluna.tim.application.service.employee;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class EmployeeDTO {
 
 	private Long id;
@@ -9,7 +11,9 @@ public class EmployeeDTO {
 	private String surnames;
 	private Double customerHourPrice;
 	private Double employeeHourPrice;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date expirationDate;
+	
 
 	public Date getExpirationDate() {
 		return expirationDate;
@@ -17,9 +21,7 @@ public class EmployeeDTO {
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public EmployeeDTO(Long id) {
-		this.id = id;
-	}
+	
 	public Long getId() {
 		return id;
 	}

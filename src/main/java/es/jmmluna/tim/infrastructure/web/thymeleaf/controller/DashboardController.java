@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
 import es.jmmluna.tim.domain.model.dashboard.Dashboard;
-import es.jmmluna.tim.service.EmployeeService;
 
 @Controller
 @RequestMapping("/")

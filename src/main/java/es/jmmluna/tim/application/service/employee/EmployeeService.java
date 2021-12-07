@@ -12,8 +12,9 @@ public abstract class EmployeeService {
 		this.repository = repository;
 	}
 
-	public EmployeeDTO toDTO(Employee employee) {
-		var employeeDTO = new EmployeeDTO(employee.getEmployeeId().getValue());
+	public static EmployeeDTO toDTO(Employee employee) {
+		var employeeDTO = new EmployeeDTO();
+		employeeDTO.setId(employee.getEmployeeId().getValue());
 		employeeDTO.setName(employee.getName());
 		employeeDTO.setSurnames(employee.getSurnames());
 		employeeDTO.setCustomerHourPrice(employee.getCustomerHourPrice());
@@ -22,7 +23,7 @@ public abstract class EmployeeService {
 		return employeeDTO;
 	}
 
-	public Employee toModel(EmployeeDTO employeeDTO) {
+	public static Employee toModel(EmployeeDTO employeeDTO) {
 		var employee = new Employee(EmployeeId.of(employeeDTO.getId()));
 		employee.setName(employeeDTO.getName());
 		employee.setSurnames(employeeDTO.getSurnames());

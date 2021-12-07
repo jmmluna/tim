@@ -29,25 +29,28 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import com.lowagie.text.DocumentException;
 
 import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.employee.EmployeeByIdService;
 import es.jmmluna.tim.application.service.employee.EmployeeDTO;
+import es.jmmluna.tim.application.service.employee.EmployeeDeletionService;
 import es.jmmluna.tim.application.service.employee.EmployeeListingService;
 import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
-import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
-import es.jmmluna.tim.service.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
-	@Autowired
-	private EmployeeService employeeService;
-	
+
 	@Autowired
 	private EmployeeSaveService employeeSaveService;
-	
+
+	@Autowired
+	private EmployeeDeletionService employeeDeletionService;
+
 	@Autowired
 	private EmployeeListingService employeeListingService;
-	
+
+	@Autowired
+	private EmployeeByIdService employeeByIdService;
 
 	@Autowired
 	private SpringTemplateEngine templateEngine;
@@ -57,26 +60,25 @@ public class EmployeeController {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEmployeeList", true);
 		model.addAttribute("isAllEmployeeList", true);
-		model.addAttribute("employees", employeeListingService.execute(EElementList.ALL));//employeeService.getAll());
+		model.addAttribute("employees", employeeListingService.execute(EElementList.ALL));
 		return "employee/employee-list";
 	}
-	
+
 	@GetMapping("/list/{filter}")
 	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
 		List<EmployeeDTO> employees = new ArrayList<EmployeeDTO>();
-		switch(filter) {
-		
+		switch (filter) {
+
 		case "actives":
-			employees = employeeListingService.execute(EElementList.ACTIVE); //employeeService.getActives();
+			employees = employeeListingService.execute(EElementList.ACTIVE);
 			model.addAttribute("isActiveEmployeeList", true);
 			break;
 		case "inactives":
-			employees = employeeListingService.execute(EElementList.INACTIVE); //employeeService.getInactives();
+			employees = employeeListingService.execute(EElementList.INACTIVE);
 			model.addAttribute("isInactiveEmployeeList", true);
-			break;	
+			break;
 		}
-		
-		
+
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEmployeeList", true);
 		model.addAttribute("employees", employees);
@@ -84,12 +86,11 @@ public class EmployeeController {
 		return "employee/employee-list";
 	}
 
-
 	@GetMapping("/save/{id}")
 	public String edit(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEditEmployee", true);
-		model.addAttribute("employee", id != null && id != 0 ? employeeService.get(id) : new JpaEmployeeEntity());
+		model.addAttribute("employee", id != null && id != 0 ? employeeByIdService.execute(id) : new EmployeeDTO());
 		return "employee/employee-save";
 	}
 
@@ -97,41 +98,30 @@ public class EmployeeController {
 	public String create(Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isAddEmployee", true);
-		model.addAttribute("employee", new JpaEmployeeEntity());
+		model.addAttribute("employee", new EmployeeDTO());
 
 		return "employee/employee-save";
 	}
 
-//	@PostMapping("save")
-//	public String save(JpaEmployeeEntity employee, BindingResult result, Model model) {
-//		if (result.hasErrors()) {
-//			return "employee/employee-save";
-//		}
-//
-//		employeeService.save(employee);
-//		return "redirect:/employees/list";
-//	}
-	
-	
 	@PostMapping("save")
-	public String save(EmployeeDTO employeeDTO, BindingResult result, Model model) {
+	public String save(EmployeeDTO employee, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			LOG.error("####################" + result);
+			
 			return "employee/employee-save";
 		}
 
-		employeeSaveService.execute(employeeDTO);
-		return "redirect:/employees/list";
+		employeeSaveService.execute(employee);
+		return "redirect:/employees/list/actives";
 	}
-	
-	
-	
+
 	@GetMapping("/delete/{id}")
-	 public String delete(@PathVariable Long id, Model model) {
-		employeeService.delete(id);
-	 
-	  return "redirect:/employees/list";
-	 }
-	
+	public String delete(@PathVariable Long id, Model model) {
+		var employeeDTO = employeeByIdService.execute(id);
+		employeeDeletionService.execute(employeeDTO);
+
+		return "redirect:/employees/list/actives";
+	}
 
 	@GetMapping("print")
 	public ResponseEntity<ByteArrayResource> print(Model model) {

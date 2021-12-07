@@ -40,6 +40,7 @@ public class JpaEmployeeEntity {
 		
 	@Column(name="EXPIRATION_DATE")
 	@DateTimeFormat(pattern="dd/MM/yyyy")	
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date expirationDate;
 	

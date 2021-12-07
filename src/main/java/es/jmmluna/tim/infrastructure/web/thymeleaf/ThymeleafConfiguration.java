@@ -1,4 +1,4 @@
-package es.jmmluna.tim;
+package es.jmmluna.tim.infrastructure.web.thymeleaf;
 
 import java.util.Locale;
 
@@ -15,14 +15,12 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.decorators.strategies.GroupingStrategy;
 
 @Configuration
-public class TimConfiguration implements WebMvcConfigurer {
+public class ThymeleafConfiguration implements WebMvcConfigurer {
 		
 	@Bean
 	@Description("Spring Message Resolver")

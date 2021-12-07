@@ -36,7 +36,7 @@ public class EmployeeListingService extends EmployeeService {
 
 		for (var employee : employees) {
 
-			dtos.add(this.toDTO(employee));
+			dtos.add(EmployeeService.toDTO(employee));
 		}
 		return dtos;
 	}
