@@ -20,7 +20,7 @@ import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import nz.net.ultraq.thymeleaf.layoutdialect.decorators.strategies.GroupingStrategy;
 
 @Configuration
-public class ThymeleafConfiguration implements WebMvcConfigurer {
+public class ThymeleafConfiguration { // implements WebMvcConfigurer {
 		
 	@Bean
 	@Description("Spring Message Resolver")
@@ -44,51 +44,51 @@ public class ThymeleafConfiguration implements WebMvcConfigurer {
 	    return lci;
 	}
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-	    registry.addInterceptor(localeChangeInterceptor());
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//	    registry.addInterceptor(localeChangeInterceptor());
+//	}
 	
 	@Bean
 	public LayoutDialect layoutDialect() {
 	  return new LayoutDialect();
 	}
 	
-	@Bean
-    @Description("Thymeleaf template resolver serving HTML 5")
-    public ClassLoaderTemplateResolver templateResolver() {
-		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setCacheable(false);
-        templateResolver.setTemplateMode("HTML5");
-        templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setPrefix("templates/");
-        templateResolver.setSuffix(".html");
-
-        return templateResolver;
-    }
-
-    @Bean
-    @Description("Thymeleaf template engine with Spring integration")
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.addDialect(new SpringSecurityDialect());
-        templateEngine.addDialect(new LayoutDialect(new GroupingStrategy()));
-        templateEngine.setTemplateResolver(templateResolver());
-
-        return templateEngine;
-    }
-
-    @Bean
-    @Description("Thymeleaf view resolver")
-    public ViewResolver viewResolver() {
-
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
-        viewResolver.setCache(false);
-        viewResolver.setOrder(1);
-
-        return viewResolver;
-    }
+//	@Bean
+//    @Description("Thymeleaf template resolver serving HTML 5")
+//    public ClassLoaderTemplateResolver templateResolver() {
+//		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+//        templateResolver.setCacheable(false);
+//        templateResolver.setTemplateMode("HTML5");
+//        templateResolver.setCharacterEncoding("UTF-8");
+//        templateResolver.setPrefix("templates/");
+//        templateResolver.setSuffix(".html");
+//
+//        return templateResolver;
+//    }
+//
+//    @Bean
+//    @Description("Thymeleaf template engine with Spring integration")
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+////        templateEngine.addDialect(new SpringSecurityDialect());
+//        templateEngine.addDialect(new LayoutDialect(new GroupingStrategy()));
+//        templateEngine.setTemplateResolver(templateResolver());
+//
+//        return templateEngine;
+//    }
+//
+//    @Bean
+//    @Description("Thymeleaf view resolver")
+//    public ViewResolver viewResolver() {
+//
+//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+//        viewResolver.setTemplateEngine(templateEngine());
+//        viewResolver.setCharacterEncoding("UTF-8");
+//        viewResolver.setCache(false);
+//        viewResolver.setOrder(1);
+//
+//        return viewResolver;
+//    }
 
 }

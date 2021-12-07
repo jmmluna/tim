@@ -15,7 +15,8 @@
 	<name>tim</name>
 	<description>Tomás Invoice Management </description>
 	<properties>
-		<java.version>17</java.version>		
+		<java.version>17</java.version>
+		<start-class>es.jmmluna.tim.infrastructure.TimApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,8 +25,13 @@
 		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>			
+			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-java8time</artifactId>
+			<version>3.0.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
@@ -69,7 +75,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-<!-- 			<version>5.7.0</version> -->
+			<!-- <version>5.7.0</version> -->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

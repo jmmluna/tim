@@ -88,10 +88,11 @@
 						<div class="col-md-2 mb-3 text-danger" th:if="*{expirationDate}">
 							<label for="surnames">Fecha de baja</label>
 							<div class="input-group">
+								<!-- 								th:field="${#calendars.format(expirationDate, 'dd-MM-yyyy')}" id="expirationDate" -->
 
 								<input type="text" readonly class="form-control"
-									th:field="*{expirationDate}" id="expirationDate"
-									> <a class="btn bg-transparent"
+									th:field="*{expirationDate}" id="expirationDate">
+								<a class="btn bg-transparent"
 									onclick="document.getElementById('expirationDate').value = ''"
 									style="margin-left: -40px; z-index: 100;"> <i
 									class="fa fa-times"></i>
