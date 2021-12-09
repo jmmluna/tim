@@ -1,32 +1,38 @@
 package es.jmmluna.tim.domain.model.customer;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class CustomerId {
-	private String dni;
-	private boolean valid = true;
+	private UUID uuid;
 
-	public CustomerId(String dni)  {
-		if (!this.isValid(dni))
-			this.valid = false;
-		this.dni = dni;
-	}
-	
-	public boolean isValid() {
-		return this.valid;
+	public CustomerId(String uuid) {
+		this.uuid = UUID.fromString(uuid);
 	}
 
-	public static CustomerId of(String dni)  {
-		return new CustomerId(dni);
+	public CustomerId(UUID uuid) {
+		this.uuid = uuid;
 	}
 
-	public String getValue() {
-		return this.dni;
+	public CustomerId() {
+		this.uuid = UUID.randomUUID();
+	}
+
+	public static CustomerId of(String uuid) {
+		return new CustomerId(uuid);
+	}
+
+	public static CustomerId of(UUID uuid) {
+		return new CustomerId(uuid);
+	}
+
+	public UUID getValue() {
+		return this.uuid;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dni);
+		return Objects.hash(uuid);
 	}
 
 	@Override
@@ -38,15 +44,12 @@ public class CustomerId {
 		if (getClass() != obj.getClass())
 			return false;
 		CustomerId other = (CustomerId) obj;
-		return Objects.equals(dni, other.dni);
+		return Objects.equals(uuid, other.uuid);
 	}
 
 	@Override
 	public String toString() {
-		return "CustomerId [dni=" + dni + "]";
+		return "CustomerId [uuid=" + uuid + "]";
 	}
 
-	private boolean isValid(String dni) {		
-		return true;
-	}
 }

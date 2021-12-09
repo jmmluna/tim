@@ -1,7 +1,9 @@
 package es.jmmluna.tim.application.service.customer;
 
-public class CustomerDTO {
+import java.util.UUID;
 
+public class CustomerDTO {
+	private UUID uuid;
 	private String dni;
 	private String name;
 	private String surnames;
@@ -9,12 +11,20 @@ public class CustomerDTO {
 	private String phone;
 	private String email;
 
-	public CustomerDTO(String dni) {
+	public CustomerDTO(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 
 	public String getDni() {
 		return dni;
+	}
+
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	public String getName() {

@@ -12,16 +12,17 @@ import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 public class CustomerListingService extends CustomerService {
 
 	@Autowired
-	private CustomerRepository customerRepository;
-	
+	public CustomerListingService(CustomerRepository repository) {
+		super(repository);
+	}
+
 	public List<CustomerDTO> execute() {
-        var customers = customerRepository.findAll();         
-        var dtos = new ArrayList<CustomerDTO>();
-        
-        for (var customer : customers) {
-        	                        
-            dtos.add(this.toDTO(customer));
-        }
-        return dtos;
-    }
+		var customers = this.repository.getAll();
+		var dtos = new ArrayList<CustomerDTO>();
+
+		for (var customer : customers) {
+			dtos.add(CustomerService.toDTO(customer));
+		}
+		return dtos;
+	}
 }

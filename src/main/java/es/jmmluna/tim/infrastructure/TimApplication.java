@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("es.jmmluna.tim")
 public class TimApplication {
 	
 	public static void main(String[] args) {

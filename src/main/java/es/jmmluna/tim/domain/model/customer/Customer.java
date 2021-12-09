@@ -5,6 +5,8 @@ import java.util.Date;
 public class Customer {
 
 	private CustomerId customerId;
+	private Dni dni;
+	
 	private String name;
 	private String surnames;
 	private String address;
@@ -18,6 +20,14 @@ public class Customer {
 
 	public CustomerId getCustomerId() {
 		return customerId;
+	}
+	
+	public Dni getDni() {
+		return dni;
+	}
+
+	public void setDni(Dni dni) {
+		this.dni = dni;
 	}
 
 	public String getName() {

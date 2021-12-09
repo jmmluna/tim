@@ -25,14 +25,14 @@ import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
 import es.jmmluna.tim.application.service.employee.EmployeeService;
 import es.jmmluna.tim.domain.model.employee.EmployeeId;
 import es.jmmluna.tim.domain.model.employee.EmployeeRepository;
+import es.jmmluna.tim.infrastructure.TimApplication;
 import lombok.extern.slf4j.Slf4j;
-
-@SpringBootTest
+@SpringBootTest(classes = TimApplication.class)
 @Slf4j
 @DisplayName("Employee test")
 @ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
-public class EmployeeTest {
+public class EmployeeTests {
 
 	@Autowired
 	private EmployeeSaveService employeeSaveService;
