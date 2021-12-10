@@ -22,6 +22,7 @@ public abstract class CustomerService {
 		customerDTO.setAddress(customer.getAddress());
 		customerDTO.setPhone(customer.getPhone());
 		customerDTO.setEmail(customer.getEmail());
+		customerDTO.setExpirationDate(customer.getExpirationDate());
 
 		return customerDTO;
 	}
@@ -35,6 +36,7 @@ public abstract class CustomerService {
 		customer.setAddress(customerDTO.getAddress());
 		customer.setPhone(customerDTO.getPhone());
 		customer.setEmail(customerDTO.getEmail());
+		customer.setExpirationDate(customerDTO.getExpirationDate());
 
 		return customer;
 	}

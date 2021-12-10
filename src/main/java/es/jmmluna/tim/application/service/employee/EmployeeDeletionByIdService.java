@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 import es.jmmluna.tim.domain.model.employee.EmployeeRepository;
 
 @Service
-public class EmployeeDeletionService extends EmployeeService {
+public class EmployeeDeletionByIdService extends EmployeeService {
 
 	@Autowired
-	public EmployeeDeletionService(EmployeeRepository repository) {
+	public EmployeeDeletionByIdService(EmployeeRepository repository) {
 		super(repository);
 	}
 
-	public EmployeeDTO execute(EmployeeDTO employeeDTO) {
-		var employee = this.repository.delete(EmployeeService.toModel(employeeDTO));
+	public EmployeeDTO execute(Long id) {
+		var employee = this.repository.delete(id);
 		return EmployeeService.toDTO(employee);
 	}
 

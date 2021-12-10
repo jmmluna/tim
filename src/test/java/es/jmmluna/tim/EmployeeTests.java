@@ -1,6 +1,8 @@
 package es.jmmluna.tim;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -19,14 +21,13 @@ import es.jmmluna.tim.application.service.EElementList;
 import es.jmmluna.tim.application.service.employee.EmployeeByIdService;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
 import es.jmmluna.tim.application.service.employee.EmployeeDTO;
+import es.jmmluna.tim.application.service.employee.EmployeeDeletionByIdService;
 import es.jmmluna.tim.application.service.employee.EmployeeDeletionService;
 import es.jmmluna.tim.application.service.employee.EmployeeListingService;
 import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
-import es.jmmluna.tim.application.service.employee.EmployeeService;
-import es.jmmluna.tim.domain.model.employee.EmployeeId;
-import es.jmmluna.tim.domain.model.employee.EmployeeRepository;
 import es.jmmluna.tim.infrastructure.TimApplication;
 import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest(classes = TimApplication.class)
 @Slf4j
 @DisplayName("Employee test")
@@ -47,18 +48,19 @@ public class EmployeeTests {
 	private EmployeeDeletionService employeeDeletionService;
 
 	@Autowired
-	private EmployeeByIdService employeeByIdService;
+	private EmployeeDeletionByIdService employeeDeletionByIdService;
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private EmployeeByIdService employeeByIdService;
 
 	@Test
 	@Sql("classpath:employee-test-data.sql")
 	@DisplayName("Initialize employees")
 	@Order(1)
 	public void shouldSaveEmployeesThroughSqlFile() {
-		var employee = this.employeeRepository.getById(EmployeeId.of(1L));
-		assertNotNull(employee);
+		var employeeDTO = this.employeeByIdService.execute(1L);
+
+		assertEquals(employeeDTO.getName(), "usu1", "No coincide el nombre del empleado");
 	}
 
 	@Test
@@ -66,9 +68,9 @@ public class EmployeeTests {
 	@Order(2)
 	public void testEmployeeCreation() {
 		var employeeDTO = this.getExternalEmployee();
-		this.employeeSaveService.execute(employeeDTO);
-		var employee = this.employeeRepository.getByName("José María");
-		assertNotNull(employee);
+		var savedEmployeeDTO = this.employeeSaveService.execute(employeeDTO);
+
+		assertEquals(savedEmployeeDTO.getName(), employeeDTO.getName(), "No coincide el nombre del empleado");
 	}
 
 	@Test
@@ -91,19 +93,30 @@ public class EmployeeTests {
 	@DisplayName("Delete employee")
 	@Order(5)
 	public void testDeleteEmployee() {
-		var employee = this.employeeRepository.getByName("José María");
-		employeeDeletionService.execute(EmployeeService.toDTO(employee));
+		var employeeDTO = this.employeeByIdService.execute(1L);
+		var deletedEmployeeDTO = employeeDeletionService.execute(employeeDTO);
+
+		assertEquals(employeeDTO.getName(), deletedEmployeeDTO.getName(),
+				"No coincide el nombre del empleado eliminado");
+		
+		assertNull(employeeDTO.getExpirationDate(), "La fecha de baja tiene que ser nula");
+		assertNotNull(deletedEmployeeDTO.getExpirationDate(), "El empleado tiene que tener asignado la fecha de baja");
 
 		Long employeeCount = this.employeeCountService.execute();
-		assertTrue(employeeCount == 4);
+		assertTrue(employeeCount == 4, "El número de empleados no es correcto después de eliminar");
 	}
 
 	@Test
-	@DisplayName("Find employee by Id")
+	@DisplayName("Delete employee by Id")
 	@Order(6)
-	public void testFindEmployeeById() {
-		var employeeDTO = employeeByIdService.execute(1L);
-		assertNotNull(employeeDTO);
+	public void testDeleteEmployeeById() {
+		var deletedEmployeeDTO = employeeDeletionByIdService.execute(2L);
+
+		assertEquals(2L, deletedEmployeeDTO.getId(), "No coincide el nombre del empleado eliminado");
+		assertNotNull(deletedEmployeeDTO.getExpirationDate(), "El empleado tiene que tener asignado la fecha de baja");
+
+		Long employeeCount = this.employeeCountService.execute();
+		assertTrue(employeeCount == 3, "El número de empleados no es correcto después de eliminar");
 
 	}
 

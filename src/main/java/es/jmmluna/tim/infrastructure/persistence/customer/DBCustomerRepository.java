@@ -1,6 +1,7 @@
 package es.jmmluna.tim.infrastructure.persistence.customer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,24 +14,20 @@ import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
 @Component
-public class DBCustomerRepository implements CustomerRepository{
+public class DBCustomerRepository implements CustomerRepository {
 
 	@Autowired
 	private JpaCustomerRepository customerRepository;
-	
+
 	@Override
-	public void save(Customer customer) {
-		customerRepository.save(JpaCustomerEntity.toEntity(customer));		
+	public long getActiveCount() {
+		return customerRepository.countByExpirationDate(null);
 	}
 
 	@Override
-	public List<Customer> getAll() {
-		var customers = new ArrayList<Customer>();
-		var jpaCustomerEntities = customerRepository.findAll();
-		for(var jpaCustomerEntity: jpaCustomerEntities) {
-			customers.add(jpaCustomerEntity.toCustomer());
-		}
-		return customers;
+	public Customer save(Customer customer) {
+		var savedEntity = customerRepository.save(JpaCustomerEntity.toEntity(customer));
+		return savedEntity.toCustomer();
 	}
 
 	@Override
@@ -41,39 +38,58 @@ public class DBCustomerRepository implements CustomerRepository{
 	}
 
 	@Override
-	public long getActiveCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Customer getByName(String name) {
+		var jpaEmployeeEntity = customerRepository.findByName(name);
+		return jpaEmployeeEntity.toCustomer();
 	}
 
 	@Override
-	public void delete(Customer customer) {
-		// TODO Auto-generated method stub
-		
+	public Customer delete(Customer customer) {
+		// TODO: no modificar directamente el parámetro de entrada
+		customer.setExpirationDate(new Date());
+		return this.save(customer);
 	}
 
 	@Override
-	public void delete(UUID uuid) {
-		// TODO Auto-generated method stub
-		
+	public Customer delete(String uuid) {
+		var customer = this.getById(CustomerId.of(uuid));
+		return this.delete(customer);
+	}
+	
+	@Override
+	public Customer delete(UUID uuid) {
+		return this.delete(uuid.toString());
+	}
+
+	@Override
+	public List<Customer> getAll() {
+		var customers = new ArrayList<Customer>();
+		var jpaCustomerEntities = customerRepository.findAll();
+		for (var jpaCustomerEntity : jpaCustomerEntities) {
+			customers.add(jpaCustomerEntity.toCustomer());
+		}
+		return customers;
 	}
 
 	@Override
 	public List<Customer> getActives() {
-		// TODO Auto-generated method stub
-		return null;
+		var jpaEmployeeEntities = customerRepository.findByExpirationDate(null);
+		return toCustomerList(jpaEmployeeEntities);
+
 	}
 
 	@Override
 	public List<Customer> getInactives() {
-		// TODO Auto-generated method stub
-		return null;
+		var jpaEmployeeEntities = customerRepository.findByExpirationDateIsNotNull();
+		return toCustomerList(jpaEmployeeEntities);
 	}
 
-	@Override
-	public Customer getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	private List<Customer> toCustomerList(List<JpaCustomerEntity> jpaCustomerEntities) {
+		var customers = new ArrayList<Customer>();
+		for (var jpaCustomerEntity : jpaCustomerEntities) {
+			customers.add(jpaCustomerEntity.toCustomer());
+		}
+		return customers;
 	}
 
 }

@@ -13,8 +13,9 @@ public class EmployeeSaveService extends EmployeeService {
 		super(repository);
 	}
 
-	public void execute(EmployeeDTO employeeDTO) {
-		this.repository.save(EmployeeService.toModel(employeeDTO));
+	public EmployeeDTO execute(EmployeeDTO employeeDTO) {
+		var savedEmployee = this.repository.save(EmployeeService.toModel(employeeDTO));
+		return EmployeeService.toDTO(savedEmployee);
 	}
 
 }

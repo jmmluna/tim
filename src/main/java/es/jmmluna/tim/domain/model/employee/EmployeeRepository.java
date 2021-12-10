@@ -6,13 +6,13 @@ public interface EmployeeRepository {
 
 	public long getActiveCount();
 
-	public void save(Employee employee);	
+	public Employee save(Employee employee);	
 
 	public Employee getById(EmployeeId employeeId);
 
-	public void delete(Employee employee);
+	public Employee delete(Employee employee);
 	
-	public void delete(Long id);
+	public Employee delete(Long id);
 	
 	public List<Employee> getAll();
 

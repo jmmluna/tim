@@ -1,5 +1,6 @@
 package es.jmmluna.tim.application.service.customer;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class CustomerDTO {
@@ -10,6 +11,7 @@ public class CustomerDTO {
 	private String address;
 	private String phone;
 	private String email;
+	private Date expirationDate;
 
 	public CustomerDTO(UUID uuid) {
 		this.uuid = uuid;
@@ -65,5 +67,13 @@ public class CustomerDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 }

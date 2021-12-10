@@ -2,6 +2,8 @@ package es.jmmluna.tim.domain.model.employee;
 
 import java.util.Date;
 
+import es.jmmluna.tim.domain.model.work.Work;
+
 public class Employee {
 
 	private EmployeeId employeeId;
@@ -63,5 +65,11 @@ public class Employee {
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	
+	public void assignWorkHours (float hour, Work work) {
+
+	}
+	
+	
 
 }

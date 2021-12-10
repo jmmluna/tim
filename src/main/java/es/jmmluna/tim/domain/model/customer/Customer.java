@@ -1,18 +1,24 @@
 package es.jmmluna.tim.domain.model.customer;
 
 import java.util.Date;
+import java.util.List;
+
+import es.jmmluna.tim.domain.model.budget.BudgetId;
+import es.jmmluna.tim.domain.model.work.WorkId;
 
 public class Customer {
 
 	private CustomerId customerId;
 	private Dni dni;
-	
+
 	private String name;
 	private String surnames;
 	private String address;
 	private String phone;
 	private String email;
 	private Date expirationDate;
+	private List<WorkId> works;
+	private List<BudgetId> budgets;
 
 	public Customer(CustomerId customerId) {
 		this.customerId = customerId;
@@ -21,7 +27,7 @@ public class Customer {
 	public CustomerId getCustomerId() {
 		return customerId;
 	}
-	
+
 	public Dni getDni() {
 		return dni;
 	}
@@ -76,6 +82,14 @@ public class Customer {
 
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	public void addWork() {
+
+	}
+	
+	public void addBudget() {
+
 	}
 
 }

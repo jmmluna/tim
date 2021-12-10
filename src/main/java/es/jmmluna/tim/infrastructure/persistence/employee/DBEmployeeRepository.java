@@ -24,8 +24,9 @@ public class DBEmployeeRepository implements EmployeeRepository {
 	}
 
 	@Override
-	public void save(Employee employee) {
-		employeeRepository.save(JpaEmployeeEntity.toEntity(employee));
+	public Employee save(Employee employee) {
+		var savedEntity = employeeRepository.save(JpaEmployeeEntity.toEntity(employee));
+		return savedEntity.toEmployee();
 	}
 
 	@Override
@@ -42,17 +43,16 @@ public class DBEmployeeRepository implements EmployeeRepository {
 	}
 
 	@Override
-	public void delete(Employee employee) {
+	public Employee delete(Employee employee) {
 		employee.setExpirationDate(new Date());
-		this.save(employee);
+		return this.save(employee);
 	}
 
 	@Override
-	public void delete(Long id) {
+	public Employee delete(Long id) {
 		Optional<JpaEmployeeEntity> result = employeeRepository.findById(id);
 		var jpaEmployeeEntity = result.get();
-		jpaEmployeeEntity.setExpirationDate(new Date());
-		employeeRepository.save(jpaEmployeeEntity);
+		return this.delete(jpaEmployeeEntity.toEmployee());
 	}
 
 	@Override
