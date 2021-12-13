@@ -16,7 +16,7 @@ public interface GenericRepository <T, ID extends ValueObject>{
 
 	public T delete(String id);
 	
-	public T delete(ID id);
+//	public T delete(ID id);
 
 	public List<T> getActives();
 

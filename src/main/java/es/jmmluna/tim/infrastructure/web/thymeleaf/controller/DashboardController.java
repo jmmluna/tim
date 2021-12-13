@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import es.jmmluna.tim.application.service.customer.CustomerCountService;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
 import es.jmmluna.tim.domain.model.dashboard.Dashboard;
 
@@ -17,11 +18,14 @@ public class DashboardController {
 	private static final Logger LOG = LoggerFactory.getLogger(DashboardController.class);
 	@Autowired
 	private EmployeeCountService employeeCountService;
+	@Autowired
+	private CustomerCountService customerCountService;
 	
 	@GetMapping
 	public String home(Model model) {
 		Dashboard dashboard = new Dashboard();
-		dashboard.setEmployeesTotal(employeeCountService.execute());
+		dashboard.setEmployeeTotal(employeeCountService.execute());
+		dashboard.setCustomerTotal(customerCountService.execute());
 		
 		model.addAttribute("isDashboard",true);		
 		model.addAttribute("dashboard", dashboard);						
