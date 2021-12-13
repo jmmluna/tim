@@ -32,14 +32,14 @@ public class DBConstructionMaterialRepository implements ConstructionMaterialRep
 	@Override
 	public ConstructionMaterial getById(ConstructionMaterialId constructionMaterialId) {
 		Optional<JpaConstructionMaterialEntity> result = constructionMaterialepository.findById(constructionMaterialId.getValue());
-		var jpaCustomerEntity = result.get();
-		return jpaCustomerEntity.toModel();
+		var entity = result.get();
+		return entity.toModel();
 	}
 
 	@Override
 	public ConstructionMaterial getByName(String name) {
-		var jpaEmployeeEntity = constructionMaterialepository.findByName(name);
-		return jpaEmployeeEntity.toModel();
+		var entity = constructionMaterialepository.findByName(name);
+		return entity.toModel();
 	}
 
 	@Override
@@ -55,33 +55,28 @@ public class DBConstructionMaterialRepository implements ConstructionMaterialRep
 		return this.delete(constructionMaterial);
 	}
 
-//	@Override
-//	public ConstructionMaterial delete(UUID uuid) {
-//		return this.delete(uuid.toString());
-//	}
-
 	@Override
 	public List<ConstructionMaterial> getAll() {
-		var jpaCustomerEntities = constructionMaterialepository.findAll();
-		return toCustomerList(jpaCustomerEntities);
+		var entities = constructionMaterialepository.findAll();
+		return toEntityList(entities);
 	}
 
 	@Override
 	public List<ConstructionMaterial> getActives() {
-		var jpaCustomerEntities = constructionMaterialepository.findByExpirationDate(null);
-		return toCustomerList(jpaCustomerEntities);
+		var entities = constructionMaterialepository.findByExpirationDate(null);
+		return toEntityList(entities);
 
 	}
 
 	@Override
 	public List<ConstructionMaterial> getInactives() {
-		var jpaCustomerEntities = constructionMaterialepository.findByExpirationDateIsNotNull();
-		return toCustomerList(jpaCustomerEntities);
+		var entities = constructionMaterialepository.findByExpirationDateIsNotNull();
+		return toEntityList(entities);
 	}
 
-	private List<ConstructionMaterial> toCustomerList(List<JpaConstructionMaterialEntity> jpaCustomerEntities) {
+	private List<ConstructionMaterial> toEntityList(List<JpaConstructionMaterialEntity> entities) {
 		var constructionMaterials = new ArrayList<ConstructionMaterial>();
-		jpaCustomerEntities.forEach(jpaCustomerEntity -> constructionMaterials.add(jpaCustomerEntity.toModel()));
+		entities.forEach(entity -> constructionMaterials.add(entity.toModel()));
 		return constructionMaterials;
 	}
 
