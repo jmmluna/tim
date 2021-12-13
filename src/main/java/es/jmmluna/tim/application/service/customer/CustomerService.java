@@ -15,7 +15,9 @@ public abstract class CustomerService {
 
 	public static CustomerDTO toDTO(Customer customer) {
 
-		CustomerDTO customerDTO = new CustomerDTO(customer.getCustomerId().getValue());
+//		CustomerDTO customerDTO = new CustomerDTO(customer.getCustomerId().getValue());
+		CustomerDTO customerDTO = new CustomerDTO();
+		customerDTO.setUuid(customer.getCustomerId().getValue());
 		customerDTO.setDni(customer.getDni().getValue());
 		customerDTO.setName(customer.getName());
 		customerDTO.setSurnames(customer.getSurnames());

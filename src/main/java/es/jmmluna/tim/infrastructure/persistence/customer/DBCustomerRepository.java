@@ -25,22 +25,22 @@ public class DBCustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public Customer save(Customer customer) {
-		var savedEntity = customerRepository.save(JpaCustomerEntity.toEntity(customer));
-		return savedEntity.toCustomer();
+	public Customer save(Customer customer) {		
+		var savedEntity = customerRepository.save(JpaCustomerEntity.of(customer));
+		return savedEntity.toModel();
 	}
 
 	@Override
 	public Customer getById(CustomerId customerId) {
 		Optional<JpaCustomerEntity> result = customerRepository.findById(customerId.getValue());
 		var jpaCustomerEntity = result.get();
-		return jpaCustomerEntity.toCustomer();
+		return jpaCustomerEntity.toModel();
 	}
 
 	@Override
 	public Customer getByName(String name) {
 		var jpaEmployeeEntity = customerRepository.findByName(name);
-		return jpaEmployeeEntity.toCustomer();
+		return jpaEmployeeEntity.toModel();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class DBCustomerRepository implements CustomerRepository {
 		var customer = this.getById(CustomerId.of(uuid));
 		return this.delete(customer);
 	}
-	
+
 	@Override
 	public Customer delete(UUID uuid) {
 		return this.delete(uuid.toString());
@@ -63,32 +63,26 @@ public class DBCustomerRepository implements CustomerRepository {
 
 	@Override
 	public List<Customer> getAll() {
-		var customers = new ArrayList<Customer>();
 		var jpaCustomerEntities = customerRepository.findAll();
-		for (var jpaCustomerEntity : jpaCustomerEntities) {
-			customers.add(jpaCustomerEntity.toCustomer());
-		}
-		return customers;
+		return toCustomerList(jpaCustomerEntities);
 	}
 
 	@Override
 	public List<Customer> getActives() {
-		var jpaEmployeeEntities = customerRepository.findByExpirationDate(null);
-		return toCustomerList(jpaEmployeeEntities);
+		var jpaCustomerEntities = customerRepository.findByExpirationDate(null);
+		return toCustomerList(jpaCustomerEntities);
 
 	}
 
 	@Override
 	public List<Customer> getInactives() {
-		var jpaEmployeeEntities = customerRepository.findByExpirationDateIsNotNull();
-		return toCustomerList(jpaEmployeeEntities);
+		var jpaCustomerEntities = customerRepository.findByExpirationDateIsNotNull();
+		return toCustomerList(jpaCustomerEntities);
 	}
 
 	private List<Customer> toCustomerList(List<JpaCustomerEntity> jpaCustomerEntities) {
 		var customers = new ArrayList<Customer>();
-		for (var jpaCustomerEntity : jpaCustomerEntities) {
-			customers.add(jpaCustomerEntity.toCustomer());
-		}
+		jpaCustomerEntities.forEach(jpaCustomerEntity -> customers.add(jpaCustomerEntity.toModel()));
 		return customers;
 	}
 

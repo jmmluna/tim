@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import es.jmmluna.tim.infrastructure.persistence.employee.JpaEmployeeEntity;
 
 @Repository
-public interface JpaCustomerRepository extends JpaRepository<JpaCustomerEntity, UUID> {
+public interface JpaCustomerRepository  extends JpaRepository<JpaCustomerEntity, UUID> {
 
 	public List<JpaCustomerEntity> findByExpirationDate(Date expirationDate);
 

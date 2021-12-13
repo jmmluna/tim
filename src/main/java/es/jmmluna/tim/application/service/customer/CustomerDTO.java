@@ -3,18 +3,35 @@ package es.jmmluna.tim.application.service.customer;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class CustomerDTO {
 	private UUID uuid;
+
 	private String dni;
 	private String name;
 	private String surnames;
 	private String address;
 	private String phone;
 	private String email;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date expirationDate;
 
-	public CustomerDTO(UUID uuid) {
+	public CustomerDTO() {
+		// this.uuid = UUID.randomUUID();
+	}
+
+//	public CustomerDTO(UUID uuid) {
+//		this.uuid = uuid;
+//	}
+
+	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
+	}
+
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	public void setDni(String dni) {
@@ -23,10 +40,6 @@ public class CustomerDTO {
 
 	public String getDni() {
 		return dni;
-	}
-
-	public UUID getUuid() {
-		return uuid;
 	}
 
 	public String getName() {
@@ -68,7 +81,7 @@ public class CustomerDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Date getExpirationDate() {
 		return expirationDate;
 	}

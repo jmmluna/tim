@@ -11,7 +11,8 @@ public class EmployeeDTO {
 	private String surnames;
 	private Double customerHourPrice;
 	private Double employeeHourPrice;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+//	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date expirationDate;
 	
 

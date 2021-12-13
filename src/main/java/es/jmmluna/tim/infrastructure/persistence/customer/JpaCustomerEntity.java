@@ -20,7 +20,7 @@ import lombok.Data;
 @Entity()
 @Table(name = "TIM_CUSTOMERS", schema = "TIM")
 @Data
-public class JpaCustomerEntity  {
+public class JpaCustomerEntity {
 	@Id
 	private UUID uuid;
 	@Column(name="DNI")
@@ -40,7 +40,7 @@ public class JpaCustomerEntity  {
 	@Temporal(TemporalType.DATE)
 	private Date expirationDate;
 	
-	public Customer toCustomer()  {
+	public Customer toModel()  {
 		Customer customer = new Customer(CustomerId.of(this.uuid.toString()));
 		customer.setDni(Dni.of(dni));
 		customer.setName(this.name);
@@ -52,7 +52,7 @@ public class JpaCustomerEntity  {
 		return customer;
 	}
 	
-	public static JpaCustomerEntity toEntity(Customer customer) {
+	public static JpaCustomerEntity of(Customer customer) {
 		JpaCustomerEntity entity = new JpaCustomerEntity();
 		entity.setUuid(customer.getCustomerId().getValue());
 		entity.setDni(customer.getDni().getValue());

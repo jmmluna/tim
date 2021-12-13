@@ -123,7 +123,8 @@ public class CustomerTests {
 	}
 
 	private CustomerDTO getExternalCustomer() {
-		CustomerDTO customerDTO = new CustomerDTO(UUID.randomUUID());
+		CustomerDTO customerDTO = new CustomerDTO();
+		customerDTO.setUuid(UUID.randomUUID());
 		customerDTO.setDni("30XXXXXX");
 		customerDTO.setName("José María");
 		customerDTO.setSurnames("Martínez Luna");
