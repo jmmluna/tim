@@ -16,31 +16,31 @@ import es.jmmluna.tim.domain.model.construction_material.ConstructionMaterialRep
 public class DBConstructionMaterialRepository implements ConstructionMaterialRepository {
 
 	@Autowired
-	private JpaConstructionMaterialRepository constructionMaterialepository;
+	private JpaConstructionMaterialRepository constructionMaterialRepository;
 
 	@Override
 	public long getActiveCount() {
-		return constructionMaterialepository.countByExpirationDate(null);
+		return constructionMaterialRepository.countByExpirationDate(null);
 	}
 
 	@Override
 	public ConstructionMaterial save(ConstructionMaterial constructionMaterial) {		
-		var savedEntity = constructionMaterialepository.save(JpaConstructionMaterialEntity.of(constructionMaterial));
+		var savedEntity = constructionMaterialRepository.save(JpaConstructionMaterialEntity.of(constructionMaterial));
 		return savedEntity.toModel();
 	}
 
 	@Override
 	public ConstructionMaterial getById(ConstructionMaterialId constructionMaterialId) {
-		Optional<JpaConstructionMaterialEntity> result = constructionMaterialepository.findById(constructionMaterialId.getValue());
+		Optional<JpaConstructionMaterialEntity> result = constructionMaterialRepository.findById(constructionMaterialId.getValue());
 		var entity = result.get();
 		return entity.toModel();
 	}
 
-	@Override
-	public ConstructionMaterial getByName(String name) {
-		var entity = constructionMaterialepository.findByName(name);
-		return entity.toModel();
-	}
+//	@Override
+//	public ConstructionMaterial getByName(String name) {
+//		var entity = constructionMaterialRepository.findByName(name);
+//		return entity.toModel();
+//	}
 
 	@Override
 	public ConstructionMaterial delete(ConstructionMaterial constructionMaterial) {
@@ -57,20 +57,20 @@ public class DBConstructionMaterialRepository implements ConstructionMaterialRep
 
 	@Override
 	public List<ConstructionMaterial> getAll() {
-		var entities = constructionMaterialepository.findAll();
+		var entities = constructionMaterialRepository.findAll();
 		return toEntityList(entities);
 	}
 
 	@Override
 	public List<ConstructionMaterial> getActives() {
-		var entities = constructionMaterialepository.findByExpirationDate(null);
+		var entities = constructionMaterialRepository.findByExpirationDate(null);
 		return toEntityList(entities);
 
 	}
 
 	@Override
 	public List<ConstructionMaterial> getInactives() {
-		var entities = constructionMaterialepository.findByExpirationDateIsNotNull();
+		var entities = constructionMaterialRepository.findByExpirationDateIsNotNull();
 		return toEntityList(entities);
 	}
 

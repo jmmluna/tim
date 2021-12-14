@@ -2,7 +2,9 @@ package es.jmmluna.tim.domain.model.employee;
 
 import java.util.Objects;
 
-public class EmployeeId {
+import es.jmmluna.tim.domain.model.ValueObject;
+
+public class EmployeeId implements ValueObject {
 	private Long id;
 
 	public EmployeeId(Long id) {

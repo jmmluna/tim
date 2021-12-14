@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,10 +55,10 @@ public class DBCustomerRepository implements CustomerRepository {
 		return this.delete(customer);
 	}
 
-	@Override
-	public Customer delete(UUID uuid) {
-		return this.delete(uuid.toString());
-	}
+//	@Override
+//	public Customer delete(UUID uuid) {
+//		return this.delete(uuid.toString());
+//	}
 
 	@Override
 	public List<Customer> getAll() {

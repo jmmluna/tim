@@ -48,12 +48,12 @@ public class DBEmployeeRepository implements EmployeeRepository {
 		return this.save(employee);
 	}
 
-	@Override
-	public Employee delete(Long id) {
-		Optional<JpaEmployeeEntity> result = employeeRepository.findById(id);
-		var jpaEmployeeEntity = result.get();
-		return this.delete(jpaEmployeeEntity.toEmployee());
-	}
+//	@Override
+//	public Employee delete(EmployeeId employeeId) {
+//		Optional<JpaEmployeeEntity> result = employeeRepository.findById(employeeId);
+//		var jpaEmployeeEntity = result.get();
+//		return this.delete(jpaEmployeeEntity.toEmployee());
+//	}
 
 	@Override
 	public List<Employee> getAll() {
@@ -80,5 +80,11 @@ public class DBEmployeeRepository implements EmployeeRepository {
 			employees.add(jpaEmployeeEntity.toEmployee());
 		}
 		return employees;
+	}
+
+	@Override
+	public Employee delete(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

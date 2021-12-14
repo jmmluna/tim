@@ -111,7 +111,7 @@ public class CustomerTests {
 	@Test
 	@DisplayName("Delete customer by Id")
 	@Order(6)
-	public void testDeleteEmployeeById() {
+	public void testDeleteCustomerById() {
 		var deletedCustomerDTO = customerDeletionByIdService.execute("123e4567-e89b-12d3-a456-556642440001");
 
 		assertEquals("123e4567-e89b-12d3-a456-556642440001", deletedCustomerDTO.getUuid().toString(), "No coincide el nombre del cliente eliminado");

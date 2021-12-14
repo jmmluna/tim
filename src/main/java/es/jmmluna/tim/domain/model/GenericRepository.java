@@ -22,7 +22,7 @@ public interface GenericRepository <T, ID extends ValueObject>{
 
 	public List<T> getInactives();
 
-	public T getByName(String name);
+//	public T getByName(String name);
 
 	
 
