@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import es.jmmluna.tim.infrastructure.persistence.JpaGenericRepository;
 
 @Repository
-public interface JpaConstructionMaterialRepository  extends JpaGenericRepository<JpaConstructionMaterialEntity, UUID> { //extends JpaRepository<JpaConstructionMaterialEntity, UUID> {  
+public interface ConstructionMaterialJpaRepository  extends JpaGenericRepository<ConstructionMaterialJpaEntity, UUID> { //extends JpaRepository<JpaConstructionMaterialEntity, UUID> {  
 
 //	public List<JpaConstructionMaterialEntity> findByExpirationDate(Date expirationDate);
 //

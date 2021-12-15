@@ -3,9 +3,7 @@ package es.jmmluna.tim.domain.model.construction_material;
 import java.util.Objects;
 import java.util.UUID;
 
-import es.jmmluna.tim.domain.model.ValueObject;
-
-public class ConstructionMaterialId implements ValueObject {
+public class ConstructionMaterialId {
 	private UUID uuid;
 
 	public ConstructionMaterialId(String uuid) {

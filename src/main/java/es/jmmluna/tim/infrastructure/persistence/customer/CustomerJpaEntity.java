@@ -20,7 +20,7 @@ import lombok.Data;
 @Entity()
 @Table(name = "TIM_CUSTOMERS", schema = "TIM")
 @Data
-public class JpaCustomerEntity {
+public class CustomerJpaEntity {
 	@Id
 	private UUID uuid;
 	@Column(name="DNI")
@@ -52,8 +52,8 @@ public class JpaCustomerEntity {
 		return customer;
 	}
 	
-	public static JpaCustomerEntity of(Customer customer) {
-		JpaCustomerEntity entity = new JpaCustomerEntity();
+	public static CustomerJpaEntity of(Customer customer) {
+		CustomerJpaEntity entity = new CustomerJpaEntity();
 		entity.setUuid(customer.getCustomerId().getValue());
 		entity.setDni(customer.getDni().getValue());
 		entity.setName(customer.getName());

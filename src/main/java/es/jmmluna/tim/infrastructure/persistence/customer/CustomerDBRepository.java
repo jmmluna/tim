@@ -13,10 +13,10 @@ import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
 @Component
-public class DBCustomerRepository implements CustomerRepository {
+public class CustomerDBRepository implements CustomerRepository {
 
 	@Autowired
-	private JpaCustomerRepository customerRepository;
+	private CustomerJpaRepository customerRepository;
 
 	@Override
 	public long getActiveCount() {
@@ -25,13 +25,13 @@ public class DBCustomerRepository implements CustomerRepository {
 
 	@Override
 	public Customer save(Customer customer) {		
-		var savedEntity = customerRepository.save(JpaCustomerEntity.of(customer));
+		var savedEntity = customerRepository.save(CustomerJpaEntity.of(customer));
 		return savedEntity.toModel();
 	}
 
 	@Override
 	public Customer getById(CustomerId customerId) {
-		Optional<JpaCustomerEntity> result = customerRepository.findById(customerId.getValue());
+		Optional<CustomerJpaEntity> result = customerRepository.findById(customerId.getValue());
 		var jpaCustomerEntity = result.get();
 		return jpaCustomerEntity.toModel();
 	}
@@ -55,11 +55,6 @@ public class DBCustomerRepository implements CustomerRepository {
 		return this.delete(customer);
 	}
 
-//	@Override
-//	public Customer delete(UUID uuid) {
-//		return this.delete(uuid.toString());
-//	}
-
 	@Override
 	public List<Customer> getAll() {
 		var jpaCustomerEntities = customerRepository.findAll();
@@ -79,7 +74,7 @@ public class DBCustomerRepository implements CustomerRepository {
 		return toCustomerList(jpaCustomerEntities);
 	}
 
-	private List<Customer> toCustomerList(List<JpaCustomerEntity> jpaCustomerEntities) {
+	private List<Customer> toCustomerList(List<CustomerJpaEntity> jpaCustomerEntities) {
 		var customers = new ArrayList<Customer>();
 		jpaCustomerEntities.forEach(jpaCustomerEntity -> customers.add(jpaCustomerEntity.toModel()));
 		return customers;

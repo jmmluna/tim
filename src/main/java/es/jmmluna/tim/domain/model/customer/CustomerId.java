@@ -3,9 +3,7 @@ package es.jmmluna.tim.domain.model.customer;
 import java.util.Objects;
 import java.util.UUID;
 
-import es.jmmluna.tim.domain.model.ValueObject;
-
-public class CustomerId implements ValueObject {
+public class CustomerId {
 	private UUID uuid;
 
 	public CustomerId(String uuid) {

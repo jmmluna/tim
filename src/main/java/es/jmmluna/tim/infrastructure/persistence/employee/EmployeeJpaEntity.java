@@ -20,7 +20,7 @@ import lombok.Data;
 @Entity()
 @Table(name = "TIM_EMPLOYEES", schema = "TIM")
 @Data
-public class JpaEmployeeEntity {
+public class EmployeeJpaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +54,8 @@ public class JpaEmployeeEntity {
 		return employee;
 	}
 	
-	public static JpaEmployeeEntity toEntity(Employee employee) {
-		var entity = new JpaEmployeeEntity();
+	public static EmployeeJpaEntity toEntity(Employee employee) {
+		var entity = new EmployeeJpaEntity();
 		entity.setId(employee.getEmployeeId().getValue());		
 		entity.setName(employee.getName());
 		entity.setSurnames(employee.getSurnames());		

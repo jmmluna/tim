@@ -19,7 +19,7 @@ import lombok.Data;
 @Entity()
 @Table(name = "TIM_CONSTRUCTION_MATERIALS", schema = "TIM")
 @Data
-public class JpaConstructionMaterialEntity {
+public class ConstructionMaterialJpaEntity {
 	@Id
 	private UUID uuid;
 	@Column(name = "DESCRIPTION")
@@ -41,8 +41,8 @@ public class JpaConstructionMaterialEntity {
 		return constructionMaterial;
 	}
 
-	public static JpaConstructionMaterialEntity of(ConstructionMaterial constructionMaterial) {
-		JpaConstructionMaterialEntity entity = new JpaConstructionMaterialEntity();
+	public static ConstructionMaterialJpaEntity of(ConstructionMaterial constructionMaterial) {
+		ConstructionMaterialJpaEntity entity = new ConstructionMaterialJpaEntity();
 		entity.setUuid(constructionMaterial.getConstructionMaterialId().getValue());
 		entity.setDescription(constructionMaterial.getDescription());
 		entity.setPrice(constructionMaterial.getPrice());

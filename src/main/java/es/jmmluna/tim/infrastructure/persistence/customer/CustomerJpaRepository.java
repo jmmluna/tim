@@ -7,13 +7,13 @@ import org.springframework.stereotype.Repository;
 import es.jmmluna.tim.infrastructure.persistence.JpaGenericRepository;
 
 @Repository
-public interface JpaCustomerRepository  extends JpaGenericRepository<JpaCustomerEntity, UUID> { //extends JpaRepository<JpaCustomerEntity, UUID> {
+public interface CustomerJpaRepository  extends JpaGenericRepository<CustomerJpaEntity, UUID> { //extends JpaRepository<JpaCustomerEntity, UUID> {
 
 //	public List<JpaCustomerEntity> findByExpirationDate(Date expirationDate);
 //
 //	public List<JpaCustomerEntity> findByExpirationDateIsNotNull();
 //	
-	public JpaCustomerEntity findByName(String name);
+	public CustomerJpaEntity findByName(String name);
 //	
 //	public long countByExpirationDate(Date expirationDate);
 }

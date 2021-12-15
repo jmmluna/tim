@@ -13,10 +13,10 @@ import es.jmmluna.tim.domain.model.construction_material.ConstructionMaterialId;
 import es.jmmluna.tim.domain.model.construction_material.ConstructionMaterialRepository;
 
 @Component
-public class DBConstructionMaterialRepository implements ConstructionMaterialRepository {
+public class ConstructionMaterialDBRepository implements ConstructionMaterialRepository {
 
 	@Autowired
-	private JpaConstructionMaterialRepository constructionMaterialRepository;
+	private ConstructionMaterialJpaRepository constructionMaterialRepository;
 
 	@Override
 	public long getActiveCount() {
@@ -25,13 +25,13 @@ public class DBConstructionMaterialRepository implements ConstructionMaterialRep
 
 	@Override
 	public ConstructionMaterial save(ConstructionMaterial constructionMaterial) {		
-		var savedEntity = constructionMaterialRepository.save(JpaConstructionMaterialEntity.of(constructionMaterial));
+		var savedEntity = constructionMaterialRepository.save(ConstructionMaterialJpaEntity.of(constructionMaterial));
 		return savedEntity.toModel();
 	}
 
 	@Override
 	public ConstructionMaterial getById(ConstructionMaterialId constructionMaterialId) {
-		Optional<JpaConstructionMaterialEntity> result = constructionMaterialRepository.findById(constructionMaterialId.getValue());
+		Optional<ConstructionMaterialJpaEntity> result = constructionMaterialRepository.findById(constructionMaterialId.getValue());
 		var entity = result.get();
 		return entity.toModel();
 	}
@@ -74,7 +74,7 @@ public class DBConstructionMaterialRepository implements ConstructionMaterialRep
 		return toEntityList(entities);
 	}
 
-	private List<ConstructionMaterial> toEntityList(List<JpaConstructionMaterialEntity> entities) {
+	private List<ConstructionMaterial> toEntityList(List<ConstructionMaterialJpaEntity> entities) {
 		var constructionMaterials = new ArrayList<ConstructionMaterial>();
 		entities.forEach(entity -> constructionMaterials.add(entity.toModel()));
 		return constructionMaterials;

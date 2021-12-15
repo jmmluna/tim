@@ -13,10 +13,10 @@ import es.jmmluna.tim.domain.model.employee.EmployeeId;
 import es.jmmluna.tim.domain.model.employee.EmployeeRepository;
 
 @Component
-public class DBEmployeeRepository implements EmployeeRepository {
+public class EmployeeDBRepository implements EmployeeRepository {
 
 	@Autowired
-	private JpaEmployeeRepository employeeRepository;
+	private EmployeeJpaRepository employeeRepository;
 
 	@Override
 	public long getActiveCount() {
@@ -25,13 +25,13 @@ public class DBEmployeeRepository implements EmployeeRepository {
 
 	@Override
 	public Employee save(Employee employee) {
-		var savedEntity = employeeRepository.save(JpaEmployeeEntity.toEntity(employee));
+		var savedEntity = employeeRepository.save(EmployeeJpaEntity.toEntity(employee));
 		return savedEntity.toEmployee();
 	}
 
 	@Override
 	public Employee getById(EmployeeId employeeId) {
-		Optional<JpaEmployeeEntity> result = employeeRepository.findById(employeeId.getValue());
+		Optional<EmployeeJpaEntity> result = employeeRepository.findById(employeeId.getValue());
 		var jpaEmployeeEntity = result.get();
 		return jpaEmployeeEntity.toEmployee();
 	}
@@ -47,13 +47,6 @@ public class DBEmployeeRepository implements EmployeeRepository {
 		employee.setExpirationDate(new Date());
 		return this.save(employee);
 	}
-
-//	@Override
-//	public Employee delete(EmployeeId employeeId) {
-//		Optional<JpaEmployeeEntity> result = employeeRepository.findById(employeeId);
-//		var jpaEmployeeEntity = result.get();
-//		return this.delete(jpaEmployeeEntity.toEmployee());
-//	}
 
 	@Override
 	public List<Employee> getAll() {
@@ -74,7 +67,7 @@ public class DBEmployeeRepository implements EmployeeRepository {
 		return toEmployeeList(jpaEmployeeEntities);
 	}
 
-	private List<Employee> toEmployeeList(List<JpaEmployeeEntity> jpaEmployeeEntities) {
+	private List<Employee> toEmployeeList(List<EmployeeJpaEntity> jpaEmployeeEntities) {
 		var employees = new ArrayList<Employee>();
 		for (var jpaEmployeeEntity : jpaEmployeeEntities) {
 			employees.add(jpaEmployeeEntity.toEmployee());
@@ -82,9 +75,4 @@ public class DBEmployeeRepository implements EmployeeRepository {
 		return employees;
 	}
 
-	@Override
-	public Employee delete(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

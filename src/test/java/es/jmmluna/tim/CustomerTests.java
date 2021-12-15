@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(classes = TimApplication.class)
 @Slf4j
 @DisplayName("Customer test")
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
 public class CustomerTests {
 
