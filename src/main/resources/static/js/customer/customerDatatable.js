@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
 //	const table = $('#employeeDataTable').DataTable(
-	$('#employeeDataTable').DataTable(
+	$('#customerDataTable').DataTable(
 		{
 
 			"columnDefs": [

@@ -1,4 +1,4 @@
-package es.jmmluna.tim.domain.model.dashboard;
+package es.jmmluna.tim.infrastructure.web.thymeleaf.controller.dashboard;
 
 import lombok.Data;
 
@@ -7,6 +7,7 @@ public class Dashboard {
 
 	private Long employeeTotal;
 	private Long customerTotal;
+	private Long constructionMaterialTotal;
 
 //	public Long getEmployeesTotal() {
 //		return employeesTotal;

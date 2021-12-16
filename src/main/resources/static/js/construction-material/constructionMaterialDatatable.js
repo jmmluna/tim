@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
 //	const table = $('#employeeDataTable').DataTable(
-	$('#employeeDataTable').DataTable(
+	$('#constructionMaterialDataTable').DataTable(
 		{
 
 			"columnDefs": [
@@ -11,6 +11,12 @@ $(document).ready(function() {
 					"targets": [0],
 					"visible": false,
 					"searchable": false
+				},
+				{
+					"targets": [2],
+					"visible": true,
+					"searchable": true,
+					className: "text-right",
 				}
 				, 
 				{//state column

@@ -30,7 +30,7 @@
 
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h1 class="h3 mb-2 text-gray-800">
-				<i class="fas fa-fw fa-users"></i> Materiales de construcción
+				<i class="fas fa-fw fa-gavel"></i> Materiales de construcción
 			</h1>
 
 			<div class="align-items-right ">
@@ -43,7 +43,7 @@
 					th:classappend="${isAllConstructionMaterialList} ? 'btn-success' : 'btn-outline-success'"
 					th:href="@{/construction-materials/list}">Todos</a> <a
 					th:href="@{/construction-materials/save}" class="btn btn-primary btn-circle btn">
-					<i class="fas fa-user-plus"></i>
+					<i class="fas fa-gavel">+</i>
 				</a>
 			</div>
 		</div>
@@ -92,14 +92,14 @@
 									th:title="${#dates.format(constructionMaterial.expirationDate, 'dd-MM-yyyy')}"
 									class="align-middle text-danger"
 									th:if="${constructionMaterial.expirationDate}"><i
-									class="fas fa-user-times"></i></td>
+									class="fas fa-trash"></i></td>
 								<td class="align-middle text-success"
 									th:unless="${constructionMaterial.expirationDate}"><i
-									class="fas fa-user"></i></td>
+									class="fas fa-gavel"></i></td>
 
 								<td class="align-middle"><a class="btn btn-info"
 									th:href="@{/construction-materials/save/{uuid}(uuid=${constructionMaterial.uuid})}"><i
-										class="fas fa-user-edit ml-2"></i></a></td>
+										class="fas fa-edit ml-2"></i></a></td>
 
 								<td class="align-middle" th:if="${constructionMaterial.expirationDate}">
 
@@ -107,7 +107,7 @@
 								<td class="align-middle" th:unless="${constructionMaterial.expirationDate}">
 									<a class="btn btn-danger" data-toggle="modal"
 									th:attr="data-target='#deleteConfirm'+${constructionMaterial.uuid }"><i
-										class="fas fa-user-times ml-2"></i></a>
+										class="fas fa-trash-alt ml-1"></i></a>
 
 								</td>
 

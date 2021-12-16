@@ -16,11 +16,11 @@
 	<section layout:fragment="content">
 
 		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditConstructionMaterial}">
-			<i class="fas fa-user-edit ml-2" aria-hidden="true"></i> Editar
+			<i class="fas fa-edit ml-2" aria-hidden="true"></i> Editar
 			material de construcción
 		</h1>
 		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditConstructionMaterial}">
-			<i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo material de construcción
+			<i class="fa fa-gavel" aria-hidden="true">+</i> Nuevo material de construcción
 		</h1>
 
 		<form action="#" th:action="@{/construction-materials/save}"
@@ -47,8 +47,8 @@
 						</div>
 
 						<div class="col-md-5 mb-3">
-							<label for="name">Precio</label> <input type="text"
-								class="form-control" th:field="*{price}" id="name" required>
+							<label for="name">Precio</label> <input type="number"
+								class="form-control" th:field="*{price}" id="name" required onkeypress="return onlyNumberKey(event)">
 						</div>
 						
 

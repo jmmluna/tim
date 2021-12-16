@@ -1,6 +1,12 @@
 # TIM: Aplicación de gestión de facturas
 
-## Diseño
+## Juego de iconos
+
+```
+https://fontawesome.com/v5.9/icons?d=gallery&p=2
+```
+
+## Diseño software
 
     - Arquitectura hexagonal
     - Domain-Driven Development (DDD)
