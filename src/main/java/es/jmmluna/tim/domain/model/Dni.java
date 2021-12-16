@@ -1,4 +1,4 @@
-package es.jmmluna.tim.domain.model.customer;
+package es.jmmluna.tim.domain.model;
 
 import java.util.Objects;
 

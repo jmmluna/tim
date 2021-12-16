@@ -3,6 +3,7 @@ package es.jmmluna.tim.domain.model.customer;
 import java.util.Date;
 import java.util.List;
 
+import es.jmmluna.tim.domain.model.Dni;
 import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.work.WorkId;
 

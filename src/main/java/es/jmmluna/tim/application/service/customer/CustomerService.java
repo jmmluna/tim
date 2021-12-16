@@ -1,9 +1,9 @@
 package es.jmmluna.tim.application.service.customer;
 
+import es.jmmluna.tim.domain.model.Dni;
 import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
-import es.jmmluna.tim.domain.model.customer.Dni;
 
 public abstract class CustomerService {
 	

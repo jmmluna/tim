@@ -12,9 +12,9 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import es.jmmluna.tim.domain.model.Dni;
 import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
-import es.jmmluna.tim.domain.model.customer.Dni;
 import lombok.Data;
 
 @Entity()
