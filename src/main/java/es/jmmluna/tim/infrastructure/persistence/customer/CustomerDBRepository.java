@@ -30,7 +30,7 @@ public class CustomerDBRepository implements CustomerRepository {
 	}
 
 	@Override
-	public Customer getById(CustomerId customerId) {
+	public Customer findById(CustomerId customerId) {
 		Optional<CustomerJpaEntity> result = customerRepository.findById(customerId.getValue());
 		var jpaCustomerEntity = result.get();
 		return jpaCustomerEntity.toModel();
@@ -43,20 +43,20 @@ public class CustomerDBRepository implements CustomerRepository {
 	}
 
 	@Override
-	public Customer delete(Customer customer) {
+	public void delete(Customer customer) {
 		// TODO: no modificar directamente el parámetro de entrada
 		customer.setExpirationDate(new Date());
-		return this.save(customer);
+		this.save(customer);
 	}
 
-	@Override
-	public Customer delete(String uuid) {
-		var customer = this.getById(CustomerId.of(uuid));
-		return this.delete(customer);
-	}
+//	@Override
+//	public Customer delete(String uuid) {
+//		var customer = this.getById(CustomerId.of(uuid));
+//		return this.delete(customer);
+//	}
 
 	@Override
-	public List<Customer> getAll() {
+	public List<Customer> findAll() {
 		var jpaCustomerEntities = customerRepository.findAll();
 		return toCustomerList(jpaCustomerEntities);
 	}

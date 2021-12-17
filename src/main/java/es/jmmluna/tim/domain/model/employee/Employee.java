@@ -73,4 +73,11 @@ public class Employee {
 	
 	
 
+	public void deactivate() {
+		
+	}
+	
+	public void activate() {
+		
+	}
 }

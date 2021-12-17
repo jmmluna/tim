@@ -1,21 +1,22 @@
 package es.jmmluna.tim.domain.model.customer;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface CustomerRepository {
+import es.jmmluna.tim.domain.model.CommonRepository;
 
-	public Customer save(Customer customer);
+public interface CustomerRepository extends CommonRepository<Customer, CustomerId>{
 
-	public List<Customer> getAll();
+//	public Customer save(Customer customer);
 
-	public Customer getById(CustomerId customerId);
+//	public List<Customer> getAll();
+
+//	public Customer getById(CustomerId customerId);
 
 	public long getActiveCount();
 
-	public Customer delete(Customer customer);
+//	public Customer delete(Customer customer);
 
-	public Customer delete(String uuid);
+//	public Customer delete(String uuid);
 
 	public List<Customer> getActives();
 

@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
 @Service
-public class CustomerDeletionService extends CustomerService {
+public class SaveCustomer extends CustomerService {
 
 	@Autowired
-	public CustomerDeletionService(CustomerRepository repository) {
+	public SaveCustomer(CustomerRepository repository) {
 		super(repository);
 	}
 
 	public CustomerDTO execute(CustomerDTO customerDTO) {
-		var customer = this.repository.delete(CustomerService.toModel(customerDTO));
+		var customer = this.repository.save(CustomerService.toModel(customerDTO));
 		return CustomerService.toDTO(customer);
 	}
 

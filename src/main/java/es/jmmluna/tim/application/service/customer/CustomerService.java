@@ -5,6 +5,8 @@ import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
+
+//https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
 public abstract class CustomerService {
 	
 	protected CustomerRepository repository;

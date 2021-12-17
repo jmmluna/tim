@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.customer.CustomerByIdService;
+import es.jmmluna.tim.application.service.customer.GetCustomer;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
-import es.jmmluna.tim.application.service.customer.CustomerDeletionService;
-import es.jmmluna.tim.application.service.customer.CustomerListingService;
-import es.jmmluna.tim.application.service.customer.CustomerSaveService;
+import es.jmmluna.tim.application.service.customer.DisableCustomer;
+import es.jmmluna.tim.application.service.customer.GetCustomerList;
+import es.jmmluna.tim.application.service.customer.SaveCustomer;
 
 @Controller
 @RequestMapping("/customers")
@@ -28,16 +28,16 @@ public class CustomerController {
 	private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
-	private CustomerSaveService customerSaveService;
+	private SaveCustomer customerSaveService;
 
 	@Autowired
-	private CustomerDeletionService customerDeletionService;
+	private DisableCustomer customerDeletionService;
 
 	@Autowired
-	private CustomerListingService customerListingService;
+	private GetCustomerList customerListingService;
 
 	@Autowired
-	private CustomerByIdService customerByIdService;
+	private GetCustomer customerByIdService;
 
 	@GetMapping("/list")
 	public String getCustomers(Model model) {
