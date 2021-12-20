@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialCountService;
-import es.jmmluna.tim.application.service.customer.CustomerCountService;
+import es.jmmluna.tim.application.service.customer.useCase.GetActiveCustomerCount;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
 
 @Controller
@@ -19,7 +19,7 @@ public class DashboardController {
 	@Autowired
 	private EmployeeCountService employeeCountService;
 	@Autowired
-	private CustomerCountService customerCountService;
+	private GetActiveCustomerCount customerCountService;
 	@Autowired
 	private ConstructionMaterialCountService constructionMaterialCountService;
 	@GetMapping

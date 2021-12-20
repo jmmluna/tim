@@ -6,20 +6,12 @@ import java.util.UUID;
 public class CustomerId {
 	private UUID uuid;
 
-	public CustomerId(String uuid) {
-		this.uuid = UUID.fromString(uuid);
-	}
-
 	public CustomerId(UUID uuid) {
 		this.uuid = uuid;
 	}
 
 	public CustomerId() {
 		this.uuid = UUID.randomUUID();
-	}
-
-	public static CustomerId of(String uuid) {
-		return new CustomerId(uuid);
 	}
 
 	public static CustomerId of(UUID uuid) {

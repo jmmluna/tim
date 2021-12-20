@@ -2,7 +2,6 @@ package es.jmmluna.tim;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -18,18 +17,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.customer.CustomerCountService;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
-import es.jmmluna.tim.application.service.customer.SaveCustomer;
-import es.jmmluna.tim.application.service.customer.DisableCustomer;
-import es.jmmluna.tim.application.service.customer.DisableCustomerBasedOnIdenfier;
-import es.jmmluna.tim.application.service.customer.GetCustomer;
-import es.jmmluna.tim.application.service.customer.GetCustomerList;
+import es.jmmluna.tim.application.service.customer.useCase.DisableCustomer;
+import es.jmmluna.tim.application.service.customer.useCase.GetActiveCustomerCount;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
+import es.jmmluna.tim.application.service.customer.useCase.SaveCustomer;
 import es.jmmluna.tim.infrastructure.TimApplication;
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest(classes = TimApplication.class)
-@Slf4j
 @DisplayName("Customer test")
 @TestMethodOrder(OrderAnnotation.class)
 public class CustomerTests {
@@ -44,20 +40,17 @@ public class CustomerTests {
 	private GetCustomerList getCustomerList;
 
 	@Autowired
-	private CustomerCountService customerCountService;
+	private GetActiveCustomerCount getActiveCustomerCount;
 
 	@Autowired
-	private DisableCustomer customerDeletionService;
-
-	@Autowired
-	private DisableCustomerBasedOnIdenfier disableCustomerBasedOnIdenfier;
+	private DisableCustomer disableCustomer;
 
 	@Test
 	@Sql("classpath:customer-test-data.sql")
 	@DisplayName("Initialize customers")
 	@Order(1)
 	public void shouldSaveCustomersThroughSqlFile() {
-		var customerDTO = getCustomer.execute("123e4567-e89b-12d3-a456-556642440000");
+		var customerDTO = getCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 		assertNotNull(customerDTO, "El cliente debe estar registrado");
 		assertEquals(customerDTO.getName(), "usuario 1", "No coincide el nombre del cliente");
 	}
@@ -84,54 +77,26 @@ public class CustomerTests {
 	@DisplayName("Active customer count")
 	@Order(4)
 	public void testActiveCustomerCount() {
-		Long customerCount = this.customerCountService.execute();
+		Long customerCount = this.getActiveCustomerCount.execute();
 		assertTrue(customerCount == 4);
 	}
 
 	@Test
 	@DisplayName("Delete customer")
 	@Order(5)
-	public void testDeleteCustomer() {
+	public void testDisableCustomer() {
 
-		var customerDTO = this.getCustomer.execute("123e4567-e89b-12d3-a456-556642440000");
-		customerDeletionService.execute(customerDTO);
-		
-		assertNull(customerDTO.getExpirationDate(), "La fecha de baja tiene que ser nula");
-		
-		var deletedCustomerDTO = this.getCustomer.execute("123e4567-e89b-12d3-a456-556642440000");
-		
-		assertEquals(customerDTO.getName(), deletedCustomerDTO.getName(),
-				"No coincide el nombre del cliente eliminado");
+		disableCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
+
+		var deletedCustomerDTO = this.getCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 		assertNotNull(deletedCustomerDTO.getExpirationDate(), "El cliente tiene que tener asignado la fecha de baja");
 
-		Long customerCount = this.customerCountService.execute();
+		Long customerCount = this.getActiveCustomerCount.execute();
 		assertTrue(customerCount == 3, "El número de clientes no es correcto después de eliminar");
 	}
 
-	@Test
-	@DisplayName("Delete customer by Id")
-	@Order(6)
-	public void testDisableCustomerBasedOnIdenfier() {
-		disableCustomerBasedOnIdenfier.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440001"));
-
-		var deletedCustomerDTO = this.getCustomer.execute("123e4567-e89b-12d3-a456-556642440001");
-		assertNotNull(deletedCustomerDTO.getExpirationDate(), "El cliente tiene que tener asignado la fecha de baja");
-
-		Long customerCount = this.customerCountService.execute();
-		assertTrue(customerCount == 2, "El número de clientes no es correcto después de eliminar");
-
-	}
-
 	private CustomerDTO getExternalCustomer() {
-		CustomerDTO customerDTO = new CustomerDTO();
-		customerDTO.setUuid(UUID.randomUUID());
-		customerDTO.setDni("30XXXXXX");
-		customerDTO.setName("José María");
-		customerDTO.setSurnames("Martínez Luna");
-		customerDTO.setAddress("XXXXX");
-		customerDTO.setPhone("6666666");
-		customerDTO.setEmail("jmmluna@gmail.com");
-
-		return customerDTO;
+		return new CustomerDTO(UUID.randomUUID(), "30XXXXXX", "José María", "Martínez Luna", "XXXXX", "6666666",
+				"jmmluna@gmail.com");
 	}
 }

@@ -1,4 +1,4 @@
-package es.jmmluna.tim.application.service.customer;
+package es.jmmluna.tim.application.service.customer.useCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.customer.CustomerDTO;
+import es.jmmluna.tim.application.service.customer.CustomerMapper;
 import es.jmmluna.tim.domain.model.customer.Customer;
 import es.jmmluna.tim.domain.model.customer.CustomerRepository;
 
 @Service
-public class GetCustomerList extends CustomerService {
+public class GetCustomerList  {
+	
+	private CustomerRepository repository;
+	@Autowired
+	private CustomerMapper mapper;
 
 	@Autowired
 	public GetCustomerList(CustomerRepository repository) {
-		super(repository);
+		this.repository = repository;
 	}
 
 	public List<CustomerDTO> execute(EElementList type) {
@@ -36,7 +42,7 @@ public class GetCustomerList extends CustomerService {
 
 		for (var customer : customers) {
 
-			dtos.add(CustomerService.toDTO(customer));
+			dtos.add(mapper.toDTO(customer));
 		}
 		return dtos;
 	}

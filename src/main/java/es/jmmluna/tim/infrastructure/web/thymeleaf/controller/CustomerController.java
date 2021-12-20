@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,35 +14,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.customer.GetCustomer;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
-import es.jmmluna.tim.application.service.customer.DisableCustomer;
-import es.jmmluna.tim.application.service.customer.GetCustomerList;
-import es.jmmluna.tim.application.service.customer.SaveCustomer;
+import es.jmmluna.tim.application.service.customer.useCase.DisableCustomer;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
+import es.jmmluna.tim.application.service.customer.useCase.SaveCustomer;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
-	private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
+//	private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
-	private SaveCustomer customerSaveService;
+	private SaveCustomer saveCustomer;
 
 	@Autowired
-	private DisableCustomer customerDeletionService;
+	private DisableCustomer disableCustomer;
 
 	@Autowired
-	private GetCustomerList customerListingService;
+	private GetCustomerList getCustomerList;
 
 	@Autowired
-	private GetCustomer customerByIdService;
+	private GetCustomer getCustomer;
 
 	@GetMapping("/list")
 	public String getCustomers(Model model) {
 		model.addAttribute("isCustomers", true);
 		model.addAttribute("isCustomerList", true);
 		model.addAttribute("isAllCustomerList", true);
-		model.addAttribute("customers", customerListingService.execute(EElementList.ALL));
+		model.addAttribute("customers", getCustomerList.execute(EElementList.ALL));
 		return "customer/customer-list";
 	}
 
@@ -54,11 +52,11 @@ public class CustomerController {
 		switch (filter) {
 
 		case "actives":
-			customers = customerListingService.execute(EElementList.ACTIVE);
+			customers = getCustomerList.execute(EElementList.ACTIVE);
 			model.addAttribute("isActiveCustomerList", true);
 			break;
 		case "inactives":
-			customers = customerListingService.execute(EElementList.INACTIVE);
+			customers = getCustomerList.execute(EElementList.INACTIVE);
 			model.addAttribute("isInactiveCustomerList", true);
 			break;
 		}
@@ -74,7 +72,7 @@ public class CustomerController {
 	public String edit(@PathVariable("uuid") String uuid, Model model) {
 		model.addAttribute("isCustomers", true);
 		model.addAttribute("isEditCustomer", true);
-		model.addAttribute("customer", uuid != null && !uuid.isEmpty() ? customerByIdService.execute(uuid) : new CustomerDTO());
+		model.addAttribute("customer", uuid != null && !uuid.isEmpty() ? getCustomer.execute(UUID.fromString(uuid)) : new CustomerDTO());
 		return "customer/customer-save";
 	}
 
@@ -90,20 +88,19 @@ public class CustomerController {
 	@PostMapping("save")
 	public String save(CustomerDTO customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			LOG.error("####################" + result);
-			
 			return "customer/customer-save";
 		}
 
 		if(customer.getUuid() == null) customer.setUuid(UUID.randomUUID());
-		customerSaveService.execute(customer);
+		saveCustomer.execute(customer);
 		return "redirect:/customers/list/actives";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable String id, Model model) {
-		var customerDTO = customerByIdService.execute(id);
-		customerDeletionService.execute(customerDTO);
+	@GetMapping("/delete/{uuid}")
+	public String delete(@PathVariable String uuid, Model model) {
+//		var customerDTO = customerByIdService.execute(id);
+//		customerDeletionService.execute(customerDTO);
+		disableCustomer.execute(UUID.fromString(uuid));
 
 		return "redirect:/customers/list/actives";
 	}	
