@@ -12,7 +12,7 @@ public class Work {
 	
 	private String description;
 	private Date expirationDate;
-	
+	private WorkStatus workStatus;
 
 	public Work(WorkId workId) {
 		this.workId = workId;

@@ -3,19 +3,19 @@ package es.jmmluna.tim.domain.model.budget;
 import java.util.Objects;
 import java.util.UUID;
 
-public class BudgetId {
+public class BudgetItemId {
 	private UUID uuid;
 
-	public BudgetId(UUID uuid) {
+	public BudgetItemId(UUID uuid) {
 		this.uuid = uuid;
 	}
 
-	public BudgetId() {
+	public BudgetItemId() {
 		this.uuid = UUID.randomUUID();
 	}
 
-	public static BudgetId of(UUID uuid) {
-		return new BudgetId(uuid);
+	public static BudgetItemId of(UUID uuid) {
+		return new BudgetItemId(uuid);
 	}
 
 	public UUID getValue() {
@@ -35,7 +35,7 @@ public class BudgetId {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BudgetId other = (BudgetId) obj;
+		BudgetItemId other = (BudgetItemId) obj;
 		return Objects.equals(uuid, other.uuid);
 	}
 
