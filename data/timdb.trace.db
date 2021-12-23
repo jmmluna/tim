@@ -4463,3 +4463,388 @@ INSERT INTO[*] TIM.TIM_CUSTOMERS(UUID, DNI, NAME, SURNAMES, ADDRESS, PHONE, EMAI
 SELECT * FROM TIM.TIM_CUSTOMERS
 
 INSERT INTO TIM.TIM_CUSTOMERS(UUID, DNI, NAME, SURNAMES, ADDRESS, PHONE, EMAIL)  VALUES ('123e4567e89b12d3a456556642440000','30', 'usuario 1', 'USUARIO 1', 'Parque de las avenidas', '679948260', 'jmmluna@gmail.com') [42000-200]
+2021-12-23 12:22:23 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE[*])"; se esperaba "INDEX, USING, NOCHECK, CHECK, ,, )"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE[*])"; expected "INDEX, USING, NOCHECK, CHECK, ,, )"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE) [42001-200]
+2021-12-23 12:23:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE[*])"; se esperaba "INDEX, USING, NOCHECK, CHECK, ,, )"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE[*])"; expected "INDEX, USING, NOCHECK, CHECK, ,, )"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC) VISIBLE) [42001-200]
+2021-12-23 12:27:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`)[*]"; se esperaba "INDEX, ,, )"
+Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`)[*]"; expected "INDEX, ,, )"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`) [42001-200]
+2021-12-23 12:28:56 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Tipo de dato desconocido : "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"
+Unknown data type: "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_ID` VARCHAR(45) NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  INDEX `FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX` (`BUDGET_ID` ASC),
+  CONSTRAINT `FK_TIM_BUDGET_ITEMS_TIM_BUDGETS`
+    FOREIGN KEY (`BUDGETS_UUID`)
+    REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2021-12-23 12:29:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Tipo de dato desconocido : "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"
+Unknown data type: "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_ID` VARCHAR(45) NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  INDEX `FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX` (`BUDGET_ID` ASC),
+  CONSTRAINT `FK_TIM_BUDGET_ITEMS_TIM_BUDGETS`
+    FOREIGN KEY (`BUDGETS_UUID`)
+    REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2021-12-23 12:30:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Tipo de dato desconocido : "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"
+Unknown data type: "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_ID` VARCHAR(45) NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  INDEX `fk_TIM_BUDGET_ITEMS_TIM_BUDGETS_idx` (`BUDGET_ID` ASC),
+  CONSTRAINT `FK_TIM_BUDGET_ITEMS_TIM_BUDGETS`
+    FOREIGN KEY (`BUDGETS_UUID`)
+    REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2021-12-23 12:32:04 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Tipo de dato desconocido : "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"
+Unknown data type: "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS_IDX"; SQL statement:
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGETS_UUID` UUID NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  INDEX `fk_TIM_BUDGET_ITEMS_TIM_BUDGETS_idx` (`BUDGETS_UUID` ASC),
+  CONSTRAINT `fk_TIM_BUDGET_ITEMS_TIM_BUDGETS`
+    FOREIGN KEY (`BUDGETS_UUID`)
+    REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION) [50004-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5971)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5697)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8442)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8379)
+	at org.h2.command.Parser.parseCreate(Parser.java:6276)
+	at org.h2.command.Parser.parsePrepared(Parser.java:903)
+	at org.h2.command.Parser.parse(Parser.java:843)
+	at org.h2.command.Parser.parse(Parser.java:815)
+	at org.h2.command.Parser.prepareCommand(Parser.java:738)
+	at org.h2.engine.Session.prepareLocal(Session.java:657)
+	at org.h2.engine.Session.prepareCommand(Session.java:595)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1235)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:212)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)

@@ -47,3 +47,38 @@ CREATE TABLE IF NOT EXISTS `TIM`.`TIM_CONSTRUCTION_MATERIALS` (
   `PRICE` DOUBLE NULL,
   `EXPIRATION_DATE` DATE NULL,
   PRIMARY KEY (`UUID`))
+  
+  
+-- -----------------------------------------------------
+-- Table `TIM`.`BUDGETS`
+-- -----------------------------------------------------
+  
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGETS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_NUMBER` BIGINT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `YEAR` INT NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  PRIMARY KEY (`UUID`),
+  UNIQUE INDEX `BUDGET_NUMBER_UNIQUE` (`BUDGET_NUMBER` ASC));
+
+-- -----------------------------------------------------
+-- Table `TIM`.`BUDGET_ITEMS`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_UUID` UUID NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  CONSTRAINT `fk_TIM_BUDGET_ITEMS_TIM_BUDGETS`
+    FOREIGN KEY (`BUDGET_UUID`)
+    REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
+
+  

@@ -3,16 +3,15 @@ package es.jmmluna.tim.domain.model;
 import java.util.Objects;
 
 public class Price {
-	private Float amount;
+	private Double amount;
 	private String currency = "€";
 
-	public Price(Float amount)  {
+	public Price(Double amount)  {
         if (amount < 0) {
             throw new InvalidPriceException("El importe debe ser mayor que 0 y se ha recibido " + amount);
         }
         
         this.amount = amount;
-		this.currency = currency;
 	}
 	
 	@Override
@@ -37,11 +36,11 @@ public class Price {
 		return Objects.equals(amount, other.amount) && Objects.equals(currency, other.currency);
 	}
 
-	public static Price of(Float amount)  {
+	public static Price of(Double amount)  {
 		return new Price(amount);
 	}
 
-	public Float getValue() {
+	public Double getValue() {
 		return this.amount;
 	}
 	

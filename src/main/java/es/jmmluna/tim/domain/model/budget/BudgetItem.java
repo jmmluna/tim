@@ -8,4 +8,10 @@ public class BudgetItem {
 	private Integer amount;
 	private Price price;
 
+	public BudgetItem(BudgetItemId budgetItemId, String description, Integer amount, Price price) {
+		this.budgetItemId = budgetItemId;
+		this.description = description;
+		this.amount = amount;
+		this.price = price;
+	}
 }
