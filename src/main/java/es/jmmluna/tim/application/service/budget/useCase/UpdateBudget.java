@@ -9,7 +9,7 @@ import es.jmmluna.tim.domain.model.budget.BudgetRepository;
 import es.jmmluna.tim.domain.model.budget.IdentifierNotAllowedException;
 
 @Service
-public class CreateBudget {
+public class UpdateBudget {
 
 	@Autowired
 	private BudgetRepository budgetRepository;
@@ -17,10 +17,9 @@ public class CreateBudget {
 	private BudgetMapper mapper;
 
 	public BudgetDTO execute(BudgetDTO budgetDTO) {
-		if (budgetDTO.getUuid() != null)
-			throw new IdentifierNotAllowedException("Not null UUID are not allowed");
-		
-		budgetDTO.setUuid(budgetRepository.getNextIdentifier());
+		if (budgetDTO.getUuid() == null)
+			throw new IdentifierNotAllowedException("Null UUID is not allowed");
+				
 		var budget = budgetRepository.save(mapper.toModel(budgetDTO));
 		return mapper.toDTO(budget);
 	}

@@ -14,4 +14,21 @@ public class BudgetItem {
 		this.amount = amount;
 		this.price = price;
 	}
+
+	public BudgetItemId getBudgetItemId() {
+		return budgetItemId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public Price getPrice() {
+		return price;
+	}
+
 }

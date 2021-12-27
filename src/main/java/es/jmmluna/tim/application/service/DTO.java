@@ -10,10 +10,7 @@ import lombok.Data;
 @Data
 public abstract class DTO {
 
-	protected UUID uuid;
-	public UUID getUuid() {
-		return uuid;
-	}
+	protected UUID uuid;	
 
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date expirationDate;

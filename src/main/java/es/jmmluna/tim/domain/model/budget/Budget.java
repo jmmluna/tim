@@ -51,6 +51,10 @@ public class Budget {
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
+	
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
 	public List<BudgetItem> getBudgetItems() {
 		return budgetItems;

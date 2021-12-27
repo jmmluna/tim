@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ import lombok.Data;
 public class BudgetEntity {
 	@Id
 	private UUID uuid;
-	@Column(name="BUDGET_NUMBER")
+	@Column(name = "BUDGET_NUMBER")
 	private Long budgetNumber;
 	@Column(name = "DESCRIPTION")
 	private String description;
@@ -31,11 +32,11 @@ public class BudgetEntity {
 	@Column(name = "YEAR")
 	private Integer year;
 
-	@OneToMany(mappedBy="buddgetId")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "budgetEntity")	
 	private List<BudgetItemEntity> budgetItems;
-	
-	@Column(name="EXPIRATION_DATE")
-	@DateTimeFormat(pattern="dd/MM/yyyy")	
+
+	@Column(name = "EXPIRATION_DATE")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	private Date expirationDate;	
+	private Date expirationDate;
 }

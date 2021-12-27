@@ -18,14 +18,12 @@ public class BudgetItemEntity {
 	@Id
 	private UUID uuid;
 	@ManyToOne
-    @JoinColumn(name="uuid", nullable=false)
-	@Column(name="BUDGET_UUID")
-	private UUID budgetId;
+    @JoinColumn(name="uuid", insertable = false, updatable = false)
+	private BudgetEntity budgetEntity;
 	@Column(name="DESCRIPTION")
 	private String description;
 	@Column(name="AMOUNT")
 	private Integer amount;
 	@Column(name="PRICE")
 	private Double price;
-
 }

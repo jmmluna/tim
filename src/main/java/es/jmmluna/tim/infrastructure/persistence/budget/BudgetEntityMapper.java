@@ -34,6 +34,8 @@ public class BudgetEntityMapper {
 		entity.setYear(model.getYear());
 		entity.setDate(model.getDate());
 		entity.setExpirationDate(model.getExpirationDate());
+		
+		//TODO: falta por implementar la conversión de items del modelo a items de entidad
 		entity.setBudgetItems(new ArrayList<BudgetItemEntity>());
 		return entity;
 	}
