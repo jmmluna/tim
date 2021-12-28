@@ -1,7 +1,6 @@
 package es.jmmluna.tim.infrastructure.persistence.budget;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,7 +41,7 @@ public class BudgetDBRepository implements BudgetRepository {
 
 	@Override
 	public void delete(Budget budget) {
-		budget.setExpirationDate(new Date());
+		budget.deactivate();
 		this.save(budget);
 	}
 

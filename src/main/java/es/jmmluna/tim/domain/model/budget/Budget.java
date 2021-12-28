@@ -1,5 +1,6 @@
 package es.jmmluna.tim.domain.model.budget;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class Budget {
 	private Long budgetNumber;
 	private String description;
 	private Integer year;
-	private Date date;	
+	private Date date;
 	private List<BudgetItem> budgetItems;
 	private Date expirationDate;
 
@@ -51,13 +52,21 @@ public class Budget {
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
-	
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
 
 	public List<BudgetItem> getBudgetItems() {
-		return budgetItems;
+		return Collections.unmodifiableList(budgetItems);
+	}
+	
+	public Boolean isActive() {
+		return expirationDate == null;
+	}
+
+	public void activate() {
+		this.expirationDate = null;
+	}
+
+	public void deactivate() {
+		this.expirationDate = new Date();
 	}
 
 	public Double getTotal() {

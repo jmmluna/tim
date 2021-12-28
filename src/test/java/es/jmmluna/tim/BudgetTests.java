@@ -24,6 +24,7 @@ import es.jmmluna.tim.application.service.EElementList;
 import es.jmmluna.tim.application.service.budget.BudgetDTO;
 import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
 import es.jmmluna.tim.application.service.budget.useCase.CreateBudget;
+import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetActiveBudgetCount;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
@@ -50,9 +51,9 @@ public class BudgetTests {
 
 	@Autowired
 	private GetActiveBudgetCount getActiveBudgetCount;
-//
-//	@Autowired
-//	private DisableCustomer disableCustomer;
+
+	@Autowired
+	private DisableBudget disableBudget;
 
 	@Test
 	@Sql("classpath:budget-test-data.sql")
@@ -108,27 +109,27 @@ public class BudgetTests {
 	}
 
 	@Test
-	@DisplayName("Get cctive budget count")
+	@DisplayName("Get active budget count")
 	@Order(6)
 	public void testGetActiveBudgetCount() {
 		Long customerCount = this.getActiveBudgetCount.execute();
 		assertTrue(customerCount == 4);
 	}
-//
-//	@Test
-//	@DisplayName("Delete customer")
-//	@Order(5)
-//	public void testDisableCustomer() {
-//
-//		disableCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
-//
-//		var deletedCustomerDTO = this.getCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
-//		assertNotNull(deletedCustomerDTO.getExpirationDate(), "El cliente tiene que tener asignado la fecha de baja");
-//
-//		Long customerCount = this.getActiveCustomerCount.execute();
-//		assertTrue(customerCount == 3, "El número de clientes no es correcto después de eliminar");
-//	}
-//
+
+	@Test
+	@DisplayName("Delete budget")
+	@Order(7)
+	public void testDisableBudget() {
+		disableBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
+
+		var disabledBudgetDTO = this.getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
+		assertNotNull(disabledBudgetDTO.getExpirationDate(), "El presupuesto tiene que tener asignado la fecha de baja");
+		
+
+		Long budgetCount = this.getActiveBudgetCount.execute();
+		assertTrue(budgetCount == 3, "El número de presupuestos no es correcto después de eliminar");
+	}
+
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
 		UUID identifier = withUUID ? UUID.randomUUID() : null;
