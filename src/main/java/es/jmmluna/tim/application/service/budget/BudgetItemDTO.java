@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 public class BudgetItemDTO extends DTO {
-//	private UUID budgetId;
 	private String description;
 	private Integer amount;
 	private Double price;

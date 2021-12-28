@@ -1,4 +1,4 @@
-package es.jmmluna.tim.domain.model.budget;
+package es.jmmluna.tim.domain.model;
 
 public class IdentifierNotAllowedException extends RuntimeException {
 

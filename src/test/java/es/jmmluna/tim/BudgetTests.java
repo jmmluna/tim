@@ -29,7 +29,7 @@ import es.jmmluna.tim.application.service.budget.useCase.GetActiveBudgetCount;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
-import es.jmmluna.tim.domain.model.budget.IdentifierNotAllowedException;
+import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
 
 @SpringBootTest(classes = TimApplication.class)
@@ -102,9 +102,9 @@ public class BudgetTests {
 		var budgetDTO = getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 		assertEquals(budgetDTO.getBudgetNumber(), 30, "No coincide el número del presupuesto original");
 		
-		budgetDTO.setBudgetNumber(1000L);
+		budgetDTO.setBudgetNumber(2000);
 		var savedBudgetDTO = updateBudget.execute(budgetDTO);
-		assertEquals(savedBudgetDTO.getBudgetNumber(), 1000, "No coincide el número del presupuesto modificado");
+		assertEquals(savedBudgetDTO.getBudgetNumber(), 2000, "No coincide el número del presupuesto modificado");
 		
 	}
 
@@ -129,10 +129,18 @@ public class BudgetTests {
 		Long budgetCount = this.getActiveBudgetCount.execute();
 		assertTrue(budgetCount == 3, "El número de presupuestos no es correcto después de eliminar");
 	}
+	
+//	@Test
+//	@DisplayName("Add budget Item")
+//	@Order(8)
+//	public void testAddBudgetItem() {
+//		var budgetDTO = getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
+//		
+//	}
 
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
 		UUID identifier = withUUID ? UUID.randomUUID() : null;
-		return new BudgetDTO(identifier, "Presupuesto de prueba", 1000L, 2021, new Date(), budgetItems);
+		return new BudgetDTO(identifier, "Presupuesto de prueba", 1000, 2021, new Date(), budgetItems);
 	}
 }

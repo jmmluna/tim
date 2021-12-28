@@ -50,7 +50,7 @@ public class BudgetMapper {
 
 	private BudgetItemDTO toBudgetItemDTO(BudgetItem budgetItem) {
 		return new BudgetItemDTO(budgetItem.getBudgetItemId().getValue(), budgetItem.getDescription(),
-				budgetItem.getAmount(), budgetItem.getPrice().getValue());
+				budgetItem.getQuantity(), budgetItem.getPrice().getValue());
 	}
 
 }

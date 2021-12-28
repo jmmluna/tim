@@ -39,6 +39,14 @@ public class Price {
 	public static Price of(Double amount)  {
 		return new Price(amount);
 	}
+	
+	public Price plus(Price price) {
+		return Price.of(amount + price.getValue());
+	}
+	
+	public Price multipliedBy(Integer quantity) {
+		return Price.of(amount*quantity);
+	}
 
 	public Double getValue() {
 		return this.amount;

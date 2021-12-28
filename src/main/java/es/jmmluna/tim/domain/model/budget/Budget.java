@@ -1,29 +1,34 @@
 package es.jmmluna.tim.domain.model.budget;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import es.jmmluna.tim.domain.model.Price;
+
 public class Budget {
 	private BudgetId budgetId;
-	private Long budgetNumber;
+	private Integer budgetNumber;
 	private String description;
 	private Integer year;
 	private Date date;
-	private List<BudgetItem> budgetItems;
+	private final List<BudgetItem> budgetItems;
 	private Date expirationDate;
+	private Price totalCost;
 
-	public Budget(BudgetId budgetId, Long budgetNumber, String description, Integer year, Date date,
+	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
 			List<BudgetItem> budgetItems) {
 		this.budgetId = budgetId;
 		this.budgetNumber = budgetNumber;
 		this.description = description;
 		this.year = year;
 		this.date = date;
-		this.budgetItems = budgetItems;
+		this.budgetItems = new ArrayList<>(budgetItems);
+		totalCost = calculateTotalCost();
 	}
 
-	public Budget(BudgetId budgetId, Long budgetNumber, String description, Integer year, Date date,
+	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
 			List<BudgetItem> budgetItems, Date expirationDate) {
 		this(budgetId, budgetNumber, description, year, date, budgetItems);
 		this.expirationDate = expirationDate;
@@ -33,7 +38,7 @@ public class Budget {
 		return budgetId;
 	}
 
-	public Long getBudgetNumber() {
+	public Integer getBudgetNumber() {
 		return budgetNumber;
 	}
 
@@ -56,7 +61,7 @@ public class Budget {
 	public List<BudgetItem> getBudgetItems() {
 		return Collections.unmodifiableList(budgetItems);
 	}
-	
+
 	public Boolean isActive() {
 		return expirationDate == null;
 	}
@@ -69,11 +74,17 @@ public class Budget {
 		this.expirationDate = new Date();
 	}
 
-	public Double getTotal() {
-		return 0D;
+	public Price getTotalCost() {
+		return totalCost;
 	}
 
-	public void addBudgetItem(BudgetItem budgetItem) {
+	public void add(BudgetItem budgetItem) {
+		budgetItems.add(budgetItem);
+		totalCost = totalCost.plus(budgetItem.getCost());
+	}
+
+	private Price calculateTotalCost() {
+		return budgetItems.stream().map(BudgetItem::getCost).reduce(Price::plus).get();
 
 	}
 }

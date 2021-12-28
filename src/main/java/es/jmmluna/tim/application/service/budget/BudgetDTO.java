@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class BudgetDTO extends DTO {
 	private String description;
-	private Long budgetNumber;
+	private Integer budgetNumber;
 	private Integer year;
 	private Date date;
 	private List<BudgetItemDTO> budgetItems;
@@ -19,7 +19,7 @@ public class BudgetDTO extends DTO {
 
 	}
 
-	public BudgetDTO(UUID uuid, String description, Long budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems) {
+	public BudgetDTO(UUID uuid, String description, Integer budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems) {
 		this.uuid = uuid;
 		this.description = description;
 		this.budgetNumber = budgetNumber;
@@ -28,7 +28,7 @@ public class BudgetDTO extends DTO {
 		this.budgetItems = budgetItems;
 	}
 
-	public BudgetDTO(UUID uuid, String description, Long budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems,
+	public BudgetDTO(UUID uuid, String description, Integer budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems,
 			Date expirationDate) {
 		this(uuid, description, budgetNumber, year, date, budgetItems);
 		this.setExpirationDate(expirationDate);

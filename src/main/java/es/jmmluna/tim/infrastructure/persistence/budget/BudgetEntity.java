@@ -24,7 +24,7 @@ public class BudgetEntity {
 	@Id
 	private UUID uuid;
 	@Column(name = "BUDGET_NUMBER")
-	private Long budgetNumber;
+	private Integer budgetNumber;
 	@Column(name = "DESCRIPTION")
 	private String description;
 	@Column(name = "DATE")
