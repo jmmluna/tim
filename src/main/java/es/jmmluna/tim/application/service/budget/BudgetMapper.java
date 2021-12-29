@@ -17,7 +17,8 @@ public class BudgetMapper {
 	public BudgetDTO toDTO(Budget budget) {
 
 		return new BudgetDTO(budget.getBudgetId().getValue(), budget.getDescription(), budget.getBudgetNumber(),
-				budget.getYear(), budget.getDate(), toBudgetItemDTOList(budget.getBudgetItems()), budget.getExpirationDate());
+				budget.getYear(), budget.getDate(), toBudgetItemDTOList(budget.getBudgetItems()),
+				budget.getExpirationDate());
 
 	}
 
@@ -28,17 +29,21 @@ public class BudgetMapper {
 				budgetDTO.getExpirationDate());
 	}
 
+	public BudgetItem toBudgetItem(BudgetItemDTO budgetItemDTO) {
+		return new BudgetItem(BudgetItemId.of(budgetItemDTO.getUuid()), budgetItemDTO.getDescription(),
+				budgetItemDTO.getAmount(), Price.of(budgetItemDTO.getPrice()));
+	}
+
+	private BudgetItemDTO toBudgetItemDTO(BudgetItem budgetItem) {
+		return new BudgetItemDTO(budgetItem.getBudgetItemId().getValue(), budgetItem.getDescription(),
+				budgetItem.getQuantity(), budgetItem.getPrice().getValue());
+	}
+
 	private List<BudgetItem> toBudgetItemList(List<BudgetItemDTO> budgetItemsDTO) {
 		var budgetItems = new ArrayList<BudgetItem>();
 
 		budgetItemsDTO.forEach(budgetItemDTO -> budgetItems.add(toBudgetItem(budgetItemDTO)));
 		return budgetItems;
-	}
-
-	private BudgetItem toBudgetItem(BudgetItemDTO budgetItemDTO) {
-		return new BudgetItem(BudgetItemId.of(budgetItemDTO.getUuid()), budgetItemDTO.getDescription(),
-				budgetItemDTO.getAmount(), Price.of(budgetItemDTO.getPrice()));
-
 	}
 
 	private List<BudgetItemDTO> toBudgetItemDTOList(List<BudgetItem> budgetItems) {
@@ -47,10 +52,4 @@ public class BudgetMapper {
 		budgetItems.forEach(budgetItem -> budgetItemsDTO.add(toBudgetItemDTO(budgetItem)));
 		return budgetItemsDTO;
 	}
-
-	private BudgetItemDTO toBudgetItemDTO(BudgetItem budgetItem) {
-		return new BudgetItemDTO(budgetItem.getBudgetItemId().getValue(), budgetItem.getDescription(),
-				budgetItem.getQuantity(), budgetItem.getPrice().getValue());
-	}
-
 }

@@ -1,5 +1,7 @@
 package es.jmmluna.tim.domain.model;
 
+import java.util.List;
+
 public interface CommonRepository<T, ID> {
 	public T save(T domain);
 
@@ -7,6 +9,6 @@ public interface CommonRepository<T, ID> {
 
 	public T findById(ID id);
 
-	public Iterable<T> findAll();
+	public List<T> findAll();
 
 }

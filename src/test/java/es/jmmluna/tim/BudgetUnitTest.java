@@ -33,10 +33,10 @@ public class BudgetUnitTest {
 					);
 
 
-//	        // when
+	        // when
 	        Price totalCost = budget.getTotalCost();
 
-//	        // then
+	        // then
 	        assertEquals(totalCost, Price.of(210.0), "El coste del presupuesto no es correcto");
 	    }
 	 

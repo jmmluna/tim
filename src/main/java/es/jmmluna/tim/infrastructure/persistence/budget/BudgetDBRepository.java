@@ -1,5 +1,6 @@
 package es.jmmluna.tim.infrastructure.persistence.budget;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +28,8 @@ public class BudgetDBRepository implements BudgetRepository {
 	}
 
 	@Override
-	public Budget save(Budget budget) {				
-		var savedEntity = budgetRepository.save(mapper.toEntity(budget));
+	public Budget save(Budget budget) {			
+		var savedEntity = budgetRepository.save(mapper.toEntity(budget));		
 		return mapper.toModel(savedEntity);
 	}
 

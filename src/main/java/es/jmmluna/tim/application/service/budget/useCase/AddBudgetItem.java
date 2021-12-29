@@ -20,12 +20,10 @@ public class AddBudgetItem {
 	private BudgetMapper mapper;
 
 	public BudgetDTO execute(UUID bugetId, BudgetItemDTO budgetItemDTO) {
-		var budget = budgetRepository.findById(BudgetId.of(bugetId));
+		var budget = budgetRepository.findById(BudgetId.of(bugetId));		
+		budget.add(mapper.toBudgetItem(budgetItemDTO));
 		
-		//TODO: hacer BudgetItemMapper
-		budget.add(null);
-		return null;
-//		var budget = budgetRepository.save(mapper.toModel(budgetDTO));
-//		return mapper.toDTO(budget);
+		var savedBudget = budgetRepository.save(budget);
+		return mapper.toDTO(savedBudget);
 	}
 }

@@ -25,6 +25,7 @@ public class Budget {
 		this.year = year;
 		this.date = date;
 		this.budgetItems = new ArrayList<>(budgetItems);
+		
 		totalCost = calculateTotalCost();
 	}
 
@@ -59,7 +60,8 @@ public class Budget {
 	}
 
 	public List<BudgetItem> getBudgetItems() {
-		return Collections.unmodifiableList(budgetItems);
+		//return Collections.unmodifiableList(budgetItems);
+		return budgetItems;
 	}
 
 	public Boolean isActive() {
@@ -84,6 +86,8 @@ public class Budget {
 	}
 
 	private Price calculateTotalCost() {
+		if(budgetItems.isEmpty())
+			return Price.of(0.0);
 		return budgetItems.stream().map(BudgetItem::getCost).reduce(Price::plus).get();
 
 	}

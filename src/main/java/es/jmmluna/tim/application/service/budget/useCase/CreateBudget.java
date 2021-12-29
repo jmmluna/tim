@@ -13,13 +13,14 @@ public class CreateBudget {
 
 	@Autowired
 	private BudgetRepository budgetRepository;
+	
 	@Autowired
 	private BudgetMapper mapper;
 
 	public BudgetDTO execute(BudgetDTO budgetDTO) {
 		if (budgetDTO.getUuid() != null)
 			throw new IdentifierNotAllowedException("Not null UUID are not allowed");
-		
+
 		budgetDTO.setUuid(budgetRepository.getNextIdentifier());
 		var budget = budgetRepository.save(mapper.toModel(budgetDTO));
 		return mapper.toDTO(budget);

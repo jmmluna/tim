@@ -35,8 +35,7 @@ public class BudgetEntityMapper {
 		entity.setDate(model.getDate());
 		entity.setExpirationDate(model.getExpirationDate());
 		
-		//TODO: falta por implementar la conversión de items del modelo a items de entidad
-		entity.setBudgetItems(new ArrayList<BudgetItemEntity>());
+		entity.setBudgetItems(toBudgetItemEntityList(entity, model.getBudgetItems()));
 		return entity;
 	}
 	
@@ -47,8 +46,27 @@ public class BudgetEntityMapper {
 		return budgetItems;
 	}
 	
+	private List<BudgetItemEntity> toBudgetItemEntityList(BudgetEntity budgetEntity, List<BudgetItem> budgetItems) {
+		var budgetItemEntities = new ArrayList<BudgetItemEntity>();
+		
+		budgetItems.forEach(budgetItem -> budgetItemEntities.add(toBudgetItemEntity(budgetEntity, budgetItem)));
+		return budgetItemEntities;
+	}
+	
 	private BudgetItem toBudgetItem(BudgetItemEntity entity) {
 		return new BudgetItem(BudgetItemId.of(entity.getUuid()), entity.getDescription(), entity.getAmount(), Price.of(entity.getPrice()));
+		
+	}
+	
+	private BudgetItemEntity toBudgetItemEntity(BudgetEntity budgetEntity, BudgetItem budgetItem) {
+		var budgetItemEntity = new BudgetItemEntity();
+		//., entity.getDescription(), entity.getAmount(), Price.of(entity.getPrice()));
+		budgetItemEntity.setUuid(budgetItem.getBudgetItemId().getValue());
+		budgetItemEntity.setBudgetEntity(budgetEntity);
+		budgetItemEntity.setDescription(budgetItem.getDescription());
+		budgetItemEntity.setPrice(budgetItem.getPrice().getValue());
+		budgetItemEntity.setAmount(budgetItem.getQuantity());
+		return budgetItemEntity;
 		
 	}
 }
