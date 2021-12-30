@@ -3,7 +3,7 @@ package es.jmmluna.tim.domain.model;
 import java.util.Objects;
 
 public class Price {
-	private Double amount;
+	private Double amount = 0.0;
 	private String currency = "€";
 
 	public Price(Double amount)  {

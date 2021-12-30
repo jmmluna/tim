@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +23,7 @@ import lombok.Data;
 @Data
 public class BudgetEntity {
 	@Id
+	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
 	@Column(name = "BUDGET_NUMBER")
 	private Integer budgetNumber;
@@ -31,8 +33,8 @@ public class BudgetEntity {
 	private Date date;
 	@Column(name = "YEAR")
 	private Integer year;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "budgetEntity")	
+	
+	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL, mappedBy = "budgetEntity")	// fetch = FetchType.EAGER
 	private List<BudgetItemEntity> budgetItems;
 
 	@Column(name = "EXPIRATION_DATE")

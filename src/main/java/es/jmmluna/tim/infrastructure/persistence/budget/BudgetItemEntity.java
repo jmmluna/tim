@@ -2,8 +2,10 @@ package es.jmmluna.tim.infrastructure.persistence.budget;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,14 +18,15 @@ import lombok.Data;
 @Data
 public class BudgetItemEntity {
 	@Id
+	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
-	@ManyToOne
-    @JoinColumn(name="uuid", insertable = false, updatable = false)
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "BUDGET_UUID", nullable = false)
 	private BudgetEntity budgetEntity;
-	@Column(name="DESCRIPTION")
+	@Column(name = "DESCRIPTION")
 	private String description;
-	@Column(name="AMOUNT")
+	@Column(name = "AMOUNT")
 	private Integer amount;
-	@Column(name="PRICE")
+	@Column(name = "PRICE")
 	private Double price;
 }

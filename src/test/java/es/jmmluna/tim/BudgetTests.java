@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import es.jmmluna.tim.application.service.EElementList;
@@ -35,6 +36,7 @@ import es.jmmluna.tim.infrastructure.TimApplication;
 @SpringBootTest(classes = TimApplication.class)
 @DisplayName("Budget test")
 @TestMethodOrder(OrderAnnotation.class)
+@ActiveProfiles("test")
 //@Sql({"classpath:budget-test-data.sql", "classpath:budgetItem-test-data.sql"})
 public class BudgetTests {
 
@@ -61,7 +63,7 @@ public class BudgetTests {
 
 	@Test
 	@Sql("classpath:budget-test-data.sql")
-//	@Sql("classpath:budgetItem-test-data.sql")
+	@Sql("classpath:budgetItem-test-data.sql")
 	@DisplayName("Initialize budgets")
 	@Order(1)
 	public void shouldSaveBudgetsThroughSqlFile() {
@@ -75,11 +77,25 @@ public class BudgetTests {
 		// then
 		 assertEquals(3, budgetCount);
 	}
+	
+	@Test
+	@DisplayName("Given budget get budget items ")
+	@Order(2)
+	public void givenBudgetWithIdentifier_whenExecute_getItems() {
+		// give
+		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		
+		// when
+		var budgetDTO = getBudget.execute(uuid);
+		
+		// then
+		 assertEquals(1, budgetDTO.getBudgetItems().size());
+	}
 
 
 	@Test
 	@DisplayName("Create budget with UUID")
-	@Order(2)
+	@Order(3)
 	public void givenBudgetWithIdentifier_whenCreate_throwsException() {
 
 		assertThrows(IdentifierNotAllowedException.class, () -> {
@@ -90,7 +106,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Create budget")
-	@Order(3)
+	@Order(4)
 	public void TestCreateBudget() {
 		//give
 		
@@ -107,7 +123,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Get active budget list")
-	@Order(4)
+	@Order(5)
 	public void testGetActiveBudgetList() {
 		List<BudgetDTO> budgets = this.getBudgetList.execute(EElementList.ACTIVE);
 		assertTrue(budgets.size() == 4);
@@ -115,7 +131,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Update budget")
-	@Order(5)
+	@Order(6)
 	public void TestUpdateBudget() {
 		var budgetDTO = getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 		assertEquals(budgetDTO.getBudgetNumber(), 30, "No coincide el número del presupuesto original");
@@ -125,7 +141,6 @@ public class BudgetTests {
 		assertEquals(savedBudgetDTO.getBudgetNumber(), 2000, "No coincide el número del presupuesto modificado");
 
 	}
-
 
 	@Test
 	@DisplayName("Delete budget")
@@ -141,22 +156,22 @@ public class BudgetTests {
 		assertTrue(budgetCount == 3, "El número de presupuestos no es correcto después de eliminar");
 	}
 
-//	@Test
-//	@DisplayName("Add budget Item")
-//	@Order(8)
-//	public void testAddBudgetItem() {
-//
-//		// given
-//		BudgetItemDTO bItem1 = new BudgetItemDTO(UUID.randomUUID(), "Cajas de bombillas", 2, 5.0);
-//
-//		// when
-//		var budgetDTO = addBudgetItem.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"), bItem1);
-//		
-//		// then
-//		assertTrue(budgetDTO.getBudgetItems().size() == 1, "El número de elementos del presupuesto no es correcto");
-//		
-//
-//	}
+	@Test
+	@DisplayName("Add budget Item")
+//	@Sql("classpath:budgetItem-test-data.sql")
+	@Order(8)
+	public void testAddBudgetItem() {
+
+		// given
+		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		BudgetItemDTO bItem1 = new BudgetItemDTO(UUID.randomUUID(), "Cajas de bombillas", 2, 5.0);
+
+		// when
+		var budgetDTO = addBudgetItem.execute(uuid, bItem1);
+		
+		// then
+		assertEquals(2, budgetDTO.getBudgetItems().size());		
+	}
 
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();

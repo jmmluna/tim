@@ -31,7 +31,7 @@ public class BudgetMapper {
 
 	public BudgetItem toBudgetItem(BudgetItemDTO budgetItemDTO) {
 		return new BudgetItem(BudgetItemId.of(budgetItemDTO.getUuid()), budgetItemDTO.getDescription(),
-				budgetItemDTO.getAmount(), Price.of(budgetItemDTO.getPrice()));
+				budgetItemDTO.getQuantity(), Price.of(budgetItemDTO.getPrice()));
 	}
 
 	private BudgetItemDTO toBudgetItemDTO(BudgetItem budgetItem) {

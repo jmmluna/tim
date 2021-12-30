@@ -9,24 +9,24 @@ import lombok.Data;
 @Data
 public class BudgetItemDTO extends DTO {
 	private String description;
-	private Integer amount;
+	private Integer quantity;
 	private Double price;
 
 	public BudgetItemDTO() {
 
 	}
 
-	public BudgetItemDTO(UUID uuid, String description, Integer amount, Double price) {
+	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price) {
 		this.uuid = uuid;
 //		this.budgetId = budgetId;
 		this.description = description;
-		this.amount = amount;
+		this.quantity = quantity;
 		this.price = price;
 	}
 
-	public BudgetItemDTO(UUID uuid, String description, Integer amount, Double price,
+	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price,
 			Date expirationDate) {
-		this(uuid, description, amount, price);
+		this(uuid, description, quantity, price);
 		this.setExpirationDate(expirationDate);
 	}
 }

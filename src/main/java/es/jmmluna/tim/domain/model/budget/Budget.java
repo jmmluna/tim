@@ -26,7 +26,7 @@ public class Budget {
 		this.date = date;
 		this.budgetItems = new ArrayList<>(budgetItems);
 		
-		totalCost = calculateTotalCost();
+//		totalCost = calculateTotalCost();
 	}
 
 	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
@@ -82,7 +82,7 @@ public class Budget {
 
 	public void add(BudgetItem budgetItem) {
 		budgetItems.add(budgetItem);
-		totalCost = totalCost.plus(budgetItem.getCost());
+//		totalCost = totalCost.plus(budgetItem.getCost());
 	}
 
 	private Price calculateTotalCost() {

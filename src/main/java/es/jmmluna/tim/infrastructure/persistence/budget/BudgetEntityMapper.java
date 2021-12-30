@@ -10,8 +10,10 @@ import es.jmmluna.tim.domain.model.budget.Budget;
 import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.budget.BudgetItem;
 import es.jmmluna.tim.domain.model.budget.BudgetItemId;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class BudgetEntityMapper {
 
 	public Budget toModel(BudgetEntity entity) {
@@ -53,19 +55,19 @@ public class BudgetEntityMapper {
 		return budgetItemEntities;
 	}
 	
-	private BudgetItem toBudgetItem(BudgetItemEntity entity) {
+	private BudgetItem toBudgetItem(BudgetItemEntity entity) {		
+//		log.info("*********************************************Precio de la Entidad---->" + entity.getUuid());
+//		log.info("*********************************************Precio de la Entidad---->" + entity.getPrice());
 		return new BudgetItem(BudgetItemId.of(entity.getUuid()), entity.getDescription(), entity.getAmount(), Price.of(entity.getPrice()));
-		
 	}
 	
 	private BudgetItemEntity toBudgetItemEntity(BudgetEntity budgetEntity, BudgetItem budgetItem) {
 		var budgetItemEntity = new BudgetItemEntity();
-		//., entity.getDescription(), entity.getAmount(), Price.of(entity.getPrice()));
 		budgetItemEntity.setUuid(budgetItem.getBudgetItemId().getValue());
 		budgetItemEntity.setBudgetEntity(budgetEntity);
 		budgetItemEntity.setDescription(budgetItem.getDescription());
 		budgetItemEntity.setPrice(budgetItem.getPrice().getValue());
-		budgetItemEntity.setAmount(budgetItem.getQuantity());
+		budgetItemEntity.setAmount(budgetItem.getQuantity());	
 		return budgetItemEntity;
 		
 	}
