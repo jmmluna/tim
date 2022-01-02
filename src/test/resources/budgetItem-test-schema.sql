@@ -1,0 +1,15 @@
+-- -----------------------------------------------------
+-- Table `TIM`.`BUDGET_ITEMS`
+-- -----------------------------------------------------
+ 
+-- DROP TABLE `TIM`.`TIM_BUDGET_ITEMS`;
+-- CREATE TABLE IF NOT EXISTS
+
+CREATE TABLE  `TIM`.`TIM_BUDGET_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `BUDGET_UUID` UUID NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+  CONSTRAINT `fk_TIM_BUDGET_ITEMS_TIM_BUDGETS` FOREIGN KEY (`BUDGET_UUID`) REFERENCES `TIM`.`TIM_BUDGETS` (`UUID`));

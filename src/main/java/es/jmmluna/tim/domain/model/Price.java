@@ -44,6 +44,10 @@ public class Price {
 		return Price.of(amount + price.getValue());
 	}
 	
+	public Price minus(Price price) {
+		return Price.of(amount - price.getValue());
+	}
+	
 	public Price multipliedBy(Integer quantity) {
 		return Price.of(amount*quantity);
 	}

@@ -29,6 +29,7 @@ import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetActiveBudgetCount;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
+import es.jmmluna.tim.application.service.budget.useCase.RemoveBudgetItem;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
 import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
@@ -60,9 +61,15 @@ public class BudgetTests {
 
 	@Autowired
 	private AddBudgetItem addBudgetItem;
+	
+	@Autowired
+	private RemoveBudgetItem removeBudgetItem;
 
 	@Test
-	@Sql("classpath:budget-test-data.sql")
+	@Sql("classpath:drop-all.sql")
+	@Sql("classpath:customer-test-data.sql")	
+	@Sql("classpath:budget-test-data.sql")		
+	@Sql("classpath:budgetItem-test-schema.sql")
 	@Sql("classpath:budgetItem-test-data.sql")
 	@DisplayName("Initialize budgets")
 	@Order(1)
@@ -158,7 +165,6 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Add budget Item")
-//	@Sql("classpath:budgetItem-test-data.sql")
 	@Order(8)
 	public void testAddBudgetItem() {
 
@@ -172,6 +178,24 @@ public class BudgetTests {
 		// then
 		assertEquals(2, budgetDTO.getBudgetItems().size());		
 	}
+	
+	@Test
+	@DisplayName("Remove budget Item")
+	@Order(9)
+	public void testRemoveBudgetItem() {
+
+		// given
+		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		var budgetDTO = getBudget.execute(uuid);
+		var budgetItemDTO = budgetDTO.getBudgetItems().get(0);
+
+		// when
+		var removedBudgetDTO = removeBudgetItem.execute(uuid, budgetItemDTO);
+		
+		// then
+		assertEquals(1, removedBudgetDTO.getBudgetItems().size());		
+	}
+
 
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import es.jmmluna.tim.domain.model.NotFoundBudgetItemException;
 import es.jmmluna.tim.domain.model.Price;
 
 public class Budget {
@@ -26,7 +27,7 @@ public class Budget {
 		this.date = date;
 		this.budgetItems = new ArrayList<>(budgetItems);
 		
-//		totalCost = calculateTotalCost();
+		totalCost = calculateTotalCost();
 	}
 
 	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
@@ -60,8 +61,8 @@ public class Budget {
 	}
 
 	public List<BudgetItem> getBudgetItems() {
-		//return Collections.unmodifiableList(budgetItems);
-		return budgetItems;
+		return Collections.unmodifiableList(budgetItems);
+//		return budgetItems;
 	}
 
 	public Boolean isActive() {
@@ -82,13 +83,19 @@ public class Budget {
 
 	public void add(BudgetItem budgetItem) {
 		budgetItems.add(budgetItem);
-//		totalCost = totalCost.plus(budgetItem.getCost());
+		totalCost = totalCost.plus(budgetItem.getCost());
+	}
+	
+	public void remove(BudgetItem budgetItem) {
+		if(budgetItems.remove(budgetItem))
+			totalCost = totalCost.minus(budgetItem.getCost());
+		else
+			throw new NotFoundBudgetItemException("No se ha encontrado el elemento del presupuesto");
 	}
 
 	private Price calculateTotalCost() {
 		if(budgetItems.isEmpty())
 			return Price.of(0.0);
 		return budgetItems.stream().map(BudgetItem::getCost).reduce(Price::plus).get();
-
 	}
 }

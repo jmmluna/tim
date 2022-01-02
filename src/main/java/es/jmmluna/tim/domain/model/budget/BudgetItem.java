@@ -1,8 +1,10 @@
 package es.jmmluna.tim.domain.model.budget;
 
+import java.util.Objects;
+
 import es.jmmluna.tim.domain.model.Price;
 
-public class BudgetItem {
+public class BudgetItem {	
 	private BudgetItemId budgetItemId;
 	private String description;
 	private Integer quantity;
@@ -35,5 +37,23 @@ public class BudgetItem {
         return getPrice()
             .multipliedBy(quantity);
     }
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(budgetItemId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BudgetItem other = (BudgetItem) obj;
+		return Objects.equals(budgetItemId, other.budgetItemId);
+	}
+
 
 }

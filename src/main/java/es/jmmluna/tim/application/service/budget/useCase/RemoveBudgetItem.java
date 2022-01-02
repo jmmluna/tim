@@ -12,16 +12,16 @@ import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.budget.BudgetRepository;
 
 @Service
-public class AddBudgetItem {
+public class RemoveBudgetItem {
 
 	@Autowired
 	private BudgetRepository budgetRepository;
 	@Autowired
 	private BudgetMapper mapper;
 
-	public BudgetDTO execute(UUID budgetId, BudgetItemDTO budgetItemDTO) {	
-		var budget = budgetRepository.findById(BudgetId.of(budgetId));		
-		budget.add(mapper.toBudgetItem(budgetItemDTO));
+	public BudgetDTO execute(UUID bugetId, BudgetItemDTO budgetItemDTO) {	
+		var budget = budgetRepository.findById(BudgetId.of(bugetId));		
+		budget.remove(mapper.toBudgetItem(budgetItemDTO));
 		
 		var savedBudget = budgetRepository.save(budget);				
 		return mapper.toDTO(savedBudget);			
