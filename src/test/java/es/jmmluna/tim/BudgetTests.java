@@ -86,8 +86,22 @@ public class BudgetTests {
 	}
 	
 	@Test
-	@DisplayName("Given budget get budget items ")
+	@DisplayName("Given budget get customer id ")
 	@Order(2)
+	public void givenBudgetWithIdentifier_whenExecute_getCustomer() {
+		// give
+		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		
+		// when
+		var budgetDTO = getBudget.execute(uuid);
+		
+		// then
+		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), budgetDTO.getCustomerId());
+	}
+	
+	@Test
+	@DisplayName("Given budget get budget items ")
+	@Order(3)
 	public void givenBudgetWithIdentifier_whenExecute_getItems() {
 		// give
 		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
@@ -102,7 +116,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Create budget with UUID")
-	@Order(3)
+	@Order(4)
 	public void givenBudgetWithIdentifier_whenCreate_throwsException() {
 
 		assertThrows(IdentifierNotAllowedException.class, () -> {
@@ -113,24 +127,21 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Create budget")
-	@Order(4)
+	@Order(5)
 	public void TestCreateBudget() {
-		//give
-		
+		//give		
 		var budgetDTO = this.getExternalBudget(false);
 		
-		// when
-		
+		//when		
 		createBudget.execute(budgetDTO);
 		
-		// then		
-
+		//then		
 		 assertEquals(4, this.getActiveBudgetCount.execute());
 	}
 
 	@Test
 	@DisplayName("Get active budget list")
-	@Order(5)
+	@Order(6)
 	public void testGetActiveBudgetList() {
 		List<BudgetDTO> budgets = this.getBudgetList.execute(EElementList.ACTIVE);
 		assertTrue(budgets.size() == 4);
@@ -138,7 +149,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Update budget")
-	@Order(6)
+	@Order(7)
 	public void TestUpdateBudget() {
 		var budgetDTO = getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 		assertEquals(budgetDTO.getBudgetNumber(), 30, "No coincide el número del presupuesto original");
@@ -151,7 +162,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Delete budget")
-	@Order(7)
+	@Order(8)
 	public void testDisableBudget() {
 		disableBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
 
@@ -165,7 +176,7 @@ public class BudgetTests {
 
 	@Test
 	@DisplayName("Add budget Item")
-	@Order(8)
+	@Order(9)
 	public void testAddBudgetItem() {
 
 		// given
@@ -181,7 +192,7 @@ public class BudgetTests {
 	
 	@Test
 	@DisplayName("Remove budget Item")
-	@Order(9)
+	@Order(10)
 	public void testRemoveBudgetItem() {
 
 		// given
@@ -195,11 +206,11 @@ public class BudgetTests {
 		// then
 		assertEquals(1, removedBudgetDTO.getBudgetItems().size());		
 	}
-
-
+	
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
-		UUID identifier = withUUID ? UUID.randomUUID() : null;
-		return new BudgetDTO(identifier, "Presupuesto de prueba", 1000, 2021, new Date(), budgetItems);
+		UUID budgetId = withUUID ? UUID.randomUUID() : null;
+		UUID customerId = UUID.fromString("123e4567-e89b-12d3-a456-556642440002");
+		return new BudgetDTO(budgetId, customerId,"Presupuesto de prueba", 1000, 2021, new Date(), budgetItems);
 	}
 }

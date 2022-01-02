@@ -14,6 +14,7 @@ import es.jmmluna.tim.domain.model.budget.Budget;
 import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.budget.BudgetItem;
 import es.jmmluna.tim.domain.model.budget.BudgetItemId;
+import es.jmmluna.tim.domain.model.customer.CustomerId;
 
 public class BudgetUnitTest {
 
@@ -24,7 +25,7 @@ public class BudgetUnitTest {
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));
 
-		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), 1000,
+		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()), 1000,
 				"Presupuesto para reforma de casa calle El Olivo", 2021, new Date(), List.of(bItem1, bItem2));
 
 		// when
@@ -41,7 +42,7 @@ public class BudgetUnitTest {
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));
 
-		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), 1000,
+		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()), 1000,
 				"Presupuesto para reforma de casa calle El Olivo", 2021, new Date(), List.of(bItem1, bItem2));
 
 		// when
@@ -60,7 +61,7 @@ public class BudgetUnitTest {
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));
 
-		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), 1000,
+		Budget budget = new Budget(BudgetId.of(UUID.randomUUID()), CustomerId.of(UUID.randomUUID()), 1000,
 				"Presupuesto para reforma de casa calle El Olivo", 2021, new Date(), List.of(bItem1, bItem2));
 
 		// when
@@ -70,4 +71,5 @@ public class BudgetUnitTest {
 		assertEquals(budget.getTotalCost(), Price.of(10.0), "El coste del presupuesto no es correcto");
 
 	}
+
 }

@@ -46,6 +46,7 @@ public class CustomerTests {
 	private DisableCustomer disableCustomer;
 
 	@Test
+	@Sql("classpath:drop-all.sql")
 	@Sql("classpath:customer-test-data.sql")
 	@DisplayName("Initialize customers")
 	@Order(1)

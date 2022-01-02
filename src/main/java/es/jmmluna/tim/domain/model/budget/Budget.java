@@ -7,9 +7,11 @@ import java.util.List;
 
 import es.jmmluna.tim.domain.model.NotFoundBudgetItemException;
 import es.jmmluna.tim.domain.model.Price;
+import es.jmmluna.tim.domain.model.customer.CustomerId;
 
 public class Budget {
 	private BudgetId budgetId;
+	private CustomerId customerId;
 	private Integer budgetNumber;
 	private String description;
 	private Integer year;
@@ -18,26 +20,31 @@ public class Budget {
 	private Date expirationDate;
 	private Price totalCost;
 
-	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
-			List<BudgetItem> budgetItems) {
+	public Budget(BudgetId budgetId, CustomerId customerId, Integer budgetNumber, String description, Integer year,
+			Date date, List<BudgetItem> budgetItems) {
 		this.budgetId = budgetId;
+		this.customerId = customerId;
 		this.budgetNumber = budgetNumber;
 		this.description = description;
 		this.year = year;
 		this.date = date;
 		this.budgetItems = new ArrayList<>(budgetItems);
-		
+
 		totalCost = calculateTotalCost();
 	}
 
-	public Budget(BudgetId budgetId, Integer budgetNumber, String description, Integer year, Date date,
-			List<BudgetItem> budgetItems, Date expirationDate) {
-		this(budgetId, budgetNumber, description, year, date, budgetItems);
+	public Budget(BudgetId budgetId, CustomerId customerId, Integer budgetNumber, String description, Integer year,
+			Date date, List<BudgetItem> budgetItems, Date expirationDate) {
+		this(budgetId, customerId, budgetNumber, description, year, date, budgetItems);
 		this.expirationDate = expirationDate;
 	}
 
 	public BudgetId getBudgetId() {
 		return budgetId;
+	}
+
+	public CustomerId getCustomerId() {
+		return customerId;
 	}
 
 	public Integer getBudgetNumber() {
@@ -85,16 +92,16 @@ public class Budget {
 		budgetItems.add(budgetItem);
 		totalCost = totalCost.plus(budgetItem.getCost());
 	}
-	
+
 	public void remove(BudgetItem budgetItem) {
-		if(budgetItems.remove(budgetItem))
+		if (budgetItems.remove(budgetItem))
 			totalCost = totalCost.minus(budgetItem.getCost());
 		else
 			throw new NotFoundBudgetItemException("No se ha encontrado el elemento del presupuesto");
 	}
 
 	private Price calculateTotalCost() {
-		if(budgetItems.isEmpty())
+		if (budgetItems.isEmpty())
 			return Price.of(0.0);
 		return budgetItems.stream().map(BudgetItem::getCost).reduce(Price::plus).get();
 	}

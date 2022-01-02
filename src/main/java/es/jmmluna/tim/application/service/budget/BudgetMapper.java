@@ -10,23 +10,24 @@ import es.jmmluna.tim.domain.model.budget.Budget;
 import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.budget.BudgetItem;
 import es.jmmluna.tim.domain.model.budget.BudgetItemId;
+import es.jmmluna.tim.domain.model.customer.CustomerId;
 
 @Component
 public class BudgetMapper {
 
 	public BudgetDTO toDTO(Budget budget) {
 
-		return new BudgetDTO(budget.getBudgetId().getValue(), budget.getDescription(), budget.getBudgetNumber(),
-				budget.getYear(), budget.getDate(), toBudgetItemDTOList(budget.getBudgetItems()),
-				budget.getExpirationDate());
+		return new BudgetDTO(budget.getBudgetId().getValue(), budget.getCustomerId().getValue(),
+				budget.getDescription(), budget.getBudgetNumber(), budget.getYear(), budget.getDate(),
+				toBudgetItemDTOList(budget.getBudgetItems()), budget.getExpirationDate());
 
 	}
 
 	public Budget toModel(BudgetDTO budgetDTO) {
 
-		return new Budget(BudgetId.of(budgetDTO.getUuid()), budgetDTO.getBudgetNumber(), budgetDTO.getDescription(),
-				budgetDTO.getYear(), budgetDTO.getDate(), toBudgetItemList(budgetDTO.getBudgetItems()),
-				budgetDTO.getExpirationDate());
+		return new Budget(BudgetId.of(budgetDTO.getUuid()), CustomerId.of(budgetDTO.getCustomerId()),
+				budgetDTO.getBudgetNumber(), budgetDTO.getDescription(), budgetDTO.getYear(), budgetDTO.getDate(),
+				toBudgetItemList(budgetDTO.getBudgetItems()), budgetDTO.getExpirationDate());
 	}
 
 	public BudgetItem toBudgetItem(BudgetItemDTO budgetItemDTO) {
