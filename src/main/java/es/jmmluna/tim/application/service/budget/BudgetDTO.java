@@ -14,6 +14,7 @@ public class BudgetDTO extends DTO {
 	private Integer budgetNumber;
 	private Integer year;
 	private Date date;
+	private Double cost = 0.0;
 	private List<BudgetItemDTO> budgetItems;
 
 	public BudgetDTO() {

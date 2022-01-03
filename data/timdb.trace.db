@@ -4909,3 +4909,90 @@ Feature not supported: "getFunctions" [50100-200]
 	at net.sourceforge.squirrel_sql.client.session.mainpanel.objecttree.ObjectTree$3.run(ObjectTree.java:305)
 	at net.sourceforge.squirrel_sql.fw.util.TaskExecuter.run(TaskExecuter.java:82)
 	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-01-03 13:04:46 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Imposible eliminar "TIM_BUDGETS" debido a que "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS" depende de él.
+Cannot drop "TIM_BUDGETS" because "FK_TIM_BUDGET_ITEMS_TIM_BUDGETS" depends on it; SQL statement:
+DROP TABLE TIM.TIM_BUDGETS [90107-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:576)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:98)
+	at org.h2.command.ddl.DropTable.update(DropTable.java:124)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:198)
+	at org.h2.command.Command.executeUpdate(Command.java:251)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:228)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:201)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1459)
+	at org.h2.server.web.WebApp.query(WebApp.java:1116)
+	at org.h2.server.web.WebApp.query(WebApp.java:1092)
+	at org.h2.server.web.WebApp.process(WebApp.java:241)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:173)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1722)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-01-03 13:11:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "TIM_CUSTOMERS" no encontrada
+Table "TIM_CUSTOMERS" not found; SQL statement:
+SELECT * FROM TIM_CUSTOMERS
+
+
+-- BUDGETS
+
+INSERT INTO TIM.TIM_BUDGETS(UUID, CUSTOMERS_UUID, BUDGET_NUMBER, DESCRIPTION, DATE, YEAR)  VALUES ('123e4567e89b12d3a456556642440000', '123e4567e89b12d3a456556642440002' ,'30', 'Presupuesto 1', CURRENT_TIMESTAMP(), 2021) [42102-200]
+2022-01-03 13:11:47 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM TIM.TIM_CUSTOMERS
+
+
+          
+
+INSERT INTO[*] TIM.TIM_BUDGETS(UUID, CUSTOMERS_UUID, BUDGET_NUMBER, DESCRIPTION, DATE, YEAR)  VALUES ('123e4567e89b12d3a456556642440000', '123e4567e89b12d3a456556642440002' ,'30', 'Presupuesto 1', CURRENT_TIMESTAMP(), 2021)"
+Syntax error in SQL statement "SELECT * FROM TIM.TIM_CUSTOMERS
+
+
+          
+
+INSERT INTO[*] TIM.TIM_BUDGETS(UUID, CUSTOMERS_UUID, BUDGET_NUMBER, DESCRIPTION, DATE, YEAR)  VALUES ('123e4567e89b12d3a456556642440000', '123e4567e89b12d3a456556642440002' ,'30', 'Presupuesto 1', CURRENT_TIMESTAMP(), 2021)"; SQL statement:
+SELECT * FROM TIM.TIM_CUSTOMERS
+
+
+-- BUDGETS
+
+INSERT INTO TIM.TIM_BUDGETS(UUID, CUSTOMERS_UUID, BUDGET_NUMBER, DESCRIPTION, DATE, YEAR)  VALUES ('123e4567e89b12d3a456556642440000', '123e4567e89b12d3a456556642440002' ,'30', 'Presupuesto 1', CURRENT_TIMESTAMP(), 2021) [42000-200]
+2022-01-03 13:50:21 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "TIM[*].TIM_BUDGETS"; se esperaba "TRUNCATE"
+Syntax error in SQL statement "TIM[*].TIM_BUDGETS"; expected "TRUNCATE"; SQL statement:
+TIM.TIM_BUDGETS [42001-200]
