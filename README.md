@@ -37,7 +37,6 @@ mvn spring-boot:run
 
 ```
 mvn test
-
 ```
 
 ### Ejecución de un conjunto de casos de usos
@@ -45,15 +44,12 @@ mvn test
 ```
 mvn -Dtest=CustomerIT test
 mvn -Dtest=CustomerIT,EmployeeIT test
-
 ```
 
 ### Ejecución de un caso de uso concreto
 
 ```
 mvn -Dtest=CustomerIT#testCustomerCreation test
-
-
 ```
 
 ## Generar informe de test unitarios

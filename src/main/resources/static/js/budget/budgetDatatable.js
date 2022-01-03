@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
 
-//	const table = $('#employeeDataTable').DataTable(
+	//	const table = $('#employeeDataTable').DataTable(
 	$('#budgetDataTable').DataTable(
 		{
 
@@ -11,28 +11,45 @@ $(document).ready(function() {
 					"targets": [0],
 					"visible": false,
 					"searchable": false
-				}
-				, 
-				{//state column
+				},
+				{
+					"targets": [2],
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					orderable: true
+				},
+				{ // Total
 					"targets": [3],
 					"visible": true,
-					"searchable": false,
-					className: "text-center",
-					orderable: false					
-				},
-				{//edit column
+					"searchable": true,
+					className: "text-right",
+					orderable: true,
+					"render": function(data, type, row) {
+						return "<b>" + data + "</b>";
+					},
+				}
+				,
+				{//state column
 					"targets": [4],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
-					orderable: false					
+					orderable: false
 				},
-				{//delete column
+				{//edit column
 					"targets": [5],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
-					orderable: false					
+					orderable: false
+				},
+				{//delete column
+					"targets": [6],
+					"visible": true,
+					"searchable": false,
+					className: "text-center",
+					orderable: false
 				}
 
 
@@ -49,7 +66,7 @@ $(document).ready(function() {
 				//				"info": "Total: _TOTAL_ registros.",
 				"info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
 				"infoEmpty": "No hay registros disponibles",
-				"infoFiltered": "(filtrado desde _MAX_ total registros)",
+				"infoFiltered": "(filtrado desde _MAX_ registros)",
 				"loadingRecords": "Loading...",
 				"processing": "Procesando...",
 				"search": "Buscar:",
@@ -68,10 +85,10 @@ $(document).ready(function() {
 	);
 
 
-//	table.on('select', (e, dt, type, indexes) => {
-//		var id = dt.rows({ selected: true }).data();
-//		//			alert(id[0])
-//	})
+	//	table.on('select', (e, dt, type, indexes) => {
+	//		var id = dt.rows({ selected: true }).data();
+	//		//			alert(id[0])
+	//	})
 
 });
 

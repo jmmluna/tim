@@ -211,6 +211,6 @@ public class BudgetIT {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
 		UUID budgetId = withUUID ? UUID.randomUUID() : null;
 		UUID customerId = UUID.fromString("123e4567-e89b-12d3-a456-556642440002");
-		return new BudgetDTO(budgetId, customerId,"Presupuesto de prueba", 1000, 2021, new Date(), budgetItems);
+		return new BudgetDTO(budgetId, customerId,"Presupuesto de prueba", 1000, 2021, new Date(), 0.0, budgetItems);
 	}
 }

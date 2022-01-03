@@ -4,7 +4,7 @@
 	layout:decorate="~{layout}">
 <head>
 <meta charset="utf-8">
-<title>Nuevo empleado</title>
+<title>Presupuesto</title>
 <link th:href="@{/css/app.css}" rel="stylesheet" />
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
@@ -16,23 +16,23 @@
 <body>
 	<section layout:fragment="content">
 
-		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditCustomer}">
-			<i class="fas fa-user-edit ml-2" aria-hidden="true"></i> Editar
-			cliente
+		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditBudget}">
+			<i class="fas fa-edit ml-2" aria-hidden="true"></i> Editar
+			Presupuesto
 		</h1>
-		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditCustomer}">
-			<i class="fa fa-user-plus" aria-hidden="true"></i> Nuevo cliente
+		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditBudget}">
+			<i class="fa fa-file-invoice-dollar" aria-hidden="true">+</i> Nuevo Presupuesto
 		</h1>
 
-		<form action="#" th:action="@{/customers/save}"
-			th:object="${customer}" method="post">
+		<form action="#" th:action="@{/budgets/save}"
+			th:object="${budget}" method="post">
 
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">
 						<i class="fa fa-file-text-o" aria-hidden="true"></i> <i
 							class="fa fa-address-card" aria-hidden="true"
-							th:text="${isEditCustomer}?'Formulario de edición':'Formulario de alta'"></i>
+							th:text="${isEditBudget}?'Formulario de edición':'Formulario de alta'"></i>
 					</h6>
 				</div>
 				<div class="card-body">
@@ -43,33 +43,43 @@
 							id="uuid">
 
 						<div class="col-md-5 mb-3">
-							<label for="name">DNI</label> <input type="text"
-								class="form-control" th:field="*{dni}" id="dni" required>
-						</div>
+							<label for="name">DESCRIPCIÓN</label> <input type="text"
+								class="form-control" th:field="*{description}" id="description" required>
+						</div>						
+<!-- 						https://www.baeldung.com/thymeleaf-list -->
 
-						<div class="col-md-5 mb-3">
-							<label for="name">Nombre</label> <input type="text"
-								class="form-control" th:field="*{name}" id="name" required>
-						</div>
-						<div class="col-md-6 mb-3">
-							<label for="surnames">Apellidos</label> <input type="text"
-								class="form-control" th:field="*{surnames}" id="surnames"
-								value="" required>
-						</div>
+<!-- 						<div class="col-md-5 mb-3"> -->
+<!-- 							<label for="name">Nombre</label> <input type="text" -->
+<!-- 								class="form-control" th:field="*{name}" id="name" required> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-md-6 mb-3"> -->
+<!-- 							<label for="surnames">Apellidos</label> <input type="text" -->
+<!-- 								class="form-control" th:field="*{surnames}" id="surnames" -->
+<!-- 								value="" required> -->
+<!-- 						</div> -->
 
-						<div class="col-md-5 mb-3">
-							<label for="name">Dirección</label> <input type="text"
-								class="form-control" th:field="*{address}" id="address" required>
-						</div>
-						<div class="col-md-5 mb-3">
-							<label for="name">Teléfono</label> <input type="text"
-								class="form-control" th:field="*{phone}" id="phone" required>
-						</div>
+<!-- 						<div class="col-md-5 mb-3"> -->
+<!-- 							<label for="name">Dirección</label> <input type="text" -->
+<!-- 								class="form-control" th:field="*{address}" id="address" required> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-md-5 mb-3"> -->
+<!-- 							<label for="name">Teléfono</label> <input type="text" -->
+<!-- 								class="form-control" th:field="*{phone}" id="phone" required> -->
+<!-- 						</div> -->
 						
-						<div class="col-md-5 mb-3">
-							<label for="name">Email</label> <input type="text"
-								class="form-control" th:field="*{email}" id="email" required>
-						</div>
+<!-- 						<div class="col-md-5 mb-3"> -->
+<!-- 							<label for="name">Email</label> <input type="text" -->
+<!-- 								class="form-control" th:field="*{email}" id="email" required> -->
+<!-- 						</div> -->
+
+
+
+
+
+
+
+
+
 
 
 						<div class="col-md-2 mb-3 text-danger" th:if="*{expirationDate}">
@@ -91,6 +101,77 @@
 						</div>
 
 					</div>
+					
+					<div class="card-body">
+				<div class="table-responsive">
+					<table
+						class="table display hover table-striped table-bordered dt-responsive nowrap"
+						id="budgetItemDataTable" width="100%" cellspacing="0">
+						<thead class="table-dark">
+
+							<tr>
+								<th>Id</th>
+								<th class="text-center">Descripción</th>
+								<th class="text-center">Cantidad</th>
+								<th class="text-center">Precio <i
+									class="fas fa-euro-sign"></i>
+								</th>
+<!-- 								<th class="text-center">Precio/trabajador <i -->
+<!-- 									class="fas fa-euro-sign"></i></th> -->
+								<th class="text-center">Estado</th>
+								<th class="text-center">Editar</th>
+								<th class="text-center">Eliminar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="*{budgetItems.empty}">
+								<td colspan="2">No hay elementos disponibles</td>
+							</tr>
+
+							<tr th:each="budgetItem : *{budgetItems}">
+								<td class="align-middle" th:text="${budgetItem.uuid}"></td>
+								<td class="align-middle" th:text="${budgetItem.description}"></td>								
+								<td class="align-middle" th:text="${budgetItem.quantity}"></td>
+								<td class="align-middle" th:text="${budgetItem.price}"></td>
+<!-- 								<td class="align-middle" th:text="${employee.customerHourPrice}"></td> -->
+<!-- 								<td class="align-middle" th:text="${employee.employeeHourPrice}"></td> -->
+
+								
+
+
+
+								<div class="modal fade" th:id="'deleteConfirm' + ${budget.uuid}"
+									data-backdrop="static" data-keyboard="false" tabindex="-1"
+									aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title font-italic font-weight-bold"
+													id="staticBackdropLabel">Confirmación de borrado</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body font-weight-bold"
+												th:text="'¿Estás seguro de borrar el presupuesto ' + ${budget.description} + '?'">¿Estás
+												seguro de borrar el presupuesto ?</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Cancelar</button>
+												<a type="button" class="btn btn-primary"
+													th:href="@{/budgets/delete/{uuid}(uuid=${budget.uuid})}">Borrar</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 
 					<button class="btn btn-success float-right " type="submit">Guardar</button>
 					<a class="btn btn-primary float-right mr-1"

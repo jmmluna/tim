@@ -19,7 +19,8 @@ public class BudgetMapper {
 
 		return new BudgetDTO(budget.getBudgetId().getValue(), budget.getCustomerId().getValue(),
 				budget.getDescription(), budget.getBudgetNumber(), budget.getYear(), budget.getDate(),
-				toBudgetItemDTOList(budget.getBudgetItems()), budget.getExpirationDate());
+				budget.getTotalCost().getValue(), toBudgetItemDTOList(budget.getBudgetItems()),
+				budget.getExpirationDate());
 
 	}
 

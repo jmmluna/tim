@@ -21,19 +21,20 @@ public class BudgetDTO extends DTO {
 
 	}
 
-	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems) {
+	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, Double cost, List<BudgetItemDTO> budgetItems) {
 		this.uuid = uuid;
 		this.customerId = customerId;
 		this.description = description;
 		this.budgetNumber = budgetNumber;
 		this.year = year;
 		this.date = date;
+		this.cost =cost;
 		this.budgetItems = budgetItems;
 	}
 
-	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, List<BudgetItemDTO> budgetItems,
+	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, Double cost, List<BudgetItemDTO> budgetItems,
 			Date expirationDate) {
-		this(uuid, customerId, description, budgetNumber, year, date, budgetItems);
+		this(uuid, customerId, description, budgetNumber, year, date, cost, budgetItems);
 		this.setExpirationDate(expirationDate);
 	}
 }
