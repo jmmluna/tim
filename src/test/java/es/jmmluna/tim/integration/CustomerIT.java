@@ -1,4 +1,4 @@
-package es.jmmluna.tim;
+package es.jmmluna.tim.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,7 +28,7 @@ import es.jmmluna.tim.infrastructure.TimApplication;
 @SpringBootTest(classes = TimApplication.class)
 @DisplayName("Customer test")
 @TestMethodOrder(OrderAnnotation.class)
-public class CustomerTests {
+public class CustomerIT {
 
 	@Autowired
 	private GetCustomer getCustomer;

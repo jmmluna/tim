@@ -1,4 +1,4 @@
-package es.jmmluna.tim;
+package es.jmmluna.tim.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,11 +16,11 @@ import es.jmmluna.tim.domain.model.budget.BudgetItem;
 import es.jmmluna.tim.domain.model.budget.BudgetItemId;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 
-public class BudgetUnitTest {
+public class BudgetTest {
 
 	@DisplayName("Given budget with two items, when calculate total cost, then sum is returned")
 	@Test
-	void test0() throws Exception {
+	void testCalculateBudgetCost() throws Exception {
 		// given
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));
@@ -37,7 +37,7 @@ public class BudgetUnitTest {
 
 	@DisplayName("Given budget with two line items, when add another line item, then total cost is updated")
 	@Test
-	void test1() throws Exception {
+	void testAddBudgetItem() throws Exception {
 		// given
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));
@@ -56,7 +56,7 @@ public class BudgetUnitTest {
 
 	@DisplayName("Given budget with two line items, when remove one item, then total cost is updated")
 	@Test
-	void test2() throws Exception {
+	void testRemoveBudgetItem() throws Exception {
 		// given
 		BudgetItem bItem1 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Cajas de bombillas", 2, Price.of(5.0));
 		BudgetItem bItem2 = new BudgetItem(BudgetItemId.of(UUID.randomUUID()), "Escalon de piedra", 4, Price.of(50.0));

@@ -1,4 +1,4 @@
-package es.jmmluna.tim;
+package es.jmmluna.tim.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -39,7 +39,7 @@ import es.jmmluna.tim.infrastructure.TimApplication;
 @TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("test")
 //@Sql({"classpath:budget-test-data.sql", "classpath:budgetItem-test-data.sql"})
-public class BudgetTests {
+public class BudgetIT {
 
 	@Autowired
 	private GetBudget getBudget;

@@ -1,4 +1,4 @@
-package es.jmmluna.tim;
+package es.jmmluna.tim.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @DisplayName("Employee test")
 //@ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
-public class EmployeeTests {
+public class EmployeeIT {
 
 	@Autowired
 	private EmployeeSaveService employeeSaveService;

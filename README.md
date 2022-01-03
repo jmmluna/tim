@@ -56,9 +56,9 @@ mvn -Dtest=CustomerTests#testCustomerCreation test
 
 ```
 
-## Generar informe de testing
+## Generar informe de test unitarios
 
-### Se generan los ficheros .xml de los tests
+### Se generan los ficheros .xml de los tests unitarios
 ```
 mvn test
 ```
@@ -73,6 +73,32 @@ mvn surefire-report:report-only
 
 ```
 mvn site -DgenerateReports=false
+```
+
+## Generar informe de test de integración
+
+La ejecución de los tests de integración ejecutan antes los tests unitarios.
+
+### Se generan los ficheros .xml de los tests de integración
+```
+mvn integration-test | mvn verify
+```
+
+Si solo se quiere ejecutar los test de integración: 
+
+```
+mvn failsafe:integration-test
+```
+
+### Se convierten los .xml en .html sin CSS ni imágenes
+
+```
+mvn surefire-report:failsafe-report-only
+```
+
+## Generar informes de test unitarios y de integración
+```
+mvn clean verify surefire-report:report-only surefire-report:failsafe-report-only site -DgenerateReports=false
 ```
 
 ## Entregable
