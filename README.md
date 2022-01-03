@@ -43,15 +43,15 @@ mvn test
 ### Ejecución de un conjunto de casos de usos
 
 ```
-mvn -Dtest=CustomerTests test
-mvn -Dtest=CustomerTests,EmployeeTests test
+mvn -Dtest=CustomerIT test
+mvn -Dtest=CustomerIT,EmployeeIT test
 
 ```
 
 ### Ejecución de un caso de uso concreto
 
 ```
-mvn -Dtest=CustomerTests#testCustomerCreation test
+mvn -Dtest=CustomerIT#testCustomerCreation test
 
 
 ```
