@@ -8,5 +8,5 @@ import es.jmmluna.tim.infrastructure.persistence.JpaGenericRepository;
 
 @Repository
 public interface BudgetJpaRepository  extends JpaGenericRepository<BudgetEntity, UUID> {
-
+	long countByYear(Integer year);
 }

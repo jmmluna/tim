@@ -1,5 +1,6 @@
 package es.jmmluna.tim.application.service.budget;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class BudgetDTO extends DTO {
 	private List<BudgetItemDTO> budgetItems;
 
 	public BudgetDTO() {
-
+		this.budgetItems = new ArrayList<BudgetItemDTO>();
 	}
 
 	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, Double cost, List<BudgetItemDTO> budgetItems) {

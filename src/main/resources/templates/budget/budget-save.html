@@ -71,19 +71,19 @@
 						</div>
 						<!-- 						https://www.baeldung.com/thymeleaf-list -->
 
-						<div class="col-md-5 mb-3">
-							<label for="name">Nº Presupuesto</label> <input type="text"
+						<div class="col-md-5 mb-3" th:if="${isEditBudget}">
+							<label for="budgetNumber">Nº Presupuesto</label> <input type="text"
 								class="form-control" th:field="*{budgetNumber}" id="name"
 								required>
 						</div>
-						<div class="col-md-6 mb-3">
-							<label for="surnames">Año</label> <input type="text"
+						<div class="col-md-6 mb-3" th:if="${isEditBudget}">
+							<label for="year">Año</label> <input type="text"
 								class="form-control" th:field="*{year}" id="year" value=""
 								required>
 						</div>
 
-						<div class="col-md-5 mb-3">
-							<label for="name">Fecha</label> <input type="text"
+						<div class="col-md-5 mb-3" th:if="${isEditBudget}">
+							<label for="date">Fecha</label> <input type="text"
 								class="form-control" th:field="*{date}" id="date" required>
 						</div>
 						<!-- 						<div class="col-md-5 mb-3"> -->
@@ -165,7 +165,7 @@
 									<!-- 									<tr th:each="budgetItemDTO : *{budgetItems}"> -->
 									<tr th:each="budgetItemDTO, itemStat : *{budgetItems}">
 										<!-- 										<td > -->
-										<input hidden th:name="|budgetItems[${itemStat.index}].uuid|"
+										<input type="hidden" th:name="|budgetItems[${itemStat.index}].uuid|"
 											th:value="${budgetItemDTO.uuid}" />
 
 										<!-- 											</td> -->
@@ -174,7 +174,7 @@
 											th:placeholder="Descripción + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].description}"
 											required /></td>
-										<td><input
+										<td><input size="2"
 											th:placeholder="Cantidad + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].quantity}"
 											required /></td>

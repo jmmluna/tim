@@ -83,7 +83,7 @@ public class BudgetController {
 	public String edit(@PathVariable("uuid") String uuid, Model model) {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isEditBudget", true);
-		model.addAttribute("customers", getCustomerList.execute(EElementList.ALL));
+		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
 		model.addAttribute("budget", uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
 		return "budget/budget-save";
 	}
@@ -92,6 +92,7 @@ public class BudgetController {
 	public String create(Model model) {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isAddBudget", true);
+		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
 		model.addAttribute("budget", new BudgetDTO());
 
 		return "budget/budget-save";

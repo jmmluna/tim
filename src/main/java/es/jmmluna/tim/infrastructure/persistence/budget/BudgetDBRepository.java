@@ -1,6 +1,7 @@
 package es.jmmluna.tim.infrastructure.persistence.budget;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,6 @@ public class BudgetDBRepository implements BudgetRepository {
 	public List<Budget> getActives() {
 		var entities = budgetRepository.findByExpirationDate(null);
 		return toList(entities);
-
 	}
 
 	@Override
@@ -69,6 +69,12 @@ public class BudgetDBRepository implements BudgetRepository {
 		var budgets = new ArrayList<Budget>();
 		budgetEntities.forEach(entity -> budgets.add(mapper.toModel(entity)));
 		return budgets;
+	}
+	
+	@Override
+	public Integer getNextBudgetNumber() {
+		Long count = budgetRepository.countByYear(LocalDate.now().getYear());
+		return count.intValue();
 	}
 
 	@Override

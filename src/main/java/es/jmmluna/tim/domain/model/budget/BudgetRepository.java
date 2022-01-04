@@ -14,5 +14,7 @@ public interface BudgetRepository extends CommonRepository<Budget, BudgetId>{
 	public List<Budget> getInactives();	
 	
 	public UUID getNextIdentifier();
+	
+	public Integer getNextBudgetNumber();
 
 }
