@@ -21,6 +21,7 @@ import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -42,6 +43,10 @@ public class BudgetController {
 
 	@Autowired
 	private GetBudget getBudget;
+	
+	@Autowired
+	private GetCustomerList getCustomerList;
+
 
 	@GetMapping("/list")
 	public String getCustomers(Model model) {
@@ -78,6 +83,7 @@ public class BudgetController {
 	public String edit(@PathVariable("uuid") String uuid, Model model) {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isEditBudget", true);
+		model.addAttribute("customers", getCustomerList.execute(EElementList.ALL));
 		model.addAttribute("budget", uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
 		return "budget/budget-save";
 	}

@@ -46,11 +46,24 @@
 
 
 						<input type="hidden" class="form-control" th:field="*{uuid}"
-							id="uuid"> <input type="hidden" class="form-control"
-							th:field="*{customerId}" id="customerId">
+							id="uuid">
+
+						<!-- 						<input type="hidden" class="form-control" -->
+						<!-- 							th:field="*{customerId}" id="customerId"> -->
+
+						<div class="col-md-5 mb-3">
+							<label for="name">CLIENTE</label> <select class="form-control"
+								th:field="*{customerId}">
+
+								<option th:each="customer : ${customers}"
+									th:value="${customer.uuid}"
+									th:text="${customer.name} + ' ' + ${customer.surnames}"
+									th:selected="${customer.uuid} == ${budget.customerId}"></option>
+							</select>
+						</div>
 
 
-
+						<!--  -->
 						<div class="col-md-5 mb-3">
 							<label for="name">DESCRIPCIÓN</label> <input type="text"
 								class="form-control" th:field="*{description}" id="description"
@@ -130,7 +143,7 @@
 								<thead class="table-dark">
 
 									<tr>
-<!-- 										<th>Id</th> -->
+										<!-- 										<th>Id</th> -->
 										<th class="text-center">Descripción</th>
 										<th class="text-center">Cantidad</th>
 										<th class="text-center">Precio <i
@@ -151,13 +164,12 @@
 
 									<!-- 									<tr th:each="budgetItemDTO : *{budgetItems}"> -->
 									<tr th:each="budgetItemDTO, itemStat : *{budgetItems}">
-<!-- 										<td > -->
-										<input hidden
-											th:name="|budgetItems[${itemStat.index}].uuid|"
+										<!-- 										<td > -->
+										<input hidden th:name="|budgetItems[${itemStat.index}].uuid|"
 											th:value="${budgetItemDTO.uuid}" />
-											
-<!-- 											</td> -->
-<!-- 										<td><input th:placeholder="UUID + ' ' + ${itemStat.count}" th:field="*{budgetItems[__${itemStat.index}__].uuid}" required/></td> -->
+
+										<!-- 											</td> -->
+										<!-- 										<td><input th:placeholder="UUID + ' ' + ${itemStat.count}" th:field="*{budgetItems[__${itemStat.index}__].uuid}" required/></td> -->
 										<td><input
 											th:placeholder="Descripción + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].description}"
