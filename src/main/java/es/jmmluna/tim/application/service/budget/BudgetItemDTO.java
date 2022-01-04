@@ -1,6 +1,5 @@
 package es.jmmluna.tim.application.service.budget;
 
-import java.util.Date;
 import java.util.UUID;
 
 import es.jmmluna.tim.application.service.DTO;
@@ -18,15 +17,14 @@ public class BudgetItemDTO extends DTO {
 
 	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price) {
 		this.uuid = uuid;
-//		this.budgetId = budgetId;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
 	}
 
-	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price,
-			Date expirationDate) {
-		this(uuid, description, quantity, price);
-		this.setExpirationDate(expirationDate);
-	}
+//	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price,
+//			Date expirationDate) {
+//		this(uuid, description, quantity, price);
+//		this.setExpirationDate(expirationDate);
+//	}
 }

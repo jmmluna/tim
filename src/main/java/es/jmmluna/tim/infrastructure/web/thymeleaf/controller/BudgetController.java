@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +21,11 @@ import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/budgets")
+@Slf4j
 public class BudgetController {
 
 	@Autowired
@@ -91,6 +94,7 @@ public class BudgetController {
 	@PostMapping("save")
 	public String save(BudgetDTO budget, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			log.info("***********************************************" + result.toString());
 			return "budget/budget-save";
 		}
 
@@ -98,6 +102,15 @@ public class BudgetController {
 			createBudget.execute(budget);
 		else
 			updateBudget.execute(budget);
+		
+//		log.info("***********************************************" + budget.getDescription());
+//		if(budget.getBudgetItems() == null)
+//			log.info("*********************************************** Items es nulo");
+//		else
+//			log.info("*********************************************** Items: " + budget.getBudgetItems().size());
+//		return "budget/budget-save";
+		
+//		log.info("*********************************************** Item 1 (uuid): " + budget.getBudgetItems().get(0).getUuid());
 		return "redirect:/budgets/list/actives";
 	}
 
