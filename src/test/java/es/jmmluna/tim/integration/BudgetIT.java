@@ -31,6 +31,8 @@ import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.RemoveBudgetItem;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
+import es.jmmluna.tim.application.service.customer.CustomerDTO;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
 
@@ -64,6 +66,9 @@ public class BudgetIT {
 	
 	@Autowired
 	private RemoveBudgetItem removeBudgetItem;
+	
+	@Autowired
+	private GetCustomer getCustomer;
 
 	@Test
 	@Sql("classpath:drop-all.sql")
@@ -96,7 +101,7 @@ public class BudgetIT {
 		var budgetDTO = getBudget.execute(uuid);
 		
 		// then
-		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), budgetDTO.getCustomerId());
+		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), budgetDTO.getCustomerDTO().getUuid());
 	}
 	
 	@Test
@@ -210,7 +215,7 @@ public class BudgetIT {
 	private BudgetDTO getExternalBudget(boolean withUUID) {
 		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
 		UUID budgetId = withUUID ? UUID.randomUUID() : null;
-		UUID customerId = UUID.fromString("123e4567-e89b-12d3-a456-556642440002");
-		return new BudgetDTO(budgetId, customerId,"Presupuesto de prueba", 1000, 2021, new Date(), 0.0, budgetItems);
+		var customerDTO = getCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440002"));
+		return new BudgetDTO(budgetId, customerDTO, "Presupuesto de prueba", 1000, 2021, new Date(), 0.0, budgetItems);
 	}
 }

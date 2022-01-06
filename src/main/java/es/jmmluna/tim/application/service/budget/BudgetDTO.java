@@ -8,11 +8,12 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import es.jmmluna.tim.application.service.DTO;
+import es.jmmluna.tim.application.service.customer.CustomerDTO;
 import lombok.Data;
 
 @Data
 public class BudgetDTO extends DTO {
-	private UUID customerId;
+	private CustomerDTO customerDTO;
 	private String description;
 	private Integer budgetNumber;
 	private Integer year;
@@ -25,23 +26,24 @@ public class BudgetDTO extends DTO {
 		this.budgetItems = new ArrayList<BudgetItemDTO>();
 	}
 
-	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, Double cost, List<BudgetItemDTO> budgetItems) {
+	public BudgetDTO(UUID uuid, CustomerDTO customerDTO, String description, Integer budgetNumber, Integer year,
+			Date date, Double cost, List<BudgetItemDTO> budgetItems) {
 		this.uuid = uuid;
-		this.customerId = customerId;
+		this.customerDTO = customerDTO;
 		this.description = description;
 		this.budgetNumber = budgetNumber;
 		this.year = year;
 		this.date = date;
-		this.cost =cost;
+		this.cost = cost;
 		this.budgetItems = budgetItems;
 	}
 
-	public BudgetDTO(UUID uuid, UUID customerId, String description, Integer budgetNumber, Integer year, Date date, Double cost, List<BudgetItemDTO> budgetItems,
-			Date expirationDate) {
-		this(uuid, customerId, description, budgetNumber, year, date, cost, budgetItems);
+	public BudgetDTO(UUID uuid, CustomerDTO customerDTO, String description, Integer budgetNumber, Integer year,
+			Date date, Double cost, List<BudgetItemDTO> budgetItems, Date expirationDate) {
+		this(uuid, customerDTO, description, budgetNumber, year, date, cost, budgetItems);
 		this.setExpirationDate(expirationDate);
 	}
-	
+
 	public void add(BudgetItemDTO budgetItemDTO) {
 		budgetItems.add(budgetItemDTO);
 	}

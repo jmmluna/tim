@@ -53,13 +53,13 @@
 						<!-- 							th:field="*{customerId}" id="customerId"> -->
 
 						<div class="col-md-5 mb-3">
-							<label for="name">CLIENTE</label> <select disabled class="form-control"
-								th:field="*{customerId}">
+							<label for="name">CLIENTE</label> <select  class="form-control"
+								th:field="*{customerDTO.uuid}">
 
 								<option th:each="customer : ${customers}"
 									th:value="${customer.uuid}"
 									th:text="${customer.name} + ' ' + ${customer.surnames}"
-									th:selected="${customer.uuid} == ${budget.customerId}"></option>
+									th:selected="${customer.uuid} == ${budget.customerDTO.uuid}"></option>
 							</select>
 						</div>
 

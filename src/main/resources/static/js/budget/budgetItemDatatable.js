@@ -5,11 +5,15 @@ $(document).ready(function() {
 		{
 
 			"columnDefs": [
-//				{
-//					"targets": [0],
-//					"visible": true,
-//					"searchable": false
-//				},
+
+				{//description column
+					"targets": [0],
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					orderable: true
+				},
+
 				{//quantity column
 					"targets": [1],
 					"visible": true,

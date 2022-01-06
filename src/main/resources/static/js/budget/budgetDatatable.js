@@ -12,15 +12,29 @@ $(document).ready(function() {
 					"visible": false,
 					"searchable": false
 				},
-				{
+				{ //customer column
+					"targets": [1],
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					orderable: true
+				},
+				{ //description column
 					"targets": [2],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
 					orderable: true
 				},
-				{ // Total
+				{ //date column
 					"targets": [3],
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					orderable: true
+				},
+				{ // Total column
+					"targets": [4],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
@@ -31,21 +45,21 @@ $(document).ready(function() {
 				}
 				,
 				{//state column
-					"targets": [4],
-					"visible": true,
-					"searchable": false,
-					className: "text-center",
-					orderable: false
-				},
-				{//edit column
 					"targets": [5],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
 					orderable: false
 				},
-				{//delete column
+				{//edit column
 					"targets": [6],
+					"visible": true,
+					"searchable": false,
+					className: "text-center",
+					orderable: false
+				},
+				{//delete column
+					"targets": [7],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",

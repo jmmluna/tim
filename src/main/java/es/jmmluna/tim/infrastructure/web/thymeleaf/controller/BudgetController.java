@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/budgets")
 @Slf4j
 public class BudgetController {
-
+	private static String NO_UUID = null;
 	@Autowired
 	private CreateBudget createBudget;
 
@@ -91,11 +91,15 @@ public class BudgetController {
 		model.addAttribute("isEditBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
 		model.addAttribute("budgetItem", new BudgetItemDTO());
-		if (budgetDTOForAddItem == null)
-			model.addAttribute("budget",
-					uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
-		else
-			model.addAttribute("budget", budgetDTOForAddItem);
+		
+		
+		checkAddItem(model, uuid);
+//		if (budgetDTOForAddItem == null)
+//			model.addAttribute("budget",
+//					uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
+//		else
+//			model.addAttribute("budget", budgetDTOForAddItem);
+		
 		return "budget/budget-save";
 	}
 
@@ -104,7 +108,10 @@ public class BudgetController {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isAddBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
-		model.addAttribute("budget", new BudgetDTO());
+		model.addAttribute("budgetItem", new BudgetItemDTO());
+//		model.addAttribute("budget", new BudgetDTO());
+		
+		checkAddItem(model, NO_UUID);
 
 		return "budget/budget-save";
 	}
@@ -113,14 +120,17 @@ public class BudgetController {
 	public RedirectView addBudgetItem(String budgetDescription, BudgetItemDTO budgetItem, RedirectAttributes redirectAttributes) {
 						
 		if (this.budgetDTOForAddItem == null)
-			this.budgetDTOForAddItem = getBudget.execute(budgetItem.getBudgetId());
+			this.budgetDTOForAddItem = budgetItem.getBudgetId()!=null? getBudget.execute(budgetItem.getBudgetId()): new BudgetDTO();
 
 		this.budgetDTOForAddItem.add(budgetItem);
 		this.budgetDTOForAddItem.setDescription(budgetDescription);
 		String message = "Nuevo elemento añadido!! " + budgetDescription;
 		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
 
+		if(budgetItem.getBudgetId() !=null)
 		return new RedirectView("/budgets/save/" + budgetItem.getBudgetId(), true);
+		else 
+			return new RedirectView("/budgets/save", true);
 	}
 
 	@PostMapping("save")
@@ -142,5 +152,13 @@ public class BudgetController {
 		disableBudget.execute(UUID.fromString(uuid));
 
 		return "redirect:/budgets/list/actives";
+	}
+	
+	private void checkAddItem(Model model, String uuid) {
+		if (budgetDTOForAddItem == null)
+			model.addAttribute("budget",
+					uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
+		else
+			model.addAttribute("budget", budgetDTOForAddItem);
 	}
 }

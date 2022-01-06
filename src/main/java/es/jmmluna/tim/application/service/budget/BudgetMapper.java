@@ -3,8 +3,10 @@ package es.jmmluna.tim.application.service.budget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.domain.model.Price;
 import es.jmmluna.tim.domain.model.budget.Budget;
 import es.jmmluna.tim.domain.model.budget.BudgetId;
@@ -15,9 +17,13 @@ import es.jmmluna.tim.domain.model.customer.CustomerId;
 @Component
 public class BudgetMapper {
 
+	@Autowired
+	private GetCustomer getCustomer;
+	
 	public BudgetDTO toDTO(Budget budget) {
-
-		return new BudgetDTO(budget.getBudgetId().getValue(), budget.getCustomerId().getValue(),
+		var customerDTO = getCustomer.execute(budget.getCustomerId().getValue());
+		
+		return new BudgetDTO(budget.getBudgetId().getValue(), customerDTO,
 				budget.getDescription(), budget.getBudgetNumber(), budget.getYear(), budget.getDate(),
 				budget.getTotalCost().getValue(), toBudgetItemDTOList(budget.getBudgetItems()),
 				budget.getExpirationDate());
@@ -26,7 +32,7 @@ public class BudgetMapper {
 
 	public Budget toModel(BudgetDTO budgetDTO) {
 
-		return new Budget(BudgetId.of(budgetDTO.getUuid()), CustomerId.of(budgetDTO.getCustomerId()),
+		return new Budget(BudgetId.of(budgetDTO.getUuid()), CustomerId.of(budgetDTO.getCustomerDTO().getUuid()),
 				budgetDTO.getBudgetNumber(), budgetDTO.getDescription(), budgetDTO.getYear(), budgetDTO.getDate(),
 				toBudgetItemList(budgetDTO.getBudgetItems()), budgetDTO.getExpirationDate());
 	}
