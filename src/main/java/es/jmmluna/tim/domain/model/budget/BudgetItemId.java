@@ -15,6 +15,7 @@ public class BudgetItemId {
 	}
 
 	public static BudgetItemId of(UUID uuid) {
+		if(uuid == null) uuid = UUID.randomUUID();
 		return new BudgetItemId(uuid);
 	}
 

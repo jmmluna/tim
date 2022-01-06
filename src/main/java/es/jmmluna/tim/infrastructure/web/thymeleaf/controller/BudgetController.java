@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.jmmluna.tim.application.service.EElementList;
 import es.jmmluna.tim.application.service.budget.BudgetDTO;
+import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
 import es.jmmluna.tim.application.service.budget.useCase.CreateBudget;
 import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
@@ -31,7 +34,7 @@ public class BudgetController {
 
 	@Autowired
 	private CreateBudget createBudget;
-	
+
 	@Autowired
 	private UpdateBudget updateBudget;
 
@@ -43,13 +46,15 @@ public class BudgetController {
 
 	@Autowired
 	private GetBudget getBudget;
-	
+
 	@Autowired
 	private GetCustomerList getCustomerList;
 
+	private BudgetDTO budgetDTOForAddItem;
 
 	@GetMapping("/list")
 	public String getCustomers(Model model) {
+		this.budgetDTOForAddItem = null;
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isBudgetList", true);
 		model.addAttribute("isAllBudgetList", true);
@@ -59,6 +64,7 @@ public class BudgetController {
 
 	@GetMapping("/list/{filter}")
 	public String getBudgetilter(@PathVariable("filter") String filter, Model model) {
+		this.budgetDTOForAddItem = null;
 		List<BudgetDTO> budgets = new ArrayList<BudgetDTO>();
 		switch (filter) {
 
@@ -84,7 +90,12 @@ public class BudgetController {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isEditBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
-		model.addAttribute("budget", uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
+		model.addAttribute("budgetItem", new BudgetItemDTO());
+		if (budgetDTOForAddItem == null)
+			model.addAttribute("budget",
+					uuid != null && !uuid.isEmpty() ? getBudget.execute(UUID.fromString(uuid)) : new BudgetDTO());
+		else
+			model.addAttribute("budget", budgetDTOForAddItem);
 		return "budget/budget-save";
 	}
 
@@ -98,26 +109,31 @@ public class BudgetController {
 		return "budget/budget-save";
 	}
 
+	@PostMapping("addItem")
+	public RedirectView addBudgetItem(String budgetDescription, BudgetItemDTO budgetItem, RedirectAttributes redirectAttributes) {
+						
+		if (this.budgetDTOForAddItem == null)
+			this.budgetDTOForAddItem = getBudget.execute(budgetItem.getBudgetId());
+
+		this.budgetDTOForAddItem.add(budgetItem);
+		this.budgetDTOForAddItem.setDescription(budgetDescription);
+		String message = "Nuevo elemento añadido!! " + budgetDescription;
+		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
+
+		return new RedirectView("/budgets/save/" + budgetItem.getBudgetId(), true);
+	}
+
 	@PostMapping("save")
 	public String save(BudgetDTO budget, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			log.info("***********************************************" + result.toString());
+		if (result.hasErrors()) {			
 			return "budget/budget-save";
 		}
 
-		if(budget.getUuid() == null) 
+		if (budget.getUuid() == null)
 			createBudget.execute(budget);
 		else
 			updateBudget.execute(budget);
-		
-//		log.info("***********************************************" + budget.getDescription());
-//		if(budget.getBudgetItems() == null)
-//			log.info("*********************************************** Items es nulo");
-//		else
-//			log.info("*********************************************** Items: " + budget.getBudgetItems().size());
-//		return "budget/budget-save";
-		
-//		log.info("*********************************************** Item 1 (uuid): " + budget.getBudgetItems().get(0).getUuid());
+
 		return "redirect:/budgets/list/actives";
 	}
 
@@ -126,5 +142,5 @@ public class BudgetController {
 		disableBudget.execute(UUID.fromString(uuid));
 
 		return "redirect:/budgets/list/actives";
-	}	
+	}
 }

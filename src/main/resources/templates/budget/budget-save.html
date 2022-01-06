@@ -13,6 +13,7 @@
 <script type="text/javascript"
 	th:src="@{/js/budget/budgetItemDatatable.js}"></script>
 <script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
+<script type="text/javascript" th:src="@{/js/copyAttributeValue.js}"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -52,7 +53,7 @@
 						<!-- 							th:field="*{customerId}" id="customerId"> -->
 
 						<div class="col-md-5 mb-3">
-							<label for="name">CLIENTE</label> <select class="form-control"
+							<label for="name">CLIENTE</label> <select disabled class="form-control"
 								th:field="*{customerId}">
 
 								<option th:each="customer : ${customers}"
@@ -67,23 +68,23 @@
 						<div class="col-md-5 mb-3">
 							<label for="name">DESCRIPCIÓN</label> <input type="text"
 								class="form-control" th:field="*{description}" id="description"
-								required>
+								required onkeyUp="return copyValue('description', 'budgetDescription')">
 						</div>
 						<!-- 						https://www.baeldung.com/thymeleaf-list -->
 
 						<div class="col-md-5 mb-3" th:if="${isEditBudget}">
-							<label for="budgetNumber">Nº Presupuesto</label> <input type="text"
-								class="form-control" th:field="*{budgetNumber}" id="name"
-								required>
+							<label for="budgetNumber">Nº Presupuesto</label> <input readonly
+								type="text" class="form-control" th:field="*{budgetNumber}"
+								id="name" required>
 						</div>
 						<div class="col-md-6 mb-3" th:if="${isEditBudget}">
-							<label for="year">Año</label> <input type="text"
+							<label for="year">Año</label> <input type="text" readonly
 								class="form-control" th:field="*{year}" id="year" value=""
 								required>
 						</div>
 
 						<div class="col-md-5 mb-3" th:if="${isEditBudget}">
-							<label for="date">Fecha</label> <input type="text"
+							<label for="date">Fecha</label> <input type="text" readonly
 								class="form-control" th:field="*{date}" id="date" required>
 						</div>
 						<!-- 						<div class="col-md-5 mb-3"> -->
@@ -121,6 +122,9 @@
 						</div>
 
 					</div>
+
+					<div th:if="${budgetItemMessage}" th:utext="${budgetItemMessage}"
+						class="alert alert-success text-center"></div>
 
 					<div class="card-body">
 
@@ -163,30 +167,38 @@
 									<!-- 							</tr> -->
 
 									<!-- 									<tr th:each="budgetItemDTO : *{budgetItems}"> -->
-									<tr th:each="budgetItemDTO, itemStat : *{budgetItems}">
+									<tr th:each="budgetItemDTO, itemStat : *{budgetItems}" 
+									th:style="${budgetItemDTO.uuid} ? '' : 'background: #fcb7a9'">
 										<!-- 										<td > -->
-										<input type="hidden" th:name="|budgetItems[${itemStat.index}].uuid|"
+										<input type="hidden"
+											th:name="|budgetItems[${itemStat.index}].uuid|"
 											th:value="${budgetItemDTO.uuid}" />
 
 										<!-- 											</td> -->
 										<!-- 										<td><input th:placeholder="UUID + ' ' + ${itemStat.count}" th:field="*{budgetItems[__${itemStat.index}__].uuid}" required/></td> -->
-										<td><input
+										
+										
+										
+										<input type="hidden"
 											th:placeholder="Descripción + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].description}"
-											required /></td>
-										<td><input size="2"
+											required />
+										<input type="hidden" size="2"
 											th:placeholder="Cantidad + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].quantity}"
-											required /></td>
-										<td><input
+											required />
+										<input type="hidden"
 											th:placeholder="Precio + ' ' + ${itemStat.count}"
 											th:field="*{budgetItems[__${itemStat.index}__].price}"
-											required /></td>
+											required />
+											
+											
+											
 
-										<!-- 										<td class="align-middle" th:text="${budgetItemDTO.uuid}"></td> -->
-										<!-- 										<td class="align-middle" th:text="${budgetItemDTO.description}"></td> -->
-										<!-- 										<td class="align-middle" th:text="${budgetItemDTO.quantity}"></td> -->
-										<!-- 										<td class="align-middle" th:text="${budgetItemDTO.price}"></td> -->
+<!-- 																				<td class="align-middle" th:text="${budgetItemDTO.uuid}"></td> -->
+																				<td class="align-middle" th:text="${budgetItemDTO.description}"></td>
+																				<td class="align-middle" th:text="${budgetItemDTO.quantity}"></td>
+																				<td class="align-middle" th:text="${budgetItemDTO.price}"></td>
 
 										<td class="align-middle"
 											th:text="${budgetItemDTO.price * budgetItemDTO.quantity}"></td>
@@ -203,32 +215,34 @@
 
 
 
-										<div class="modal fade"
-											th:id="'deleteConfirm' + ${budget.uuid}"
-											data-backdrop="static" data-keyboard="false" tabindex="-1"
-											aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title font-italic font-weight-bold"
-															id="staticBackdropLabel">Confirmación de borrado</h5>
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body font-weight-bold"
-														th:text="'¿Estás seguro de borrar el presupuesto ' + ${budget.description} + '?'">¿Estás
-														seguro de borrar el presupuesto ?</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">Cancelar</button>
-														<a type="button" class="btn btn-primary"
-															th:href="@{/budgets/delete/{uuid}(uuid=${budget.uuid})}">Borrar</a>
-													</div>
-												</div>
-											</div>
-										</div>
+										<!-- 										<div class="modal fade" -->
+										<!-- 											th:id="'deleteConfirm' + ${budget.uuid}" -->
+										<!-- 											data-backdrop="static" data-keyboard="false" tabindex="-1" -->
+										<!-- 											aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+										<!-- 											<div class="modal-dialog"> -->
+										<!-- 												<div class="modal-content"> -->
+										<!-- 													<div class="modal-header"> -->
+										<!-- 														<h5 class="modal-title font-italic font-weight-bold" -->
+										<!-- 															id="staticBackdropLabel">Confirmación de borrado</h5> -->
+										<!-- 														<button type="button" class="close" data-dismiss="modal" -->
+										<!-- 															aria-label="Close"> -->
+										<!-- 															<span aria-hidden="true">&times;</span> -->
+										<!-- 														</button> -->
+										<!-- 													</div> -->
+										<!-- 													<div class="modal-body font-weight-bold" -->
+										<!-- 														th:text="'¿Estás seguro de borrar el presupuesto ' + ${budget.description} + '?'">¿Estás -->
+										<!-- 														seguro de borrar el presupuesto ?</div> -->
+										<!-- 													<div class="modal-footer"> -->
+										<!-- 														<button type="button" class="btn btn-secondary" -->
+										<!-- 															data-dismiss="modal">Cancelar</button> -->
+										<!-- 														<a type="button" class="btn btn-primary" -->
+										<!-- 															th:href="@{/budgets/delete/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
+										<!-- 													</div> -->
+										<!-- 												</div> -->
+										<!-- 											</div> -->
+										<!-- 										</div> -->
+
+
 
 
 									</tr>
@@ -239,16 +253,79 @@
 					</div>
 					<!-- 					<button class="btn btn-success float-left ml-4" type="submit">Añadir</button> -->
 
-					<a th:href="@{/budgets/save}"
+					<a data-toggle="modal"
+						th:attr="data-target='#addBudgetItem'+${budget.uuid}"
 						class="btn btn-primary btn-circle btn ml-4"> <i
 						class="fas fa-file-invoice-dollar">+</i>
 					</a>
+
+
+
+
+
+
 					<button class="btn btn-success float-right " type="submit">Guardar</button>
 					<a class="btn btn-primary float-right mr-1"
 						href="javascript: history.go(-1)">Cancelar</a>
 				</div>
 			</div>
 		</form>
+
+<!--  begin add budget item -->
+
+		<form action="#" th:action="@{/budgets/addItem}"
+			th:object="${budgetItem}" method="post">
+
+			<div class="modal fade" th:id="'addBudgetItem' + ${budget.uuid}"
+				data-backdrop="static" data-keyboard="false" tabindex="-1"
+				aria-labelledby="newBudgetItem" aria-hidden="true">
+
+
+
+
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-italic font-weight-bold"
+								id="newBudgetItem">Nuevo elemento</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body ">
+
+
+							<input type="hidden" th:name="|budgetId|" th:value="${budget.uuid}" />
+
+							<input th:placeholder="Descripción" th:field="*{description}"
+								required /> 
+							
+							<input size="2" th:placeholder="Cantidad"
+								th:field="*{quantity}" required /> 
+								
+							<input
+								th:placeholder="Precio " th:field="*{price}" required />
+								
+								
+							<input type="hidden" th:value="${budget.description}" id="budgetDescription" name="budgetDescription"/>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<!-- 														<a type="button" class="btn btn-primary" -->
+							<!-- 															th:href="@{/budgets/delete/{uuid}(uuid=${budget.uuid})}">Aceptar</a> -->
+							<button class="btn btn-success float-right " type="submit">Añadir</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+		
+		<!--  end add budget item -->
 
 	</section>
 

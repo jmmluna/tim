@@ -41,4 +41,8 @@ public class BudgetDTO extends DTO {
 		this(uuid, customerId, description, budgetNumber, year, date, cost, budgetItems);
 		this.setExpirationDate(expirationDate);
 	}
+	
+	public void add(BudgetItemDTO budgetItemDTO) {
+		budgetItems.add(budgetItemDTO);
+	}
 }

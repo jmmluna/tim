@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class BudgetItemDTO extends DTO {
+	private UUID budgetId;
 	private String description;
 	private Integer quantity;
 	private Double price;
@@ -21,6 +22,7 @@ public class BudgetItemDTO extends DTO {
 		this.quantity = quantity;
 		this.price = price;
 	}
+
 
 //	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price,
 //			Date expirationDate) {
