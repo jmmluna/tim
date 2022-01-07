@@ -3,55 +3,53 @@ $(document).ready(function() {
 
 	$('#budgetItemDataTable').DataTable(
 		{
+			 "scrollY":        "200px",
+//        "scrollCollapse": true,
+        "paging":         false,
 
 			"columnDefs": [
-
 				{//description column
 					"targets": [0],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
-					orderable: true
+					"orderable": true
 				},
-
 				{//quantity column
 					"targets": [1],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
-					orderable: true
+					"orderable": true
 				},
 				{ // Price column
 					"targets": [2],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					orderable: true,
+					"orderable": true,
 					"render": function(data, type, row) {
 						return "<b>" + data + ' <i class="fas fa-euro-sign"></i></b>';
 					},
 				},
-				
+
 				{ // Total column
 					"targets": [3],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					orderable: true,
+					"orderable": true,
 					"render": function(data, type, row) {
 						return "<b>" + data + ' <i class="fas fa-euro-sign"></i></b>';
 					},
-				}
-				,
-
+				},
 				{//delete column
 					"targets": [4],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
-					orderable: false
+					"orderable": false
 				}
-
 			],
 			select: true,
 			"language": {

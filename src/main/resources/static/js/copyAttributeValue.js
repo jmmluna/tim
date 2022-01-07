@@ -1,7 +1,5 @@
 function copyValue(from, to) {
-	var description = document.getElementById(from); //"description"
-	var budgetDescription = document.getElementById(to); //"budgetDescription"
-//	
+	const description = document.getElementById(from);
+	const budgetDescription = document.getElementById(to);
     budgetDescription.value = description.value;
-//alert(budgetDescription.value)
 }

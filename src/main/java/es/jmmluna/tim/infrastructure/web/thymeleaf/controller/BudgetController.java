@@ -24,6 +24,8 @@ import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
+import es.jmmluna.tim.application.service.customer.CustomerDTO;
+import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +51,9 @@ public class BudgetController {
 
 	@Autowired
 	private GetCustomerList getCustomerList;
+	
+	@Autowired
+	private GetCustomer getCustomer;
 
 	private BudgetDTO budgetDTOForAddItem;
 
@@ -117,15 +122,17 @@ public class BudgetController {
 	}
 
 	@PostMapping("addItem")
-	public RedirectView addBudgetItem(String budgetDescription, BudgetItemDTO budgetItem, RedirectAttributes redirectAttributes) {
+	public RedirectView addBudgetItem(String uuidSelectedCustomer, String selectedBudgetDescription, BudgetItemDTO budgetItem, RedirectAttributes redirectAttributes) {
 						
 		if (this.budgetDTOForAddItem == null)
 			this.budgetDTOForAddItem = budgetItem.getBudgetId()!=null? getBudget.execute(budgetItem.getBudgetId()): new BudgetDTO();
 
 		this.budgetDTOForAddItem.add(budgetItem);
-		this.budgetDTOForAddItem.setDescription(budgetDescription);
-		String message = "Nuevo elemento añadido!! " + budgetDescription;
-		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
+		this.budgetDTOForAddItem.setDescription(selectedBudgetDescription);
+		this.budgetDTOForAddItem.setCustomerDTO(getCustomer.execute(UUID.fromString(uuidSelectedCustomer)));
+		
+//		String message = "Nuevo elemento añadido!! " + selectedBudgetDescription + "  "+ uuidSelectedCustomer;
+//		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
 
 		if(budgetItem.getBudgetId() !=null)
 		return new RedirectView("/budgets/save/" + budgetItem.getBudgetId(), true);
