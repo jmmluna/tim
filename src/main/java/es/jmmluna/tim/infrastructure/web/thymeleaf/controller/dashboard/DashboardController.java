@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import es.jmmluna.tim.application.service.budget.useCase.GetActiveBudgetCount;
 import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialCountService;
 import es.jmmluna.tim.application.service.customer.useCase.GetActiveCustomerCount;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
@@ -22,12 +23,16 @@ public class DashboardController {
 	private GetActiveCustomerCount customerCountService;
 	@Autowired
 	private ConstructionMaterialCountService constructionMaterialCountService;
+	@Autowired
+	private GetActiveBudgetCount getActiveBudgetCount;
+	
 	@GetMapping
 	public String home(Model model) {
 		Dashboard dashboard = new Dashboard();
 		dashboard.setEmployeeTotal(employeeCountService.execute());
 		dashboard.setCustomerTotal(customerCountService.execute());
 		dashboard.setConstructionMaterialTotal(constructionMaterialCountService.execute());
+		dashboard.setBudgetTotal(getActiveBudgetCount.execute());
 		
 		model.addAttribute("isDashboard",true);		
 		model.addAttribute("dashboard", dashboard);						
