@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -121,7 +122,7 @@ public class BudgetController {
 		return "budget/budget-save";
 	}
 
-	@PostMapping("addItem")
+	@PostMapping("item/add")
 	public RedirectView addBudgetItem(String uuidSelectedCustomer, String selectedBudgetDescription, BudgetItemDTO budgetItem, RedirectAttributes redirectAttributes) {
 						
 		if (this.budgetDTOForAddItem == null)
@@ -139,6 +140,29 @@ public class BudgetController {
 		else 
 			return new RedirectView("/budgets/save", true);
 	}
+	
+//	@GetMapping("item/delete/{index}/budget/{uuid}")
+//	String uuidSelectedCustomer, String selectedBudgetDescription, 
+	
+//	public RedirectView deleteBudgetItem(@PathVariable("index")Integer itemId, @PathVariable("uuid") String budgetId, Model model, RedirectAttributes redirectAttributes) {
+	@GetMapping("item/delete")	
+	public RedirectView deleteBudgetItem(@RequestParam(value = "itemIndex", required = true) Integer itemIndex, @RequestParam(value = "budgetId", required = true) String budgetId,  Model model, RedirectAttributes redirectAttributes) {
+		
+		if (this.budgetDTOForAddItem == null)
+			this.budgetDTOForAddItem = budgetId!=null? getBudget.execute(UUID.fromString(budgetId)): new BudgetDTO();
+
+		this.budgetDTOForAddItem.remove(itemIndex);
+//		this.budgetDTOForAddItem.setDescription(selectedBudgetDescription);
+//		this.budgetDTOForAddItem.setCustomerDTO(getCustomer.execute(UUID.fromString(uuidSelectedCustomer)));
+		
+		String message = "Nuevo elemento eliminado!! " + itemIndex +  " " + budgetId;
+		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
+		
+		if(budgetId !=null)
+			return new RedirectView("/budgets/save/" + budgetId, true);
+			else 
+				return new RedirectView("/budgets/save", true);
+	}
 
 	@PostMapping("save")
 	public String save(BudgetDTO budget, BindingResult result, Model model) {
@@ -148,8 +172,8 @@ public class BudgetController {
 
 		if (budget.getUuid() == null)
 			createBudget.execute(budget);
-		else
-			updateBudget.execute(budget);
+		else 
+			updateBudget.execute(budget);		
 
 		return "redirect:/budgets/list/actives";
 	}

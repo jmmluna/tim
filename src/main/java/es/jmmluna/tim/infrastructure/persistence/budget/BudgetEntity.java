@@ -29,7 +29,7 @@ public class BudgetEntity {
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne //(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CUSTOMERS_UUID", referencedColumnName = "uuid")
 	private CustomerEntity customer;
 	@Column(name = "BUDGET_NUMBER")
@@ -41,7 +41,7 @@ public class BudgetEntity {
 	@Column(name = "YEAR")
 	private Integer year;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "budgetEntity") // fetch = FetchType.EAGER
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "budgetEntity") // fetch = FetchType.EAGER
 	private List<BudgetItemEntity> budgetItems;
 
 	@Column(name = "EXPIRATION_DATE")

@@ -20,7 +20,7 @@ public class BudgetItemEntity {
 	@Id
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false,  fetch = FetchType.EAGER) //cascade = CascadeType.ALL,
 	@JoinColumn(name = "BUDGET_UUID", nullable = false)
 	private BudgetEntity budgetEntity;
 	@Column(name = "DESCRIPTION")

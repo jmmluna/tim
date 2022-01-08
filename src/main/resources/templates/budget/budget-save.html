@@ -110,8 +110,8 @@
 
 					</div>
 
-					<!-- 					<div th:if="${budgetItemMessage}" th:utext="${budgetItemMessage}" -->
-					<!-- 						class="alert alert-success text-center"></div> -->
+					<div th:if="${budgetItemMessage}" th:utext="${budgetItemMessage}"
+						class="alert alert-success text-center"></div>
 
 					<div class="card-body">
 
@@ -166,44 +166,73 @@
 
 										<td class="align-middle"><a class="btn btn-danger"
 											data-toggle="modal"
-											th:attr="data-target='#deleteConfirm'+${budgetItemDTO.uuid }"><i
+											th:attr="data-target='#deleteConfirm'+${itemStat.index}"><i
 												class="fas fa-trash-alt ml-1"></i></a></td>
 
+										<!--  **********************************Begin delete budget item -->
+
+										<div class="modal fade"
+											th:id="'deleteConfirm' + ${itemStat.index}"
+											data-backdrop="static" data-keyboard="false" tabindex="-1"
+											aria-labelledby="deleteBudgetItem" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title font-italic font-weight-bold"
+															id="deleteBudgetItem">Confirmación de borrado</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body font-weight-bold"
+														th:text="'¿Estás seguro de borrar el elemento ' + ${budgetItemDTO.description} + '?'">¿Estás
+														seguro de borrar el elemento del presupuesto ?</div>
 
 
 
+													<!-- 	String uuidSelectedCustomer, String selectedBudgetDescription, String elementId, UUID budgetId, -->
 
-										<!-- 										<div class="modal fade" -->
-										<!-- 											th:id="'deleteConfirm' + ${budget.uuid}" -->
-										<!-- 											data-backdrop="static" data-keyboard="false" tabindex="-1" -->
-										<!-- 											aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
-										<!-- 											<div class="modal-dialog"> -->
-										<!-- 												<div class="modal-content"> -->
-										<!-- 													<div class="modal-header"> -->
-										<!-- 														<h5 class="modal-title font-italic font-weight-bold" -->
-										<!-- 															id="staticBackdropLabel">Confirmación de borrado</h5> -->
-										<!-- 														<button type="button" class="close" data-dismiss="modal" -->
-										<!-- 															aria-label="Close"> -->
-										<!-- 															<span aria-hidden="true">&times;</span> -->
-										<!-- 														</button> -->
-										<!-- 													</div> -->
-										<!-- 													<div class="modal-body font-weight-bold" -->
-										<!-- 														th:text="'¿Estás seguro de borrar el presupuesto ' + ${budget.description} + '?'">¿Estás -->
-										<!-- 														seguro de borrar el presupuesto ?</div> -->
-										<!-- 													<div class="modal-footer"> -->
-										<!-- 														<button type="button" class="btn btn-secondary" -->
-										<!-- 															data-dismiss="modal">Cancelar</button> -->
-										<!-- 														<a type="button" class="btn btn-primary" -->
-										<!-- 															th:href="@{/budgets/delete/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
-										<!-- 													</div> -->
-										<!-- 												</div> -->
-										<!-- 											</div> -->
-										<!-- 										</div> -->
+													<!-- 														<input type="text" name="budgetId" -->
+													<!-- 															th:value="${budget.uuid}" /> -->
+
+													<!-- 									<input type="hidden" -->
+													<!-- 									th:value="${budget.description}" id="selectedBudgetDescription" -->
+													<!-- 									name="selectedBudgetDescription" />  -->
+
+													<!-- 									<input type="hidden" -->
+													<!-- 									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer" -->
+													<!-- 									name="uuidSelectedCustomer" /> -->
+
+													<!-- 														<input type="text" th:value="${itemStat.index}"															 -->
+													<!-- 															name="elementId" /> -->
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Cancelar</button>
+
+														<!-- 															<button class="btn btn-success float-right " -->
+														<!-- 																type="submit" th:form="'deleteConfirm' + ${itemStat.index} + 'Form'">Borrar</button> -->
+<!-- 														<a type="button" class="btn btn-primary" -->
+<!-- 															th:href="@{/budgets/delete/item/{id}(id=${itemStat.index})/budget/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
+
+<!-- 															<a type="button" class="btn btn-primary" -->
+<!-- 															th:href="@{/budgets/delete/item/{index}/budget/{uuid}(index=${itemStat.index}, uuid=${budget.uuid})}">Borrar</a> -->
+															
+																<a type="button" class="btn btn-primary"
+															th:href="@{/budgets/item/delete(itemIndex = ${itemStat.index}, budgetId = ${budget.uuid})}">Borrar</a>
+															
+													</div>
+												</div>
+											</div>
+										</div>
 
 
 
-
+										<!--********************************* End delete budget item -->
 									</tr>
+
+
 								</tbody>
 
 							</table>
@@ -223,9 +252,9 @@
 			</div>
 		</form>
 
-		<!--  begin add budget item -->
+		<!--  **********************************Begin add budget item -->
 
-		<form action="#" th:action="@{/budgets/addItem}"
+		<form action="#" th:action="@{/budgets/item/add}"
 			th:object="${budgetItem}" method="post">
 
 			<div class="modal fade" th:id="'addBudgetItem' + ${budget.uuid}"
@@ -273,9 +302,6 @@
 
 							</div>
 
-
-
-
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
@@ -289,7 +315,8 @@
 
 		</form>
 
-		<!--  end add budget item -->
+		<!--********************************* End add budget item -->
+
 
 	</section>
 

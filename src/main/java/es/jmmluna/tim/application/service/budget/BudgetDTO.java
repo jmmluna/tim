@@ -47,4 +47,8 @@ public class BudgetDTO extends DTO {
 	public void add(BudgetItemDTO budgetItemDTO) {
 		budgetItems.add(budgetItemDTO);
 	}
+	
+	public void remove(Integer index) {
+		budgetItems.remove(index.intValue());
+	}
 }
