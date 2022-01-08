@@ -1,10 +1,16 @@
 package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import com.lowagie.text.DocumentException;
 
 import es.jmmluna.tim.application.service.EElementList;
 import es.jmmluna.tim.application.service.budget.BudgetDTO;
@@ -55,6 +66,10 @@ public class BudgetController {
 	
 	@Autowired
 	private GetCustomer getCustomer;
+	
+	@Autowired
+	private SpringTemplateEngine templateEngine;
+
 
 	private BudgetDTO budgetDTOForAddItem;
 
@@ -184,6 +199,55 @@ public class BudgetController {
 
 		return "redirect:/budgets/list/actives";
 	}
+	
+	@GetMapping("print")
+	public ResponseEntity<ByteArrayResource> print(Model model) {
+
+		ByteArrayOutputStream byteArrayOutputStreamPDF = generatePdfFromHtml(parseThymeleafTemplate());
+		ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=informe.pdf")
+				.contentType(MediaType.APPLICATION_PDF).contentLength(inputStreamResourcePDF.contentLength())
+				.body(inputStreamResourcePDF);
+
+	}
+
+	private String parseThymeleafTemplate() {
+		Context context = new Context();
+		context.setVariable("to", "Presupuesto jose");
+
+		return templateEngine.process("budget/budgetReportTemplate", context);
+	}
+	
+	public ByteArrayOutputStream generatePdfFromHtml(String html) {
+		String urlBase = "http://localhost:9080";
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+
+			ITextRenderer renderer = new ITextRenderer();
+			renderer.setDocumentFromString(html, urlBase);
+
+			renderer.layout();
+			renderer.createPDF(bos, false);
+			renderer.finishPDF();
+			log.info("PDF created correctamente");
+
+			return bos;
+		} catch (DocumentException e) {
+
+			throw new RuntimeException();
+		} finally {
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					log.error("Error creando pdf", e);
+				}
+			}
+		}
+
+	}
+
 	
 	private void checkAddItem(Model model, String uuid) {
 		if (budgetDTOForAddItem == null)

@@ -79,7 +79,7 @@
 								</th>
 <!-- 								<th class="text-center">Precio/trabajador <i -->
 <!-- 									class="fas fa-euro-sign"></i></th> -->
-								<th class="text-center">Estado</th>
+								<th class="text-center">Descargar</th>
 								<th class="text-center">Editar</th>
 								<th class="text-center">Eliminar</th>
 							</tr>
@@ -98,14 +98,21 @@
 <!-- 								<td class="align-middle" th:text="${employee.customerHourPrice}"></td> -->
 <!-- 								<td class="align-middle" th:text="${employee.employeeHourPrice}"></td> -->
 
-								<td
-									th:title="${#dates.format(budget.expirationDate, 'dd-MM-yyyy')}"
-									class="align-middle text-danger"
-									th:if="${budget.expirationDate}"><i
-									class="fas fa-file-invoice-dollar"></i></td>
-								<td class="align-middle text-success"
-									th:unless="${budget.expirationDate}"><i
-									class="fas fa-file-invoice-dollar"></i></td>
+<!-- 								<td -->
+<!-- 									th:title="${#dates.format(budget.expirationDate, 'dd-MM-yyyy')}" -->
+<!-- 									class="align-middle text-danger" -->
+<!-- 									th:if="${budget.expirationDate}"><i -->
+<!-- 									class="fas fa-file-invoice-dollar"></i></td> -->
+									
+									
+<!-- 								<td class="align-middle text-success" -->
+<!-- 									th:unless="${budget.expirationDate}"><i -->
+<!-- 									class="fas fa-file-invoice-dollar"></i></td> -->
+									<td class="align-middle" ><a
+					th:href="@{/budgets/print}"
+					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
+				</a> </td>
+									
 
 								<td class="align-middle"><a class="btn btn-info"
 									th:href="@{/budgets/save/{uuid}(uuid=${budget.uuid})}"><i
