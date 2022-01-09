@@ -3,3 +3,12 @@ table.dataTable tbody tr:hover {
    font-weight: bold;
    color:white;
 }
+
+.tabla-pie {
+	font-size: 11px; 
+	color: #f1f1f1; 
+	color: #999;
+	font-family: Arial; 
+	font-weight: normal;	
+	width: 100%;
+}

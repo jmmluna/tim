@@ -109,7 +109,7 @@
 <!-- 									th:unless="${budget.expirationDate}"><i -->
 <!-- 									class="fas fa-file-invoice-dollar"></i></td> -->
 									<td class="align-middle" ><a
-					th:href="@{/budgets/print}"
+					th:href="@{/budgets/print/{uuid}(uuid=${budget.uuid})}"
 					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
 				</a> </td>
 									

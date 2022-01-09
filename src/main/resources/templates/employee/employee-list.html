@@ -41,10 +41,13 @@
 					th:href="@{/employees/list/inactives}">Inactivos</a> <a
 					class="btn "
 					th:classappend="${isAllEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list}">Todos</a> <a
-					th:href="@{/employees/print}"
-					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
-				</a> <a th:href="@{/employees/save}"
+					th:href="@{/employees/list}">Todos</a> 
+<!-- 					<a -->
+<!-- 					th:href="@{/employees/print}" -->
+<!-- 					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i> -->
+<!-- 				</a>  -->
+				
+				<a th:href="@{/employees/save}"
 					class="btn btn-primary btn-circle btn"> <i
 					class="fas fa-user-plus"></i>
 				</a>
