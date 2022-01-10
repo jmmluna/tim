@@ -11,10 +11,11 @@ public class Customer {
 
 	private CustomerId customerId;
 	private Dni dni;
-
 	private String name;
 	private String surnames;
 	private String address;
+	private Integer postalCode;
+	private String town;
 	private String phone;
 	private String email;
 	private Date expirationDate;
@@ -61,6 +62,22 @@ public class Customer {
 		this.address = address;
 	}
 
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -88,7 +105,7 @@ public class Customer {
 	public void addWork() {
 
 	}
-	
+
 	public void addBudget() {
 
 	}

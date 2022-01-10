@@ -97,7 +97,7 @@ public class CustomerIT {
 	}
 
 	private CustomerDTO getExternalCustomer() {
-		return new CustomerDTO(UUID.randomUUID(), "30XXXXXX", "José María", "Martínez Luna", "XXXXX", "6666666",
+		return new CustomerDTO(UUID.randomUUID(), "30XXXXXX", "José María", "Martínez Luna", "XXXXX",14004, "CORDOBA", "6666666",
 				"jmmluna@gmail.com");
 	}
 }

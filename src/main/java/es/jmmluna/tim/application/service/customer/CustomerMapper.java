@@ -12,7 +12,7 @@ public class CustomerMapper {
 	public CustomerDTO toDTO(Customer customer) {
 
 		return new CustomerDTO(customer.getCustomerId().getValue(), customer.getDni().getValue(), customer.getName(),
-				customer.getSurnames(), customer.getAddress(), customer.getPhone(), customer.getEmail(), customer.getExpirationDate());
+				customer.getSurnames(), customer.getAddress(), customer.getPostalCode(), customer.getTown(),customer.getPhone(), customer.getEmail(), customer.getExpirationDate());
 
 	}
 
@@ -23,6 +23,8 @@ public class CustomerMapper {
 		customer.setName(customerDTO.getName());
 		customer.setSurnames(customerDTO.getSurnames());
 		customer.setAddress(customerDTO.getAddress());
+		customer.setPostalCode(customerDTO.getPostalCode());
+		customer.setTown(customerDTO.getTown());
 		customer.setPhone(customerDTO.getPhone());
 		customer.setEmail(customerDTO.getEmail());
 		customer.setExpirationDate(customerDTO.getExpirationDate());

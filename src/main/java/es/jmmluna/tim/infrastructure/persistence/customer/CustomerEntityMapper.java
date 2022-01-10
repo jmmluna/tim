@@ -16,6 +16,8 @@ public class CustomerEntityMapper {
 		customer.setSurnames(entity.getSurnames());
 		customer.setPhone(entity.getPhone());
 		customer.setAddress(entity.getAddress());
+		customer.setPostalCode(entity.getPostalCode());
+		customer.setTown(entity.getTown());
 		customer.setEmail(entity.getEmail());
 		customer.setExpirationDate(entity.getExpirationDate());
 		return customer;
@@ -28,6 +30,8 @@ public class CustomerEntityMapper {
 		entity.setName(customer.getName());
 		entity.setSurnames(customer.getSurnames());
 		entity.setAddress(customer.getAddress());
+		entity.setPostalCode(customer.getPostalCode());
+		entity.setTown(customer.getTown());
 		entity.setPhone(customer.getPhone());
 		entity.setEmail(customer.getEmail());
 		entity.setExpirationDate(customer.getExpirationDate());

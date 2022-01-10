@@ -30,36 +30,14 @@ public class CustomerEntity {
 	private String phone;
 	@Column(name = "ADDRESS")
 	private String address;
+	@Column(name = "POSTAL_CODE")
+	private Integer postalCode;
+	@Column(name = "TOWN")
+	private String town;
 	@Column(name = "EMAIL")
 	private String email;
 	@Column(name="EXPIRATION_DATE")
 	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	@Temporal(TemporalType.DATE)
-	private Date expirationDate;
-	
-//	public Customer toModel()  {
-//		Customer customer = new Customer(CustomerId.of(this.uuid));
-//		customer.setDni(Dni.of(dni));
-//		customer.setName(this.name);
-//		customer.setSurnames(this.surnames);
-//		customer.setPhone(this.phone);
-//		customer.setAddress(this.address);
-//		customer.setEmail(this.email);
-//		customer.setExpirationDate(this.expirationDate);
-//		return customer;
-//	}
-//	
-//	public static CustomerJpaEntity of(Customer customer) {
-//		CustomerJpaEntity entity = new CustomerJpaEntity();
-//		entity.setUuid(customer.getCustomerId().getValue());
-//		entity.setDni(customer.getDni().getValue());
-//		entity.setName(customer.getName());
-//		entity.setSurnames(customer.getSurnames());
-//		entity.setAddress(customer.getAddress());
-//		entity.setPhone(customer.getPhone());
-//		entity.setEmail(customer.getEmail());
-//		entity.setExpirationDate(customer.getExpirationDate());
-//		return entity;
-//	}
-	
+	private Date expirationDate;	
 }
