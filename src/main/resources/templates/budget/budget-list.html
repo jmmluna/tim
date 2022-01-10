@@ -93,7 +93,7 @@
 								<td class="align-middle" th:text="${budget.uuid}"></td>
 								<td class="align-middle" th:text="${budget.customerDTO.name} + ' ' + ${budget.customerDTO.surnames}"></td>
 								<td class="align-middle" th:text="${budget.description}"></td>
-								<td class="align-middle" th:text="${#dates.format(budget.date, 'dd-MM-yyyy')}"></td>
+								<td class="align-middle" th:text="${#dates.format(budget.date, 'dd/MM/yyyy')}"></td>
 								<td class="align-middle" th:text="${budget.cost}"></td>
 <!-- 								<td class="align-middle" th:text="${employee.customerHourPrice}"></td> -->
 <!-- 								<td class="align-middle" th:text="${employee.employeeHourPrice}"></td> -->

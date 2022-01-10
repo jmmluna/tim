@@ -17,7 +17,7 @@ public class BudgetDTO extends DTO {
 	private String description;
 	private Integer budgetNumber;
 	private Integer year;
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 	private Double cost = 0.0;
 	private List<BudgetItemDTO> budgetItems;
