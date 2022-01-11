@@ -213,15 +213,15 @@
 
 														<!-- 															<button class="btn btn-success float-right " -->
 														<!-- 																type="submit" th:form="'deleteConfirm' + ${itemStat.index} + 'Form'">Borrar</button> -->
-<!-- 														<a type="button" class="btn btn-primary" -->
-<!-- 															th:href="@{/budgets/delete/item/{id}(id=${itemStat.index})/budget/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
+														<!-- 														<a type="button" class="btn btn-primary" -->
+														<!-- 															th:href="@{/budgets/delete/item/{id}(id=${itemStat.index})/budget/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
 
-<!-- 															<a type="button" class="btn btn-primary" -->
-<!-- 															th:href="@{/budgets/delete/item/{index}/budget/{uuid}(index=${itemStat.index}, uuid=${budget.uuid})}">Borrar</a> -->
-															
-																<a type="button" class="btn btn-primary"
+														<!-- 															<a type="button" class="btn btn-primary" -->
+														<!-- 															th:href="@{/budgets/delete/item/{index}/budget/{uuid}(index=${itemStat.index}, uuid=${budget.uuid})}">Borrar</a> -->
+
+														<a type="button" class="btn btn-primary"
 															th:href="@{/budgets/item/delete(itemIndex = ${itemStat.index}, budgetId = ${budget.uuid})}">Borrar</a>
-															
+
 													</div>
 												</div>
 											</div>
@@ -243,6 +243,10 @@
 						th:attr="data-target='#addBudgetItem'+${budget.uuid}"
 						class="btn btn-primary btn-circle btn ml-4"> <i
 						class="fas fa-file-invoice">+</i>
+					</a> <a title="Añadir material de construcción" data-toggle="modal"
+						th:attr="data-target='#addConstructionMaterialItem'+${budget.uuid}"
+						class="btn btn-primary btn-circle btn ml-4"> <i
+						class="fas fa-gavel">+</i>
 					</a>
 
 					<button class="btn btn-success float-right " type="submit">Guardar</button>
@@ -254,7 +258,7 @@
 
 		<!--  **********************************Begin add budget item -->
 
-		<form action="#" th:action="@{/budgets/item/add}"
+		<form id="budgetItemForm" action="#" th:action="@{/budgets/item/add}"
 			th:object="${budgetItem}" method="post">
 
 			<div class="modal fade" th:id="'addBudgetItem' + ${budget.uuid}"
@@ -289,9 +293,9 @@
 
 								<div class="col-md-4 mb-3">
 									<label for="quantity">CANTIDAD</label> <input
-										class="form-control" th:placeholder="Cantidad"
-										th:field="*{quantity}" type="number"
-										onkeypress="return onlyNumberKey(event)" required />
+										class="form-control" value="1" th:field="*{quantity}"
+										type="number" onkeypress="return onlyNumberKey(event)"
+										required />
 								</div>
 
 								<div class="col-md-5 mb-3">
@@ -317,6 +321,93 @@
 
 		<!--********************************* End add budget item -->
 
+
+
+		<!--  **********************************Begin add construction material item -->
+
+		<form id="constructionMaterialForm" action="#"
+			th:action="@{/budgets/item/add}" th:object="${budgetItem}"
+			method="post">
+
+			<div class="modal fade"
+				th:id="'addConstructionMaterialItem' + ${budget.uuid}"
+				data-backdrop="static" data-keyboard="false" tabindex="-1"
+				aria-labelledby="newBudgetItem" aria-hidden="true">
+
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-italic font-weight-bold"
+								id="newBudgetItem">Añadir material de construcción</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body ">
+							<div class="card-body">
+
+								<input type="hidden" th:name="|budgetId|"
+									th:value="${budget.uuid}" /> <input type="hidden"
+									th:value="${budget.description}" id="selectedBudgetDescription"
+									name="selectedBudgetDescription" /> <input type="hidden"
+									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer"
+									name="uuidSelectedCustomer" />
+
+								<div >
+									<label for="description">MATERIAL DE CONSTRUCCIÓN</label> <select
+										class="form-control" id="constructionMaterialId"
+										onchange="copyValueFromConstructionMaterial(); ">
+										
+										<option
+											th:each="constructionMaterial : ${constructionMaterials}"
+											th:value="${constructionMaterial.description} + ' | ' + ${constructionMaterial.price}"
+											th:text="${constructionMaterial.description}"></option>
+
+										<option disabled selected>Selecciona un material...</option>
+									</select>
+								</div>
+								
+							</div>
+							<hr>
+							<div class="card-body">
+								<div class="col-md-15 mb-3 mt-0 ml-2">
+									<label for="description">DESCRIPCION</label> <input
+										class="form-control" th:placeholder="Descripción"
+										th:field="*{description}" required
+										id="constructionMaterialDescription" />
+								</div>
+
+								<div class="col-md-5 mb-3">
+									<label for="quantity">CANTIDAD</label> <input
+										class="form-control" th:field="*{quantity}" type="number"
+										value="1" onkeypress="return onlyNumberKey(event)" required
+										id="constructionMaterialQuantity" />
+								</div>
+
+								<div class="col-md-5 mb-3">
+									<label for="price">PRECIO</label> <input class="form-control"
+										th:placeholder="Precio " th:field="*{price}" type="text"
+										onkeypress="return onlyNumberKey(event)" required
+										id="constructionMaterialPrice" />
+								</div>
+
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<button class="btn btn-success float-right " type="submit">Añadir</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+
+		<!--********************************* End add construction material item-->
 
 	</section>
 

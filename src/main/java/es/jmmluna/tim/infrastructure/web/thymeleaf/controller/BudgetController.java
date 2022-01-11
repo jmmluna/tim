@@ -37,6 +37,7 @@ import es.jmmluna.tim.application.service.budget.useCase.DisableBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
+import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialListingService;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
@@ -71,6 +72,10 @@ public class BudgetController {
 	
 	@Autowired
 	private ReportGenerator reportGenerator;
+	
+	@Autowired
+	private ConstructionMaterialListingService constructionMaterialListingService;
+	
 
 
 	private BudgetDTO budgetDTOForAddItem;
@@ -113,6 +118,7 @@ public class BudgetController {
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isEditBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
+		model.addAttribute("constructionMaterials", constructionMaterialListingService.execute(EElementList.ACTIVE));
 		model.addAttribute("budgetItem", new BudgetItemDTO());
 		
 		

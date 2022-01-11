@@ -1,5 +1,17 @@
 function copyValue(from, to) {
-	const description = document.getElementById(from);
-	const budgetDescription = document.getElementById(to);
-    budgetDescription.value = description.value;
+	const fromElement = document.getElementById(from);
+	const toElement = document.getElementById(to);
+    toElement.value = fromElement.value;
+}
+
+function copyValueFromConstructionMaterial() {
+	const fromElement = document.getElementById('constructionMaterialId');
+	const toDescriptionElement = document.getElementById('constructionMaterialDescription'); 
+	const toPriceElement = document.getElementById('constructionMaterialPrice');
+	const toQuantityElement = document.getElementById('constructionMaterialQuantity');
+	const values = fromElement.value.split(" | ");
+	toDescriptionElement.value = values[0];
+	toPriceElement.value = values[1];
+	toQuantityElement.value = "1";
+	
 }
