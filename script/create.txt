@@ -16,12 +16,12 @@ CREATE TABLE IF NOT EXISTS `TIM`.`TIM_EMPLOYEES` (
   `CUSTOMER_HOUR_PRICE` DOUBLE NULL,
   `EMPLOYEE_HOUR_PRICE` DOUBLE NULL,
   `EXPIRATION_DATE` DATE NULL,
-  PRIMARY KEY (`ID`))
+  PRIMARY KEY (`ID`));
 
 -- -----------------------------------------------------
 -- Table `TIM`.`TIM_CUSTOMERS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `TIM`.`TIM_CUSTOMERS` ;
+
   
   CREATE TABLE IF NOT EXISTS `TIM`.`TIM_CUSTOMERS` (
   `UUID` UUID NOT NULL,
@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `TIM`.`TIM_CUSTOMERS` ;
   `EMAIL` VARCHAR(100) NULL,
   `EXPIRATION_DATE` DATE NULL,
   UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC),
-  PRIMARY KEY (`UUID`))
+  PRIMARY KEY (`UUID`));
 
 
 -- ALTER TABLE TIM.TIM_CUSTOMERS ADD POSTAL_CODE INT;
@@ -45,14 +45,14 @@ DROP TABLE IF EXISTS `TIM`.`TIM_CUSTOMERS` ;
 -- -----------------------------------------------------
 -- Table `TIM`.`CONSTRUCTION_MATERIALS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `TIM`.`TIM_CONSTRUCTION_MATERIALS` ;
+
 
 CREATE TABLE IF NOT EXISTS `TIM`.`TIM_CONSTRUCTION_MATERIALS` (
   `UUID` UUID NOT NULL,
   `DESCRIPTION` VARCHAR(255) NULL,
   `PRICE` DOUBLE NULL,
   `EXPIRATION_DATE` DATE NULL,
-  PRIMARY KEY (`UUID`))
+  PRIMARY KEY (`UUID`));
   
   
 -- -----------------------------------------------------
