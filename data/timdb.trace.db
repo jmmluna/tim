@@ -5237,3 +5237,15 @@ Syntax error in SQL statement "SELECT * FROM TIM.TIM_CUSTOMERS
 ALTER TABLE[*] TIM.TIM_CUSTOMERS ADD TOWN VARCHAR(200)"; SQL statement:
 select * from TIM.TIM_CUSTOMERS 
 ALTER TABLE TIM.TIM_CUSTOMERS ADD TOWN VARCHAR(200) [42000-200]
+2022-01-12 18:09:27 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "TIM[*].TIM_WORKS_EMPLOYEES"; se esperaba "TRUNCATE"
+Syntax error in SQL statement "TIM[*].TIM_WORKS_EMPLOYEES"; expected "TRUNCATE"; SQL statement:
+TIM.TIM_WORKS_EMPLOYEES [42001-200]
+2022-01-12 18:09:34 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * TIM[*].TIM_WORKS_EMPLOYEES"
+Syntax error in SQL statement "SELECT * TIM[*].TIM_WORKS_EMPLOYEES"; SQL statement:
+select * TIM.TIM_WORKS_EMPLOYEES [42000-200]
+2022-01-12 18:09:39 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROMTIM[*].TIM_WORKS_EMPLOYEES"
+Syntax error in SQL statement "SELECT * FROMTIM[*].TIM_WORKS_EMPLOYEES"; SQL statement:
+select * fromTIM.TIM_WORKS_EMPLOYEES [42000-200]
