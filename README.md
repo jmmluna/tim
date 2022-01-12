@@ -107,3 +107,8 @@ Fichero jar disponible en: /target
 ```
 java -jar .\target\tim-0.0.1-SNAPSHOT.jar
 ```
+
+## Runtime personalizado
+```
+jlink --compress=2 --no-man-pages --no-header-files --module-path "${path}\jdk-17.0.1\jmods" --add-modules java.base,java.logging,java.sql,java.desktop,java.management,java.naming,jdk.unsupported --output ./tim-runtime
+```
