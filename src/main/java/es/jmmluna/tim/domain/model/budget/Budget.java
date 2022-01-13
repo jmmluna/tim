@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import es.jmmluna.tim.domain.model.NotFoundBudgetItemException;
+import es.jmmluna.tim.domain.model.NotFoundItemException;
 import es.jmmluna.tim.domain.model.Price;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 
@@ -97,7 +97,7 @@ public class Budget {
 		if (budgetItems.remove(budgetItem))
 			totalCost = totalCost.minus(budgetItem.getCost());
 		else
-			throw new NotFoundBudgetItemException("No se ha encontrado el elemento del presupuesto");
+			throw new NotFoundItemException("No se ha encontrado el elemento del presupuesto");
 	}
 
 	private Price calculateTotalCost() {

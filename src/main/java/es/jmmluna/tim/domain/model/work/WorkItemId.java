@@ -3,19 +3,20 @@ package es.jmmluna.tim.domain.model.work;
 import java.util.Objects;
 import java.util.UUID;
 
-public class WorkId {
+public class WorkItemId {
 	private UUID uuid;
 
-	public WorkId(UUID uuid) {
+	public WorkItemId(UUID uuid) {
 		this.uuid = uuid;
 	}
 
-	public WorkId() {
+	public WorkItemId() {
 		this.uuid = UUID.randomUUID();
 	}
 
-	public static WorkId of(UUID uuid) {
-		return new WorkId(uuid);
+	public static WorkItemId of(UUID uuid) {
+		if(uuid == null) uuid = UUID.randomUUID();
+		return new WorkItemId(uuid);
 	}
 
 	public UUID getValue() {
@@ -35,7 +36,7 @@ public class WorkId {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		WorkId other = (WorkId) obj;
+		WorkItemId other = (WorkItemId) obj;
 		return Objects.equals(uuid, other.uuid);
 	}
 
