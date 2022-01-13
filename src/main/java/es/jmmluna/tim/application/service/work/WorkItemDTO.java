@@ -1,4 +1,4 @@
-package es.jmmluna.tim.application.service.budget;
+package es.jmmluna.tim.application.service.work;
 
 import java.util.UUID;
 
@@ -6,17 +6,17 @@ import es.jmmluna.tim.application.service.DTO;
 import lombok.Data;
 
 @Data
-public class BudgetItemDTO extends DTO {
-	private UUID budgetId;
+public class WorkItemDTO extends DTO {
+//	private UUID workId;
 	private String description;
 	private Integer quantity;
 	private Double price;
 
-	public BudgetItemDTO() {
+	public WorkItemDTO() {
 
 	}
 
-	public BudgetItemDTO(UUID uuid, String description, Integer quantity, Double price) {
+	public WorkItemDTO(UUID uuid, String description, Integer quantity, Double price) {
 		this.uuid = uuid;
 		this.description = description;
 		this.quantity = quantity;

@@ -21,7 +21,7 @@ public class Work {
 	private Date expirationDate;
 	private Price totalCost;
 		
-	public Work(WorkId workId, BudgetId budgetId, CustomerId customerId, String description, Date date, List<WorkItem> workItems, WorkStatus workStatus) {
+	public Work(WorkId workId, BudgetId budgetId, CustomerId customerId, String description, WorkStatus workStatus, Date date, List<WorkItem> workItems) {
 		this.workId = workId;
 		this.workItems = new ArrayList<>(workItems);		
 		this.customerId = customerId;		
@@ -29,6 +29,11 @@ public class Work {
 		this.date = date;	
 		this.workStatus = workStatus;
 		totalCost = calculateTotalCost();
+	}
+	
+	public Work(WorkId workId, BudgetId budgetId, CustomerId customerId, String description, WorkStatus workStatus, Date date, List<WorkItem> workItems, Date expirationDate) {
+		this(workId,  budgetId,  customerId, description,  workStatus,  date,  workItems);
+		this.expirationDate = expirationDate;
 	}
 	
 	public WorkId getWorkId() {
