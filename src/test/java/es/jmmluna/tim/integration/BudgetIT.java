@@ -72,10 +72,13 @@ public class BudgetIT {
 
 	@Test
 	@Sql("classpath:drop-all.sql")
-	@Sql("classpath:customer-test-data.sql")	
-	@Sql("classpath:budget-test-data.sql")		
-	@Sql("classpath:budgetItem-test-schema.sql")
-	@Sql("classpath:budgetItem-test-data.sql")
+//	@Sql("classpath:customer-test-data.sql")
+//	@Sql("classpath:budget-test-data.sql")
+//	@Sql("classpath:budgetItem-test-data.sql")
+
+
+//	@Sql("classpath:budgetItem-test-schema.sql")
+//	@Sql("classpath:budgetItem-test-data.sql")
 	@DisplayName("Initialize budgets")
 	@Order(1)
 	public void shouldSaveBudgetsThroughSqlFile() {
