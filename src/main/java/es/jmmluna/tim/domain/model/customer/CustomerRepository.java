@@ -4,24 +4,14 @@ import java.util.List;
 
 import es.jmmluna.tim.domain.model.CommonRepository;
 
-public interface CustomerRepository extends CommonRepository<Customer, CustomerId>{
+public interface CustomerRepository extends CommonRepository<Customer, CustomerId> {
 
-//	public Customer save(Customer customer);
+    long getActiveCount();
 
-//	public List<Customer> getAll();
+    List<Customer> getActives();
 
-//	public Customer getById(CustomerId customerId);
+    List<Customer> getInactives();
 
-	public long getActiveCount();
-
-//	public Customer delete(Customer customer);
-
-//	public Customer delete(String uuid);
-
-	public List<Customer> getActives();
-
-	public List<Customer> getInactives();
-
-	public Customer getByName(String name);
+    Customer getByName(String name);
 
 }

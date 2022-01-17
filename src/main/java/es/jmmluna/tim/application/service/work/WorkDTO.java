@@ -25,7 +25,7 @@ public class WorkDTO extends DTO {
 	private List<WorkItemDTO> workItems;
 
 	public WorkDTO() {
-		this.workItems = new ArrayList<WorkItemDTO>();
+		this.workItems = new ArrayList<>();
 	}
 
 	public WorkDTO(UUID uuid, BudgetDTO budgetDTO, CustomerDTO customerDTO, String description, Integer workStatus,

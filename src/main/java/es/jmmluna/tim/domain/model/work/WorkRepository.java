@@ -5,14 +5,14 @@ import java.util.UUID;
 
 import es.jmmluna.tim.domain.model.CommonRepository;
 
-public interface WorkRepository extends CommonRepository<Work, WorkId>{
+public interface WorkRepository extends CommonRepository<Work, WorkId> {
 
-	public long getActiveCount();
+    long getActiveCount();
 
-	public List<Work> getActives();
+    List<Work> getActives();
 
-	public List<Work> getInactives();	
-	
-	public UUID getNextIdentifier();
-	
+    List<Work> getInactives();
+
+    UUID getNextIdentifier();
+
 }
