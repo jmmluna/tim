@@ -2,8 +2,8 @@
 $(document).ready(function() {
 
 
-	//	const table = $('#employeeDataTable').DataTable(
-	$('#budgetDataTable').DataTable(
+		//const table = $('#budgetDataTable').DataTable(
+	 $('#budgetDataTable').DataTable(
 		{
 
 			"columnDefs": [
@@ -98,11 +98,12 @@ $(document).ready(function() {
 		}
 	);
 
+//alert(table);
 
-	//	table.on('select', (e, dt, type, indexes) => {
-	//		var id = dt.rows({ selected: true }).data();
-	//		//			alert(id[0])
-	//	})
+		//table.on('select', (e, dt, type, indexes) => {
+		//	var id = dt.rows({ selected: true }).data();
+		//				alert(id[0])
+		//})
 
 });
 

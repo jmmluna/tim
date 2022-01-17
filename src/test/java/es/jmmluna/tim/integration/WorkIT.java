@@ -8,6 +8,8 @@ import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.work.useCase.GetActiveWorkCount;
 import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -60,12 +62,12 @@ public class WorkIT {
 //	private GetCustomer getCustomer;
 
 	@Test
+
 	@Sql("classpath:drop-all.sql")
 	@Sql("classpath:customer-test-data.sql")
 	@Sql("classpath:budget-test-data.sql")
 	@Sql("classpath:work-test-data.sql")
-	@Sql("classpath:workItem-test-schema.sql")
-	@Sql("classpath:workItem-test-data.sql")
+//	@Sql("classpath:workItem-test-data.sql")
 	@DisplayName("Initialize budgets")
 	@Order(1)
 	public void shouldSaveWorksThroughSqlFile() {
