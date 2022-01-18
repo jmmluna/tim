@@ -31,8 +31,8 @@ public class WorkEntityMapper {
 	private BudgetJpaRepository budgetRepository;
 
 	public Work toModel(WorkEntity entity) {
-
-		return new Work(WorkId.of(entity.getUuid()), BudgetId.of(entity.getUuid()),
+// BudgetId.of(entity.getBudget().getUuid())
+		return new Work(WorkId.of(entity.getUuid()), null,
 				CustomerId.of(entity.getCustomer().getUuid()), entity.getDescription(),
 				WorkStatus.of(entity.getStatus()), entity.getDate(), toWorkItemList(entity.getWorkItems()),
 				entity.getExpirationDate());
@@ -43,7 +43,7 @@ public class WorkEntityMapper {
 		WorkEntity entity = new WorkEntity();
 		entity.setUuid(model.getBudgetId().getValue());
 		entity.setCustomer(customerRepository.findById(model.getCustomerId().getValue()).get());
-		entity.setBudget(budgetRepository.findById(model.getBudgetId().getValue()).get());
+//		entity.setBudget(budgetRepository.findById(model.getBudgetId().getValue()).get());
 		entity.setDescription(model.getDescription());
 		entity.setStatus(WorkStatus.getCode(model.getStatus()));
 		entity.setDate(model.getDate());
@@ -52,15 +52,15 @@ public class WorkEntityMapper {
 		return entity;
 	}
 
-	private List<WorkItem> toWorkItemList(Set<WorkItemEntity> workItemEntities) {
+	private List<WorkItem> toWorkItemList(List<WorkItemEntity> workItemEntities) {
 		var workItems = new ArrayList<WorkItem>();
 
 		workItemEntities.forEach(entity -> workItems.add(toWorkItem(entity)));
 		return workItems;
 	}
 
-	private Set<WorkItemEntity> toWorkItemEntityList(WorkEntity workEntity, List<WorkItem> workItems) {
-		var workItemEntities = new HashSet<WorkItemEntity>();
+	private List<WorkItemEntity> toWorkItemEntityList(WorkEntity workEntity, List<WorkItem> workItems) {
+		var workItemEntities = new ArrayList<WorkItemEntity>();
 
 		workItems.forEach(workItem -> workItemEntities.add(toWorkItemEntity(workEntity, workItem)));
 		return workItemEntities;

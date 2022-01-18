@@ -25,7 +25,6 @@ public class GetWork {
 	public WorkDTO execute(UUID uuid) {
 		var work = this.repository.findById(WorkId.of(uuid));
 		return mapper.toDTO(work);
-
 	}
 
 }

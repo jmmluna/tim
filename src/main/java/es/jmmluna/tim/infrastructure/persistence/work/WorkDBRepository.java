@@ -31,6 +31,7 @@ public class WorkDBRepository implements WorkRepository {
 	public Work save(Work work) {			
 		var savedEntity = workRepository.save(mapper.toEntity(work));		
 		return mapper.toModel(savedEntity);
+//		return null;
 	}
 
 	@Override
@@ -38,6 +39,7 @@ public class WorkDBRepository implements WorkRepository {
 		Optional<WorkEntity> result = workRepository.findById(workId.getValue());
 		var entity = result.get();
 		return mapper.toModel(entity);
+//		return null;
 	}
 
 	@Override

@@ -28,17 +28,17 @@ public class WorkMapper {
 
 	public WorkDTO toDTO(Work work) {
 		var customerDTO = getCustomer.execute(work.getCustomerId().getValue());
-		var budgetDTO = getBudget.execute(work.getBudgetId().getValue());
+//		var budgetDTO = getBudget.execute(work.getBudgetId().getValue());
 
-		return new WorkDTO(work.getBudgetId().getValue(), budgetDTO, customerDTO, work.getDescription(),
+		return new WorkDTO(work.getWorkId().getValue(), null, customerDTO, work.getDescription(),
 				WorkStatus.getCode(work.getStatus()), work.getDate(), work.getTotalCost().getValue(),
 				toWorkItemDTOList(work.getWorkItems()), work.getExpirationDate());
 
 	}
 
 	public Work toModel(WorkDTO workDTO) {
-
-		return new Work(WorkId.of(workDTO.getUuid()), BudgetId.of(workDTO.getBudgetDTO().getUuid()),
+//BudgetId.of(workDTO.getBudgetDTO().getUuid())
+		return new Work(WorkId.of(workDTO.getUuid()), null,
 				CustomerId.of(workDTO.getCustomerDTO().getUuid()), workDTO.getDescription(),
 				WorkStatus.of(workDTO.getWorkStatus()), workDTO.getDate(), toWorkItemList(workDTO.getWorkItems()),
 				workDTO.getExpirationDate());

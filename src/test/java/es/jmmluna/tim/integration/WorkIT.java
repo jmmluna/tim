@@ -6,9 +6,12 @@ import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
 import es.jmmluna.tim.application.service.budget.useCase.*;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.work.useCase.GetActiveWorkCount;
+import es.jmmluna.tim.application.service.work.useCase.GetWork;
 import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -31,11 +34,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Budget test")
 @TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("test")
-//@Sql({"classpath:budget-test-data.sql", "classpath:budgetItem-test-data.sql"})
+@Slf4j
 public class WorkIT {
 
 	@Autowired
-	private GetBudget getBudget;
+	private GetWork getWork;
 
 //	@Autowired
 //	private CreateBudget createBudget;
@@ -66,8 +69,9 @@ public class WorkIT {
 	@Sql("classpath:drop-all.sql")
 	@Sql("classpath:customer-test-data.sql")
 	@Sql("classpath:budget-test-data.sql")
+	@Sql("classpath:budgetItem-test-data.sql")
 	@Sql("classpath:work-test-data.sql")
-//	@Sql("classpath:workItem-test-data.sql")
+	@Sql("classpath:workItem-test-data.sql")
 	@DisplayName("Initialize budgets")
 	@Order(1)
 	public void shouldSaveWorksThroughSqlFile() {
@@ -82,33 +86,54 @@ public class WorkIT {
 		 assertEquals(1, count);
 	}
 	
+	@Test
+	@DisplayName("Given work get customer id ")
+	@Order(2)
+	public void givenWorkWithIdentifier_whenExecute_getCustomer() {
+		// give
+		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+
+		// when
+		var workDTO = getWork.execute(uuid);
+
+		// then
+		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), workDTO.getCustomerDTO().getUuid());
+	}
+
 //	@Test
-//	@DisplayName("Given budget get customer id ")
-//	@Order(2)
-//	public void givenBudgetWithIdentifier_whenExecute_getCustomer() {
+//	@DisplayName("Given work get budget id ")
+//	@Order(3)
+//	public void givenWorkWithIdentifier_whenExecute_getBudget() {
 //		// give
 //		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
 //
 //		// when
-//		var budgetDTO = getBudget.execute(uuid);
+//		var workDTO = getWork.execute(uuid);
 //
 //		// then
-//		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), budgetDTO.getCustomerDTO().getUuid());
+//		assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440000"), workDTO.getBudgetDTO().getUuid());
 //	}
 //
 //	@Test
-//	@DisplayName("Given budget get budget items ")
-//	@Order(3)
+//	@DisplayName("Given work get work items ")
+//	@Order(4)
 //	public void givenBudgetWithIdentifier_whenExecute_getItems() {
 //		// give
 //		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
 //
 //		// when
-//		var budgetDTO = getBudget.execute(uuid);
+//		var workDTO = getWork.execute(uuid);
 //
 //		// then
-//		 assertEquals(1, budgetDTO.getBudgetItems().size());
+//		 assertEquals(0, workDTO.getWorkItems().size());
 //	}
+
+
+
+
+
+
+
 //
 //
 //	@Test

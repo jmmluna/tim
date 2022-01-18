@@ -20,7 +20,7 @@ public class WorkItemEntity {
 	@Id
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
-	@ManyToOne(optional = false,  fetch = FetchType.EAGER) //cascade = CascadeType.ALL,
+	@ManyToOne(optional = false,  fetch = FetchType.EAGER)
 	@JoinColumn(name = "WORK_UUID", nullable = false)
 	private WorkEntity workEntity;
 	@Column(name = "DESCRIPTION")

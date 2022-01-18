@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 public class WorkDTO extends DTO {
-	private BudgetDTO budgetDTO;
+//	private BudgetDTO budgetDTO;
 	private CustomerDTO customerDTO;
 	private String description;
 	private Integer workStatus;
@@ -32,6 +32,7 @@ public class WorkDTO extends DTO {
 			Date date, Double cost, List<WorkItemDTO> workItems) {
 		this.uuid = uuid;
 		this.customerDTO = customerDTO;
+//		this.budgetDTO = budgetDTO;
 		this.description = description;
 		this.workStatus = workStatus;
 		this.date = date;

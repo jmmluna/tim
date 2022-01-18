@@ -23,11 +23,12 @@ public class Work {
 		
 	public Work(WorkId workId, BudgetId budgetId, CustomerId customerId, String description, WorkStatus workStatus, Date date, List<WorkItem> workItems) {
 		this.workId = workId;
-		this.workItems = new ArrayList<>(workItems);		
-		this.customerId = customerId;		
+		this.budgetId = budgetId;
+		this.customerId = customerId;
 		this.description = description;		
 		this.date = date;	
 		this.workStatus = workStatus;
+		this.workItems = new ArrayList<>(workItems);
 		totalCost = calculateTotalCost();
 	}
 	
