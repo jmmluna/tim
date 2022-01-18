@@ -1,21 +1,18 @@
 package es.jmmluna.tim.application.service.work;
 
+import es.jmmluna.tim.application.service.DTO;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import es.jmmluna.tim.application.service.DTO;
-import es.jmmluna.tim.application.service.budget.BudgetDTO;
-import es.jmmluna.tim.application.service.customer.CustomerDTO;
-import lombok.Data;
-
 @Data
 public class WorkDTO extends DTO {
-//	private BudgetDTO budgetDTO;
-	private CustomerDTO customerDTO;
+	private UUID budgetId;
+	private UUID customerId;
 	private String description;
 	private Integer workStatus;
 
@@ -28,11 +25,11 @@ public class WorkDTO extends DTO {
 		this.workItems = new ArrayList<>();
 	}
 
-	public WorkDTO(UUID uuid, BudgetDTO budgetDTO, CustomerDTO customerDTO, String description, Integer workStatus,
+	public WorkDTO(UUID uuid, UUID budgetId, UUID customerId, String description, Integer workStatus,
 			Date date, Double cost, List<WorkItemDTO> workItems) {
 		this.uuid = uuid;
-		this.customerDTO = customerDTO;
-//		this.budgetDTO = budgetDTO;
+		this.customerId = customerId;
+		this.budgetId = budgetId;
 		this.description = description;
 		this.workStatus = workStatus;
 		this.date = date;
@@ -40,9 +37,9 @@ public class WorkDTO extends DTO {
 		this.workItems = workItems;
 	}
 
-	public WorkDTO(UUID uuid, BudgetDTO budgetDTO, CustomerDTO customerDTO, String description, Integer workStatus,
+	public WorkDTO(UUID uuid, UUID budgetId, UUID customerId, String description, Integer workStatus,
 			Date date, Double cost, List<WorkItemDTO> budgetItems, Date expirationDate) {
-		this(uuid, budgetDTO, customerDTO, description, workStatus, date, cost, budgetItems);
+		this(uuid, budgetId, customerId, description, workStatus, date, cost, budgetItems);
 		this.setExpirationDate(expirationDate);
 	}
 

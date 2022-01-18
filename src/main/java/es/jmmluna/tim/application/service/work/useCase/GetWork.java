@@ -12,19 +12,13 @@ import java.util.UUID;
 @Service
 public class GetWork {
 
-	private final WorkMapper mapper;
-
-	private final WorkRepository repository;
-
 	@Autowired
-	public GetWork(WorkRepository repository, WorkMapper mapper) {
-		this.repository = repository;
-		this.mapper = mapper;
-	}
+	private WorkRepository repository;
+	@Autowired
+	private WorkMapper mapper;
 
 	public WorkDTO execute(UUID uuid) {
 		var work = this.repository.findById(WorkId.of(uuid));
 		return mapper.toDTO(work);
 	}
-
 }

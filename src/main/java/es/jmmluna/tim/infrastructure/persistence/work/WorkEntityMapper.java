@@ -32,8 +32,8 @@ public class WorkEntityMapper {
 
 	public Work toModel(WorkEntity entity) {
 // BudgetId.of(entity.getBudget().getUuid())
-		return new Work(WorkId.of(entity.getUuid()), null,
-				CustomerId.of(entity.getCustomer().getUuid()), entity.getDescription(),
+		return new Work(WorkId.of(entity.getUuid()), BudgetId.of(entity.getBudgetId()),
+				CustomerId.of(entity.getCustomerId()), entity.getDescription(),
 				WorkStatus.of(entity.getStatus()), entity.getDate(), toWorkItemList(entity.getWorkItems()),
 				entity.getExpirationDate());
 
@@ -41,9 +41,9 @@ public class WorkEntityMapper {
 
 	public WorkEntity toEntity(Work model) {
 		WorkEntity entity = new WorkEntity();
-		entity.setUuid(model.getBudgetId().getValue());
-		entity.setCustomer(customerRepository.findById(model.getCustomerId().getValue()).get());
-//		entity.setBudget(budgetRepository.findById(model.getBudgetId().getValue()).get());
+		entity.setUuid(model.getWorkId().getValue());
+		entity.setCustomerId(model.getCustomerId().getValue());
+		entity.setBudgetId(model.getBudgetId().getValue());
 		entity.setDescription(model.getDescription());
 		entity.setStatus(WorkStatus.getCode(model.getStatus()));
 		entity.setDate(model.getDate());

@@ -18,14 +18,9 @@ public class WorkEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID uuid;
 
-    @OneToOne
-    @JoinColumn(name = "CUSTOMERS_UUID", referencedColumnName = "uuid")
-    private CustomerEntity customer;
+    @Column(name = "CUSTOMERS_UUID")
+    private UUID customerId;
 
-    //	@OneToOne
-//	@JoinColumn(name = "BUDGETS_UUID", referencedColumnName = "uuid")
-//	@Transient
-//	private BudgetEntity budget;
     @Column(name = "BUDGETS_UUID")
     private UUID budgetId;
 
@@ -35,12 +30,8 @@ public class WorkEntity {
     private String description;
     @Column(name = "DATE")
     private Date date;
-
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "workEntity")
-//	@Transient
     private List<WorkItemEntity> workItems;// = new HashSet<>();
-
     @Column(name = "EXPIRATION_DATE")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)

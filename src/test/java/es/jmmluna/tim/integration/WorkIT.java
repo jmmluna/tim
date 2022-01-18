@@ -1,18 +1,12 @@
 package es.jmmluna.tim.integration;
 
 import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.budget.BudgetDTO;
-import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
-import es.jmmluna.tim.application.service.budget.useCase.*;
-import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
-import es.jmmluna.tim.application.service.work.useCase.GetActiveWorkCount;
-import es.jmmluna.tim.application.service.work.useCase.GetWork;
+import es.jmmluna.tim.application.service.work.WorkDTO;
+import es.jmmluna.tim.application.service.work.WorkItemDTO;
+import es.jmmluna.tim.application.service.work.useCase.*;
 import es.jmmluna.tim.domain.model.IdentifierNotAllowedException;
 import es.jmmluna.tim.infrastructure.TimApplication;
-
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -31,26 +25,26 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = TimApplication.class)
-@DisplayName("Budget test")
+@DisplayName("Work test")
 @TestMethodOrder(OrderAnnotation.class)
 @ActiveProfiles("test")
 @Slf4j
 public class WorkIT {
 
-	@Autowired
-	private GetWork getWork;
+    @Autowired
+    private GetWork getWork;
 
-//	@Autowired
-//	private CreateBudget createBudget;
-//
-//	@Autowired
-//	private GetBudgetList getBudgetList;
-//
-//	@Autowired
-//	private UpdateBudget updateBudget;
-//
-	@Autowired
-	private GetActiveWorkCount getActiveWorkCount;
+    @Autowired
+    private CreateWork createWork;
+
+    @Autowired
+    private GetWorkList getWorkList;
+
+    @Autowired
+    private UpdateWork updateWork;
+    //
+    @Autowired
+    private GetActiveWorkCount getActiveWorkCount;
 //
 //	@Autowired
 //	private DisableBudget disableBudget;
@@ -64,124 +58,121 @@ public class WorkIT {
 //	@Autowired
 //	private GetCustomer getCustomer;
 
-	@Test
+    @Test
 
-	@Sql("classpath:drop-all.sql")
-	@Sql("classpath:customer-test-data.sql")
-	@Sql("classpath:budget-test-data.sql")
-	@Sql("classpath:budgetItem-test-data.sql")
-	@Sql("classpath:work-test-data.sql")
-	@Sql("classpath:workItem-test-data.sql")
-	@DisplayName("Initialize budgets")
-	@Order(1)
-	public void shouldSaveWorksThroughSqlFile() {
-		//give 
-		
-		// load sql
-		
-		// when
-		Long count = this.getActiveWorkCount.execute();
-		
-		// then
-		 assertEquals(1, count);
-	}
-	
-	@Test
-	@DisplayName("Given work get customer id ")
-	@Order(2)
-	public void givenWorkWithIdentifier_whenExecute_getCustomer() {
-		// give
-		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+    @Sql("classpath:drop-all.sql")
+    @Sql("classpath:customer-test-data.sql")
+    @Sql("classpath:budget-test-data.sql")
+    @Sql("classpath:budgetItem-test-data.sql")
+    @Sql("classpath:work-test-data.sql")
+    @Sql("classpath:workItem-test-data.sql")
+    @DisplayName("Initialize works")
+    @Order(1)
+    public void shouldSaveWorksThroughSqlFile() {
+        //give
 
-		// when
-		var workDTO = getWork.execute(uuid);
+        // load sql
 
-		// then
-		 assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), workDTO.getCustomerDTO().getUuid());
-	}
+        // when
+        Long count = this.getActiveWorkCount.execute();
 
-//	@Test
-//	@DisplayName("Given work get budget id ")
-//	@Order(3)
-//	public void givenWorkWithIdentifier_whenExecute_getBudget() {
-//		// give
-//		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
-//
-//		// when
-//		var workDTO = getWork.execute(uuid);
-//
-//		// then
-//		assertEquals( UUID.fromString("123e4567-e89b-12d3-a456-556642440000"), workDTO.getBudgetDTO().getUuid());
-//	}
-//
-//	@Test
-//	@DisplayName("Given work get work items ")
-//	@Order(4)
-//	public void givenBudgetWithIdentifier_whenExecute_getItems() {
-//		// give
-//		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
-//
-//		// when
-//		var workDTO = getWork.execute(uuid);
-//
-//		// then
-//		 assertEquals(0, workDTO.getWorkItems().size());
-//	}
+        // then
+        assertEquals(1, count);
+    }
 
+    @Test
+    @DisplayName("Given work get customer id ")
+    @Order(2)
+    public void givenWorkWithIdentifier_whenExecute_getCustomerId() {
+        // give
+        var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
 
+        // when
+        var workDTO = getWork.execute(uuid);
 
+        // then
+        assertEquals(UUID.fromString("123e4567-e89b-12d3-a456-556642440002"), workDTO.getCustomerId());
+    }
 
+    @Test
+    @DisplayName("Given work get budget id ")
+    @Order(3)
+    public void givenWorkWithIdentifier_whenExecute_getBudgetId() {
+        // give
+        var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
 
+        // when
+        var workDTO = getWork.execute(uuid);
 
+        // then
+        assertEquals(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"), workDTO.getBudgetId());
+    }
 
-//
-//
-//	@Test
-//	@DisplayName("Create budget with UUID")
-//	@Order(4)
-//	public void givenBudgetWithIdentifier_whenCreate_throwsException() {
-//
-//		assertThrows(IdentifierNotAllowedException.class, () -> {
-//			var budgetDTO = this.getExternalBudget(true);
-//			createBudget.execute(budgetDTO);
-//		});
-//	}
-//
-//	@Test
-//	@DisplayName("Create budget")
-//	@Order(5)
-//	public void TestCreateBudget() {
-//		//give
-//		var budgetDTO = this.getExternalBudget(false);
-//
-//		//when
-//		createBudget.execute(budgetDTO);
-//
-//		//then
-//		 assertEquals(4, this.getActiveBudgetCount.execute());
-//	}
-//
-//	@Test
-//	@DisplayName("Get active budget list")
-//	@Order(6)
-//	public void testGetActiveBudgetList() {
-//		List<BudgetDTO> budgets = this.getBudgetList.execute(EElementList.ACTIVE);
-//		assertTrue(budgets.size() == 4);
-//	}
-//
-//	@Test
-//	@DisplayName("Update budget")
-//	@Order(7)
-//	public void TestUpdateBudget() {
-//		var budgetDTO = getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
-//		assertEquals(budgetDTO.getBudgetNumber(), 30, "No coincide el número del presupuesto original");
-//
-//		budgetDTO.setBudgetNumber(2000);
-//		var savedBudgetDTO = updateBudget.execute(budgetDTO);
-//		assertEquals(savedBudgetDTO.getBudgetNumber(), 2000, "No coincide el número del presupuesto modificado");
-//
-//	}
-//
+    @Test
+    @DisplayName("Given work get work items ")
+    @Order(4)
+    public void givenWorkWithIdentifier_whenExecute_getItems() {
+        // give
+        var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+
+        // when
+        var workDTO = getWork.execute(uuid);
+
+        // then
+        assertEquals(2, workDTO.getWorkItems().size());
+    }
+
+    @Test
+    @DisplayName("Create budget with UUID")
+    @Order(5)
+    public void givenWorkWithIdentifier_whenCreate_throwsException() {
+        assertThrows(IdentifierNotAllowedException.class, () -> {
+            var workDTO = this.getExternalWork(true);
+            createWork.execute(workDTO);
+        });
+    }
+
+    @Test
+    @DisplayName("Create work")
+    @Order(6)
+    public void TestCreateWork() {
+        //give
+        assertEquals(1, this.getActiveWorkCount.execute());
+        var workDTO = this.getExternalWork(false);
+        assertNull(workDTO.getUuid());
+
+        //when
+        var savedWork = createWork.execute(workDTO);
+
+        //then
+        assertEquals(2, this.getActiveWorkCount.execute());
+        assertNotNull(savedWork.getUuid());
+    }
+
+    @Test
+    @DisplayName("Get active work list")
+    @Order(7)
+    public void testGetActiveWorkList() {
+        List<WorkDTO> works = this.getWorkList.execute(EElementList.ACTIVE);
+        assertTrue(works.size() == 2);
+    }
+
+    @Test
+    @DisplayName("Update work")
+    @Order(8)
+    public void TestUpdateWork() {
+        //given
+        var workDTO = getWork.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
+        assertEquals(workDTO.getDescription(), "Trabajo 1", "No coincide la descripción del trabajo original");
+        //when
+        workDTO.setDescription("Fachada");
+        //then
+        var savedWorkDTO = updateWork.execute(workDTO);
+        assertEquals(savedWorkDTO.getDescription(), "Fachada", "No coincide la descripción del trabajo modificado");
+
+    }
+
+    //
 //	@Test
 //	@DisplayName("Delete budget")
 //	@Order(8)
@@ -229,10 +220,11 @@ public class WorkIT {
 //		assertEquals(1, removedBudgetDTO.getBudgetItems().size());
 //	}
 //
-//	private BudgetDTO getExternalBudget(boolean withUUID) {
-//		List<BudgetItemDTO> budgetItems = Collections.<BudgetItemDTO>emptyList();
-//		UUID budgetId = withUUID ? UUID.randomUUID() : null;
-//		var customerDTO = getCustomer.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440002"));
-//		return new BudgetDTO(budgetId, customerDTO, "Presupuesto de prueba", 1000, 2021, new Date(), 0.0, budgetItems);
-//	}
+    private WorkDTO getExternalWork(boolean withUUID) {
+        var workItems = Collections.<WorkItemDTO>emptyList();
+        UUID workId = withUUID ? UUID.randomUUID() : null;
+        var customerId = UUID.fromString("123e4567-e89b-12d3-a456-556642440002");
+        var budgetId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+        return new WorkDTO(workId, budgetId, customerId, "Trabajo de prueba", 0, new Date(), 0.0, workItems);
+    }
 }
