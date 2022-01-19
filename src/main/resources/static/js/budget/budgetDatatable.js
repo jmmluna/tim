@@ -66,6 +66,13 @@ $(document).ready(function() {
 					"searchable": false,
 					className: "text-center",
 					orderable: false
+				},
+				{//work column
+					"targets": [8],
+					"visible": true,
+					"searchable": false,
+					className: "text-center",
+					orderable: false
 				}
 
 
@@ -101,12 +108,12 @@ $(document).ready(function() {
 	);
 
 
-
-		table.on('select', (e, dt, type, indexes) => {
-			var id = dt.rows({ selected: true }).data();
-			alert("id: " + id[0][0] + " cliente: " + id[0][1]); 
-						//alert(JSON.stringify(id))
-		})
+//
+//		table.on('select', (e, dt, type, indexes) => {
+//			var id = dt.rows({ selected: true }).data();
+//			alert("id: " + id[0][0] + " cliente: " + id[0][1]); 
+//						//alert(JSON.stringify(id))
+//		})
 
 });
 

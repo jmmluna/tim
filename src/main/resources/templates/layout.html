@@ -160,6 +160,27 @@
 					</div>
 				</div>
 			</li>
+			<li class="nav-item" th:classappend="${isWorks} ? 'active' : ''">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseWork" aria-expanded="true"
+				aria-controls="collapseWork"> <!--                     <i class="fas fa-user fa-cog"></i> -->
+					<i class="fas fa-fw fa-briefcase"></i> <span>Trabajos</span>
+			</a>
+				<div id="collapseWork" class="collapse"
+					th:classappend="${isWorks} ? 'show' : ''"
+					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Trabajos:</h6>
+						<a class="collapse-item"
+							th:classappend="${isWorks} and ${isWorkList}? 'active' : ''"
+							th:href="@{/works/list/actives}"><i
+							class="fas fa-fw fa-table"></i> Listado</a> <a class="collapse-item"
+							th:classappend="${isWorks} and ${isAddWork} ? 'active' : ''"
+							th:href="@{/works/save}"><i
+							class="fas fa-fw fa-briefcase">+ &nbsp;</i> &nbsp;Nuevo</a> 
+					</div>
+				</div>
+			</li>
 			<!--             Nav Item - Utilities Collapse Menu -->
 			<!--             <li class="nav-item"> -->
 			<!--                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" -->
