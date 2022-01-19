@@ -1,6 +1,7 @@
 package es.jmmluna.tim.integration;
 
 import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.work.WorkDTO;
 import es.jmmluna.tim.application.service.work.WorkItemDTO;
 import es.jmmluna.tim.application.service.work.useCase.*;
@@ -45,21 +46,20 @@ public class WorkIT {
     //
     @Autowired
     private GetActiveWorkCount getActiveWorkCount;
-//
-//	@Autowired
-//	private DisableBudget disableBudget;
-//
-//	@Autowired
-//	private AddBudgetItem addBudgetItem;
-//
-//	@Autowired
-//	private RemoveBudgetItem removeBudgetItem;
-//
-//	@Autowired
-//	private GetCustomer getCustomer;
+
+	@Autowired
+	private DisableWork disableWork;
+
+	@Autowired
+	private AddWorkItem addWorkItem;
+
+	@Autowired
+	private RemoveWorkItem removeWorkItem;
+
+    @Autowired
+    private GetBudget getBudget;
 
     @Test
-
     @Sql("classpath:drop-all.sql")
     @Sql("classpath:customer-test-data.sql")
     @Sql("classpath:budget-test-data.sql")
@@ -71,7 +71,7 @@ public class WorkIT {
     public void shouldSaveWorksThroughSqlFile() {
         //give
 
-        // load sql
+        // loaded data
 
         // when
         Long count = this.getActiveWorkCount.execute();
@@ -172,54 +172,75 @@ public class WorkIT {
 
     }
 
-    //
-//	@Test
-//	@DisplayName("Delete budget")
-//	@Order(8)
-//	public void testDisableBudget() {
-//		disableBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
-//
-//		var disabledBudgetDTO = this.getBudget.execute(UUID.fromString("123e4567-e89b-12d3-a456-556642440000"));
-//		assertNotNull(disabledBudgetDTO.getExpirationDate(),
-//				"El presupuesto tiene que tener asignado la fecha de baja");
-//
-//		Long budgetCount = this.getActiveBudgetCount.execute();
-//		assertTrue(budgetCount == 3, "El número de presupuestos no es correcto después de eliminar");
-//	}
-//
-//	@Test
-//	@DisplayName("Add budget Item")
-//	@Order(9)
-//	public void testAddBudgetItem() {
-//
-//		// given
-//		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
-//		BudgetItemDTO bItem1 = new BudgetItemDTO(UUID.randomUUID(), "Cajas de bombillas", 2, 5.0);
-//
-//		// when
-//		var budgetDTO = addBudgetItem.execute(uuid, bItem1);
-//
-//		// then
-//		assertEquals(2, budgetDTO.getBudgetItems().size());
-//	}
-//
-//	@Test
-//	@DisplayName("Remove budget Item")
-//	@Order(10)
-//	public void testRemoveBudgetItem() {
-//
-//		// given
-//		var uuid = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
-//		var budgetDTO = getBudget.execute(uuid);
-//		var budgetItemDTO = budgetDTO.getBudgetItems().get(0);
-//
-//		// when
-//		var removedBudgetDTO = removeBudgetItem.execute(uuid, budgetItemDTO);
-//
-//		// then
-//		assertEquals(1, removedBudgetDTO.getBudgetItems().size());
-//	}
-//
+
+	@Test
+	@DisplayName("Delete work")
+	@Order(9)
+	public void testDisableWork() {
+        //given
+        var workId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		//when
+        disableWork.execute(workId);
+
+        //then
+		var disabledWorkDTO = this.getWork.execute(workId);
+		assertNotNull(disabledWorkDTO.getExpirationDate(),
+				"El trabajo debe tener asignado una fecha de baja");
+
+		Long workCount = this.getActiveWorkCount.execute();
+		assertTrue(workCount == 1, "El número de trabajos no es correcto después de eliminar");
+	}
+
+	@Test
+	@DisplayName("Add work Item")
+	@Order(10)
+	public void testAddWorkItem() {
+
+		// given
+		var workId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		var workItem = new WorkItemDTO(UUID.randomUUID(), "Planchas", 2, 5.0);
+
+		// when
+		var workDTO = addWorkItem.execute(workId, workItem);
+
+		// then
+		assertEquals(3, workDTO.getWorkItems().size());
+	}
+
+	@Test
+	@DisplayName("Remove work Item")
+	@Order(11)
+	public void testRemoveWorkItem() {
+
+		// given
+		var workId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+		var workDTO = getWork.execute(workId);
+		var workItemDTO = workDTO.getWorkItems().get(0);
+
+		// when
+		var removedWorkDTO = removeWorkItem.execute(workId, workItemDTO);
+
+		// then
+		assertEquals(2, removedWorkDTO.getWorkItems().size());
+	}
+
+    @Test
+    @DisplayName("Create work based on budget")
+    @Order(12)
+    public void TestCreateWorkFromBudget() {
+        //give
+        var budgetId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
+        var budgetDTO = getBudget.execute(budgetId);
+
+        //when
+        var savedWorkDTO = createWork.execute(budgetDTO);
+
+        //then
+        assertEquals(1, savedWorkDTO.getWorkItems().size());
+        Long workCount = this.getActiveWorkCount.execute();
+        assertTrue(workCount == 2, "El número de trabajos no es correcto después de crear");
+    }
+
     private WorkDTO getExternalWork(boolean withUUID) {
         var workItems = Collections.<WorkItemDTO>emptyList();
         UUID workId = withUUID ? UUID.randomUUID() : null;
