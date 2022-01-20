@@ -81,7 +81,7 @@ public class BudgetController {
 	private BudgetDTO budgetDTOForAddItem;
 
 	@GetMapping("/list")
-	public String getCustomers(Model model) {
+	public String getBudgets(Model model) {
 		this.budgetDTOForAddItem = null;
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isBudgetList", true);

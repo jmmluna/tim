@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class WorkItemDTO extends DTO {
-//	private UUID workId;
+	private UUID workId;
 	private String description;
 	private Integer quantity;
 	private Double price;
