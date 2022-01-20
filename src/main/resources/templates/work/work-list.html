@@ -76,7 +76,8 @@
 								<th class="text-center">Cliente</th>
 								<th class="text-center">Descripción</th>
 								<th class="text-center">Fecha</th>
-								<th class="text-center">Total <i
+								<th class="text-center">Estado</th>
+								<th class="text-center">Total/Pre. <i
 									class="fas fa-euro-sign"></i>
 								</th>
 
@@ -96,6 +97,7 @@
 								<td class="align-middle" th:text="${work.customerDTO.name} + ' ' + ${work.customerDTO.surnames}"></td>
 								<td class="align-middle" th:text="${work.description}"></td>
 								<td class="align-middle" th:text="${#dates.format(work.date, 'dd/MM/yyyy')}"></td>
+								<td class="align-middle" th:text="${work.getStatusDescription}"></td>
 								<td class="align-middle" th:text="${work.cost} + '/' + ${work.budgetDTO.cost}"></td>
 
 									<td class="align-middle" ><a title="Descargar factura"

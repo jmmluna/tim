@@ -131,7 +131,7 @@ public class WorkController {
 	}
 
 	@PostMapping("item/add")
-	public RedirectView addWorkItem(String uuidSelectedCustomer, String selectedBudgetId, String selectedWorkDescription, WorkItemDTO workItem, RedirectAttributes redirectAttributes) {
+	public RedirectView addWorkItem(String uuidSelectedCustomer, String selectedWorkDescription, WorkItemDTO workItem, RedirectAttributes redirectAttributes) {
 						
 		var workId = workItem.getWorkId();
 		
@@ -141,7 +141,7 @@ public class WorkController {
 		this.workDTOForAddItem.add(workItem);
 		this.workDTOForAddItem.setDescription(selectedWorkDescription);
 		this.workDTOForAddItem.setCustomerDTO(getCustomer.execute(UUID.fromString(uuidSelectedCustomer)));
-		this.workDTOForAddItem.setBudgetDTO(getBudget.execute(UUID.fromString(selectedBudgetId)));
+//		this.workDTOForAddItem.setBudgetDTO(getBudget.execute(UUID.fromString(selectedBudgetId)));
 		
 
 		if(workId !=null)
@@ -174,7 +174,9 @@ public class WorkController {
 		if (result.hasErrors()) {			
 			return "work/work-save";
 		}
-
+		
+//		var budgetDTO = getBudget.execute(UUID.fromString(budgetId));
+//		work.setBudgetDTO(budgetDTO);
 		if (work.getUuid() == null)
 			createWork.execute(work);
 		else 

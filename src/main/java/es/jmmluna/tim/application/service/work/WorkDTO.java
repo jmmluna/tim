@@ -53,4 +53,8 @@ public class WorkDTO extends DTO {
 	public void remove(Integer index) {
 		workItems.remove(index.intValue());
 	}
+	
+	public String getStatusDescription() {
+		return this.workStatus==0?"INICIADO":"FINALIZADO";
+	}
 }

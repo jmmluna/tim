@@ -1,82 +1,55 @@
 
 $(document).ready(function() {
 
-
-		const table = $('#workDataTable').DataTable(
-
-//	 $('#budgetDataTable').DataTable(
-
+	$('#workItemDataTable').DataTable(
 		{
+			 "scrollY":        "200px",
+//        "scrollCollapse": true,
+        "paging":         false,
 
 			"columnDefs": [
-				{
+				{//description column
 					"targets": [0],
-					"visible": false,
-					"searchable": false
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					"orderable": true
 				},
-				{ //customer column
+				{//quantity column
 					"targets": [1],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
-					orderable: true
+					"orderable": true
 				},
-				{ //description column
+				{ // Price column
 					"targets": [2],
 					"visible": true,
 					"searchable": true,
-					className: "text-center",
-					orderable: true
+					className: "text-right",
+					"orderable": true,
+					"render": function(data, type, row) {
+						return "<b>" + data + ' <i class="fas fa-euro-sign"></i></b>';
+					},
 				},
-				{ //date column
+
+				{ // Total column
 					"targets": [3],
 					"visible": true,
 					"searchable": true,
-					className: "text-center",
-					orderable: true
-				},
-				{ //status column
-					"targets": [4],
-					"visible": true,
-					"searchable": true,
-					className: "text-center",
-					orderable: true
-				},
-				{ // Total column
-					"targets": [5],
-					"visible": true,
-					"searchable": true,
 					className: "text-right",
-					orderable: true,
+					"orderable": true,
 					"render": function(data, type, row) {
-						return "<b>" + data + "</b>";
+						return "<b>" + data + ' <i class="fas fa-euro-sign"></i></b>';
 					},
-				}
-				,
-				{//download column
-					"targets": [6],
-					"visible": true,
-					"searchable": false,
-					className: "text-center",
-					orderable: false
-				},
-				{//edit column
-					"targets": [7],
-					"visible": true,
-					"searchable": false,
-					className: "text-center",
-					orderable: false
 				},
 				{//delete column
-					"targets": [8],
+					"targets": [4],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",
-					orderable: false
+					"orderable": false
 				}
-
-
-
 			],
 			select: true,
 			"language": {
@@ -85,7 +58,7 @@ $(document).ready(function() {
 					rows: "",
 				},
 				"lengthMenu": "Mostrar _MENU_ registros por página",
-				"zeroRecords": "No se encontró nada, lo siento ",
+				"zeroRecords": "No se encontró ningún elemento ",
 				//				"info": "Total: _TOTAL_ registros.",
 				"info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
 				"infoEmpty": "No hay registros disponibles",
@@ -108,12 +81,10 @@ $(document).ready(function() {
 	);
 
 
-//
-//		table.on('select', (e, dt, type, indexes) => {
-//			var id = dt.rows({ selected: true }).data();
-//			alert("id: " + id[0][0] + " cliente: " + id[0][1]); 
-//						//alert(JSON.stringify(id))
-//		})
+	//	table.on('select', (e, dt, type, indexes) => {
+	//		var id = dt.rows({ selected: true }).data();
+	//		//			alert(id[0])
+	//	})
 
 });
 
