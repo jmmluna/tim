@@ -9,5 +9,5 @@ public class Dashboard {
 	private Long customerTotal;
 	private Long constructionMaterialTotal;
 	private Long budgetTotal;
-
+	private Long workTotal;
 }

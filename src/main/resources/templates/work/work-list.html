@@ -100,12 +100,16 @@
 								<td class="align-middle" th:text="${work.getStatusDescription}"></td>
 								<td class="align-middle" th:text="${work.cost} + '/' + ${work.budgetDTO.cost}"></td>
 
-									<td class="align-middle" ><a title="Descargar factura"
+									<td class="align-middle" th:if="${work.getStatusDescription() } eq 'FINALIZADO' "><a title="Descargar factura"
 										th:href="@{/works/print/{uuid}(uuid=${work.uuid})}"
 										class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
 										</a> 
 									</td>
-									
+									<td class="align-middle" th:unless="${work.getStatusDescription()} eq 'FINALIZADO'">									
+<i class="fas fa-print"></i>
+										 
+
+								</td>
 
 								<td class="align-middle">
 										<a title="Editar trabajo" class="btn btn-info"
