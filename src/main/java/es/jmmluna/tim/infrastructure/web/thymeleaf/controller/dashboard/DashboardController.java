@@ -13,6 +13,8 @@ import es.jmmluna.tim.application.service.construction_material.ConstructionMate
 import es.jmmluna.tim.application.service.customer.useCase.GetActiveCustomerCount;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
 import es.jmmluna.tim.application.service.work.useCase.GetActiveWorkCount;
+import es.jmmluna.tim.application.service.work.useCase.GetFinalizedWorkCount;
+import es.jmmluna.tim.application.service.work.useCase.GetInitiatedWorkCount;
 
 @Controller
 @RequestMapping("/")
@@ -28,6 +30,10 @@ public class DashboardController {
 	private GetActiveBudgetCount getActiveBudgetCount;
 	@Autowired
 	private GetActiveWorkCount getActiveWorkCount;
+	@Autowired
+	private GetFinalizedWorkCount getFinalizedWorkCount;
+	@Autowired
+	private GetInitiatedWorkCount getInitiatedWorkCount;
 	
 	@GetMapping
 	public String home(Model model) {
@@ -37,6 +43,8 @@ public class DashboardController {
 		dashboard.setConstructionMaterialTotal(constructionMaterialCountService.execute());
 		dashboard.setBudgetTotal(getActiveBudgetCount.execute());
 		dashboard.setWorkTotal(getActiveWorkCount.execute());
+		dashboard.setFinalizedWorkTotal(getFinalizedWorkCount.execute());
+		dashboard.setInitiatedWorkTotal(getInitiatedWorkCount.execute());
 		
 		model.addAttribute("isDashboard",true);		
 		model.addAttribute("dashboard", dashboard);						

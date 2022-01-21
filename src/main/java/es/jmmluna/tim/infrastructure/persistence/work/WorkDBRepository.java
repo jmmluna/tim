@@ -12,10 +12,11 @@ import org.springframework.stereotype.Repository;
 import es.jmmluna.tim.domain.model.work.Work;
 import es.jmmluna.tim.domain.model.work.WorkId;
 import es.jmmluna.tim.domain.model.work.WorkRepository;
+import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Repository
 public class WorkDBRepository implements WorkRepository {
-
+	
     @Autowired
     private WorkEntityMapper mapper;
 
@@ -25,6 +26,11 @@ public class WorkDBRepository implements WorkRepository {
     @Override
     public long getActiveCount() {
         return workRepository.countByExpirationDate(null);
+    }
+    
+    @Override
+    public long getStatusCount(WorkStatus workStatus) {
+        return workRepository.countByStatusAndExpirationDate(WorkStatus.getCode(workStatus), null);
     }
 
     @Override

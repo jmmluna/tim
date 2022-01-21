@@ -10,4 +10,6 @@ public class Dashboard {
 	private Long constructionMaterialTotal;
 	private Long budgetTotal;
 	private Long workTotal;
+	private Long finalizedWorkTotal;
+	private Long initiatedWorkTotal;
 }

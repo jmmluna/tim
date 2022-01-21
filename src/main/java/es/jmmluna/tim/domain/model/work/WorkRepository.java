@@ -8,6 +8,8 @@ import es.jmmluna.tim.domain.model.CommonRepository;
 public interface WorkRepository extends CommonRepository<Work, WorkId> {
 
     long getActiveCount();
+    
+    long getStatusCount(WorkStatus workStatus);
 
     List<Work> getActives();
 
