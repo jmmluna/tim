@@ -46,9 +46,30 @@
 								class="form-control" th:field="*{description}" id="dni" required>
 						</div>
 
-						<div class="col-md-5 mb-3">
-							<label for="name">Precio</label> <input type="number"
-								class="form-control" th:field="*{price}" id="name" required onkeypress="return onlyNumberKey(event)">
+<!-- 						<div class="col-md-5 mb-3"> -->
+<!-- 							<label for="name">Precio</label> <input type="number" -->
+<!-- 								class="form-control" th:field="*{price}" id="name" required onkeypress="return onlyNumberKey(event)"> -->
+<!-- 						</div> -->
+						
+						
+						
+						
+						
+						
+						<div class="col-md-2 mb-3">
+							<label for="price">Precio </label>
+
+							<div class="input-group">
+								<input id="price" th:field="*{price}"
+									type="text"  class="form-control"
+									aria-label="Precio" required
+									onkeypress="return onlyNumberKey(event)">																																			
+									
+								<div class="input-group-append">
+									<span class="input-group-text"><i
+										class="fas fa-euro-sign"></i></span> 
+								</div>
+							</div>
 						</div>
 						
 

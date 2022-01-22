@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import es.jmmluna.tim.application.service.Util;
+
 public class ConstructionMaterialDTO {
 	private UUID uuid;
 	private String description;
@@ -38,7 +40,7 @@ public class ConstructionMaterialDTO {
 	}
 
 	public void setPrice(Double price) {
-		this.price = price;
+		this.price = Util.to2Decimal(price);
 	}
 
 	public Date getExpirationDate() {

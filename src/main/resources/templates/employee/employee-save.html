@@ -59,12 +59,13 @@
 
 							<div class="input-group">
 								<input id="customerHourPrice" th:field="*{customerHourPrice}"
-									type="number" class="form-control"
+									type="text"  class="form-control"
 									aria-label="Precio/hora cliente"
-									onkeypress="return onlyNumberKey(event)">
+									onkeypress="return onlyNumberKey(event)" required>																																			
+									
 								<div class="input-group-append">
 									<span class="input-group-text"><i
-										class="fas fa-euro-sign"></i></span> <span class="input-group-text">0.00</span>
+										class="fas fa-euro-sign"></i></span> 
 								</div>
 							</div>
 						</div>
@@ -75,12 +76,12 @@
 
 							<div class="input-group">
 								<input id="employeeHourPrice" th:field="*{employeeHourPrice}"
-									type="number" class="form-control"
+									type="text" class="form-control"
 									aria-label="Precio/hora trabajador"
-									onkeypress="return onlyNumberKey(event)">
+									onkeypress="return onlyNumberKey(event)" required>
 								<div class="input-group-append">
 									<span class="input-group-text"><i
-										class="fas fa-euro-sign"></i></span> <span class="input-group-text">0.00</span>
+										class="fas fa-euro-sign"></i></span> 
 								</div>
 							</div>
 						</div>

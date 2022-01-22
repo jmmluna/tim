@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import es.jmmluna.tim.application.service.Util;
+
 public class EmployeeDTO {
 
 	private Long id;
@@ -51,8 +53,8 @@ public class EmployeeDTO {
 		return customerHourPrice;
 	}
 
-	public void setCustomerHourPrice(Double customerHourPrice) {
-		this.customerHourPrice = customerHourPrice;
+	public void setCustomerHourPrice(Double customerHourPrice) {		
+		this.customerHourPrice = Util.to2Decimal(customerHourPrice);
 	}
 
 	public Double getEmployeeHourPrice() {
@@ -60,7 +62,7 @@ public class EmployeeDTO {
 	}
 
 	public void setEmployeeHourPrice(Double employeeHourPrice) {
-		this.employeeHourPrice = employeeHourPrice;
+		this.employeeHourPrice = Util.to2Decimal(employeeHourPrice);
 	}
 	
 }

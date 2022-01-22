@@ -17,6 +17,7 @@ $(document).ready(function() {
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
+					render: $.fn.dataTable.render.number(',', '.', 2)
 				}
 				, 
 				{//state column
