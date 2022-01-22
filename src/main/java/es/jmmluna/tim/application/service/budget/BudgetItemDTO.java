@@ -3,6 +3,7 @@ package es.jmmluna.tim.application.service.budget;
 import java.util.UUID;
 
 import es.jmmluna.tim.application.service.DTO;
+import es.jmmluna.tim.application.service.Util;
 import lombok.Data;
 
 @Data
@@ -20,6 +21,14 @@ public class BudgetItemDTO extends DTO {
 		this.uuid = uuid;
 		this.description = description;
 		this.quantity = quantity;
-		this.price = price;
+		setPrice(price);
+	}
+	
+	public void setPrice(Double price) {
+		this.price = Util.to2Decimal(price);
+	}
+	
+	public Double getCost() {
+		return  Util.to2Decimal(price * quantity);
 	}
 }

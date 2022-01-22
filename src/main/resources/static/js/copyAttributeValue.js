@@ -12,6 +12,13 @@ function copyValueFromConstructionMaterial() {
 	const values = fromElement.value.split(" | ");
 	toDescriptionElement.value = values[0];
 	toPriceElement.value = values[1];
-	toQuantityElement.value = "1";
+	toQuantityElement.value = "1";	
+}
+
+function enabledBasedOn(elementId, dependentElementId) {
+	const  dependentElement = document.getElementById(dependentElementId);	
+	const  element = document.getElementById(elementId);
+	
+	element.disabled = dependentElement.value === ""?true:false; 
 	
 }

@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import es.jmmluna.tim.application.service.DTO;
+import es.jmmluna.tim.application.service.Util;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
 import lombok.Data;
 
@@ -34,7 +35,7 @@ public class BudgetDTO extends DTO {
 		this.budgetNumber = budgetNumber;
 		this.year = year;
 		this.date = date;
-		this.cost = cost;
+		this.setCost(cost);
 		this.budgetItems = budgetItems;
 	}
 
@@ -50,5 +51,9 @@ public class BudgetDTO extends DTO {
 	
 	public void remove(Integer index) {
 		budgetItems.remove(index.intValue());
+	}
+	
+	public void setCost(Double cost) {
+		this.cost = Util.to2Decimal(cost);
 	}
 }

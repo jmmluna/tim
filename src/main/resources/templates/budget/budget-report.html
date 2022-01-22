@@ -106,8 +106,10 @@ body {
 													<td class="text-right"
 														th:text="${budgetItemDTO.price} + ' €'"></td>
 
+<!-- 													<td class="text-right" -->
+<!-- 														th:text="${budgetItemDTO.price * budgetItemDTO.quantity}+ ' €'"></td> -->
 													<td class="text-right"
-														th:text="${budgetItemDTO.price * budgetItemDTO.quantity}+ ' €'"></td>
+														th:text="${budgetItemDTO.getCost()}+ ' €'"></td>
 												</tr>
 												<!--<tr> -->
 												<!-- 													<td>1024MB Cloud 2.0 Server - elisium.dynamic.com -->

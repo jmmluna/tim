@@ -134,9 +134,11 @@ public class BudgetController {
 
 	@GetMapping("/save")
 	public String create(Model model) {
+//		this.budgetDTOForAddItem = null;
 		model.addAttribute("isBudgets", true);
 		model.addAttribute("isAddBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
+		model.addAttribute("constructionMaterials", constructionMaterialListingService.execute(EElementList.ACTIVE));
 		model.addAttribute("budgetItem", new BudgetItemDTO());
 //		model.addAttribute("budget", new BudgetDTO());
 		
@@ -153,6 +155,8 @@ public class BudgetController {
 
 		this.budgetDTOForAddItem.add(budgetItem);
 		this.budgetDTOForAddItem.setDescription(selectedBudgetDescription);
+				
+		if(!uuidSelectedCustomer.isEmpty())
 		this.budgetDTOForAddItem.setCustomerDTO(getCustomer.execute(UUID.fromString(uuidSelectedCustomer)));
 		
 //		String message = "Nuevo elemento añadido!! " + selectedBudgetDescription + "  "+ uuidSelectedCustomer;
@@ -178,8 +182,8 @@ public class BudgetController {
 //		this.budgetDTOForAddItem.setDescription(selectedBudgetDescription);
 //		this.budgetDTOForAddItem.setCustomerDTO(getCustomer.execute(UUID.fromString(uuidSelectedCustomer)));
 		
-		String message = "Nuevo elemento eliminado!! " + itemIndex +  " " + budgetId;
-		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
+//		String message = "Nuevo elemento eliminado!! " + itemIndex +  " " + budgetId;
+//		redirectAttributes.addFlashAttribute("budgetItemMessage", message);
 		
 		if(budgetId !=null)
 			return new RedirectView("/budgets/save/" + budgetId, true);
@@ -188,17 +192,26 @@ public class BudgetController {
 	}
 
 	@PostMapping("save")
-	public String save(BudgetDTO budget, BindingResult result, Model model) {
-		if (result.hasErrors()) {			
-			return "budget/budget-save";
-		}
+	public RedirectView save(BudgetDTO budget, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+//		if (result.hasErrors()) {			
+//			return "budget/budget-save";
+//		}
 
+//		if(budget.getCustomerDTO().getUuid() == null) {
+//			redirectAttributes.addFlashAttribute("budgetItemMessage", "Debe seleccionar un cliente");
+//			return new RedirectView("/budgets/save", true);
+//		}
+		
+		
 		if (budget.getUuid() == null)
 			createBudget.execute(budget);
 		else 
 			updateBudget.execute(budget);		
+		
+		
 
-		return "redirect:/budgets/list/actives";
+		return new RedirectView("/budgets/list/actives", true);
+//		return "redirect:/budgets/list/actives";
 	}
 
 	@GetMapping("/delete/{uuid}")

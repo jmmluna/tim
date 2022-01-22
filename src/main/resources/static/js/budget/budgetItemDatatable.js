@@ -28,7 +28,7 @@ $(document).ready(function() {
 					"searchable": true,
 					className: "text-right",
 					"orderable": true,
-					"render": function(data, type, row) {
+					"render": function(data, type, row) {															
 						return "<b>" + data + ' <i class="fas fa-euro-sign"></i></b>';
 					},
 				},

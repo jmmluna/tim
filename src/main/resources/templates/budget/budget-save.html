@@ -74,12 +74,20 @@
 
 							<label for="name">CLIENTE</label> <select class="form-control"
 								th:field="*{customerDTO.uuid}" id="customer"
-								onchange="copyValue('customer', 'uuidSelectedCustomer')">
-
-								<option th:each="customer : ${customers}"
+								onchange="copyValue('customer', 'uuidSelectedCustomer'); enabledBasedOn('budgetSaveButton', 'customer')">
+								
+								<option  value=""  selected>Selecciona un cliente...</option>
+								
+								<option  th:each="customer : ${customers}"
 									th:value="${customer.uuid}"
 									th:text="${customer.name} + ' ' + ${customer.surnames}"
-									th:selected="${customer.uuid} == ${budget.customerDTO.uuid}"></option>
+									 th:selected="${customer.uuid} == ${budget.customerDTO.uuid}"></option>
+								
+								
+								
+								
+									
+									
 							</select>
 						</div>
 
@@ -161,9 +169,11 @@
 										<td class="align-middle" th:text="${budgetItemDTO.quantity}"></td>
 										<td class="align-middle" th:text="${budgetItemDTO.price}"></td>
 
-										<td class="align-middle"
-											th:text="${budgetItemDTO.price * budgetItemDTO.quantity}"></td>
+<!-- 										<td class="align-middle" -->
+<!-- 											th:text="${budgetItemDTO.price * budgetItemDTO.quantity}"></td> -->
 
+										<td class="align-middle"
+											th:text="${budgetItemDTO.getCost()}"></td>
 										<td class="align-middle"><a class="btn btn-danger"
 											data-toggle="modal"
 											th:attr="data-target='#deleteConfirm'+${itemStat.index}"><i
@@ -249,7 +259,8 @@
 						class="fas fa-gavel">+</i>
 					</a>
 
-					<button class="btn btn-success float-right " type="submit">Guardar</button>
+<button th:if="${isEditBudget}" class="btn btn-success float-right " type="submit" id="budgetSaveButton">Guardar</button>
+					<button th:unless="${isEditBudget}" disabled class="btn btn-success float-right " type="submit" id="budgetSaveButton">Guardar</button>
 					<a class="btn btn-primary float-right mr-1"
 						href="javascript: history.go(-1)">Cancelar</a>
 				</div>
@@ -286,22 +297,37 @@
 									name="uuidSelectedCustomer" />
 
 								<div class="ml-2 mb-3">
-									<label for="description">DESCRIPCION</label> <input
+									<label for="description">Descripción</label> <input
 										class="form-control" th:placeholder="Descripción"
 										th:field="*{description}" required />
 								</div>
 
 								<div class="col-md-5 mb-3">
-									<label for="quantity">CANTIDAD</label> <input
+									<label for="quantity">Cantidad</label> <input
 										class="form-control" value="1" th:field="*{quantity}"
 										type="number" onkeypress="return onlyNumberKey(event)"
 										required />
 								</div>
 
-								<div class="col-md-5 mb-3">
-									<label for="price">PRECIO</label> <input class="form-control"
-										th:placeholder="Precio " th:field="*{price}" type="text"
-										onkeypress="return onlyNumberKey(event)" required />
+<!-- 								<div class="col-md-5 mb-3"> -->
+<!-- 									<label for="price">PRECIO</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required /> -->
+<!-- 								</div> -->
+
+								<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
 								</div>
 
 							</div>
@@ -357,7 +383,7 @@
 									name="uuidSelectedCustomer" />
 
 								<div >
-									<label for="description">MATERIAL DE CONSTRUCCIÓN</label> <select
+									<label for="description">Material de construcción</label> <select
 										class="form-control" id="constructionMaterialId"
 										onchange="copyValueFromConstructionMaterial(); ">
 										
@@ -374,24 +400,39 @@
 							<hr>
 							<div class="card-body">
 								<div class=" mb-3  ml-2">
-									<label for="description">DESCRIPCION</label> <input
+									<label for="description">Descripción</label> <input
 										class="form-control" th:placeholder="Descripción"
 										th:field="*{description}" required
 										id="constructionMaterialDescription" />
 								</div>
 
 								<div class="col-md-5 mb-3 ml-0">
-									<label for="quantity">CANTIDAD</label> <input
+									<label for="quantity">Cantidad</label> <input
 										class="form-control" th:field="*{quantity}" type="number"
 										value="1" onkeypress="return onlyNumberKey(event)" required
 										id="constructionMaterialQuantity" />
 								</div>
 
-								<div class="col-md-5 mb-3 ml-0">
-									<label for="price">PRECIO</label> <input class="form-control"
-										th:placeholder="Precio " th:field="*{price}" type="text"
-										onkeypress="return onlyNumberKey(event)" required
-										id="constructionMaterialPrice" />
+<!-- 								<div class="col-md-5 mb-3 ml-0"> -->
+<!-- 									<label for="price">PRECIO</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required -->
+<!-- 										id="constructionMaterialPrice" /> -->
+<!-- 								</div> -->
+
+									<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  id="constructionMaterialPrice" th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
 								</div>
 
 							</div>
