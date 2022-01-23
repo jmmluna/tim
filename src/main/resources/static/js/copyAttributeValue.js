@@ -15,6 +15,17 @@ function copyValueFromConstructionMaterial() {
 	toQuantityElement.value = "1";	
 }
 
+function copyValueFromEmployee() {
+	const fromElement = document.getElementById('employeeId');
+	const toDescriptionElement = document.getElementById('employeeDescription'); 
+	const toPriceElement = document.getElementById('employeePrice');
+	const toQuantityElement = document.getElementById('employeeQuantity');
+	const values = fromElement.value.split(" | ");
+	toDescriptionElement.value = values[0];
+	toPriceElement.value = values[1];
+	toQuantityElement.value = "1";	
+}
+
 function enabledBasedOn(elementId, dependentElementId) {
 	const  dependentElement = document.getElementById(dependentElementId);	
 	const  element = document.getElementById(elementId);

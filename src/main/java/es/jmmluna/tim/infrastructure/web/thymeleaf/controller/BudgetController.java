@@ -1,7 +1,6 @@
 package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,20 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import com.lowagie.text.DocumentException;
-
-import es.jmmluna.tim.application.service.DTO;
 import es.jmmluna.tim.application.service.EElementList;
 import es.jmmluna.tim.application.service.budget.BudgetDTO;
 import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
@@ -38,9 +30,9 @@ import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudgetList;
 import es.jmmluna.tim.application.service.budget.useCase.UpdateBudget;
 import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialListingService;
-import es.jmmluna.tim.application.service.customer.CustomerDTO;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomerList;
+import es.jmmluna.tim.application.service.employee.EmployeeListingService;
 import es.jmmluna.tim.infrastructure.web.thymeleaf.ReportGenerator;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,6 +58,9 @@ public class BudgetController {
 
 	@Autowired
 	private GetCustomerList getCustomerList;
+	
+	@Autowired
+	private EmployeeListingService getEmployeeList;
 	
 	@Autowired
 	private GetCustomer getCustomer;
@@ -119,6 +114,7 @@ public class BudgetController {
 		model.addAttribute("isEditBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
 		model.addAttribute("constructionMaterials", constructionMaterialListingService.execute(EElementList.ACTIVE));
+		model.addAttribute("employees", getEmployeeList.execute(EElementList.ACTIVE));
 		model.addAttribute("budgetItem", new BudgetItemDTO());
 		
 		
@@ -139,6 +135,7 @@ public class BudgetController {
 		model.addAttribute("isAddBudget", true);
 		model.addAttribute("customers", getCustomerList.execute(EElementList.ACTIVE));
 		model.addAttribute("constructionMaterials", constructionMaterialListingService.execute(EElementList.ACTIVE));
+		model.addAttribute("employees", getEmployeeList.execute(EElementList.ACTIVE));
 		model.addAttribute("budgetItem", new BudgetItemDTO());
 //		model.addAttribute("budget", new BudgetDTO());
 		
