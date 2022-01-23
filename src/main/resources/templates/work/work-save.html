@@ -12,6 +12,16 @@
 	rel="stylesheet">
 
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+	document.getElementById('workItemDate').valueAsDate = new Date();
+	document.getElementById('materialItemDate').valueAsDate = new Date();
+
+});
+</script>
+
+
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 <script type="text/javascript"
@@ -23,11 +33,6 @@
 	th:src="@{/js/work/workItemDatatable.js}"></script>
 <script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
 <script type="text/javascript" th:src="@{/js/copyAttributeValue.js}"></script>
-
-
-
-
-
 
 </head>
 <body>
@@ -195,7 +200,7 @@
 										<td class="align-middle" th:text="${workItemDTO.price}"></td>
 
 										<td class="align-middle"
-											th:text="${workItemDTO.price * workItemDTO.quantity}"></td>
+											th:text="${workItemDTO.getCost()}"></td>
 
 										<td class="align-middle"><a class="btn btn-danger"
 											data-toggle="modal"
@@ -310,17 +315,32 @@
 										required />
 								</div>
 
-								<div class="col-md-5 mb-3">
-									<label for="price">Precio</label> <input class="form-control"
-										th:placeholder="Precio " th:field="*{price}" type="text"
-										onkeypress="return onlyNumberKey(event)" required />
+<!-- 								<div class="col-md-5 mb-3"> -->
+<!-- 									<label for="price">Precio</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required /> -->
+<!-- 								</div> -->
+								<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)"
+											 required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
 								</div>
 								
-<!-- 								onload="getDate()" -->
+								
 								<div class="col-md-5 mb-3">
 									<label for="date">Fecha</label> <input id="workItemDate" class="form-control"
-										th:placeholder="Precio " th:field="*{date}" type="date"
-										  required />
+										 th:field="*{date}" type="date"
+										 required />
 								</div>
 
 							</div>
@@ -376,7 +396,7 @@
 									name="uuidSelectedCustomer" />
 
 								<div >
-									<label for="description">MATERIAL DE CONSTRUCCIÓN</label> <select
+									<label for="description">Material de construcción</label> <select
 										class="form-control" id="constructionMaterialId"
 										onchange="copyValueFromConstructionMaterial(); ">
 										
@@ -389,28 +409,47 @@
 									</select>
 								</div>
 								
-							</div>
-							<hr>
-							<div class="card-body">
+							
 								<div class=" mb-3  ml-2">
-									<label for="description">DESCRIPCION</label> <input
+									<label for="description">Descripción</label> <input
 										class="form-control" th:placeholder="Descripción"
 										th:field="*{description}" required
 										id="constructionMaterialDescription" />
 								</div>
 
 								<div class="col-md-5 mb-3 ml-0">
-									<label for="quantity">CANTIDAD</label> <input
+									<label for="quantity">Cantidad</label> <input
 										class="form-control" th:field="*{quantity}" type="number"
 										value="1" onkeypress="return onlyNumberKey(event)" required
 										id="constructionMaterialQuantity" />
 								</div>
+								
+								<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)"
+											id="constructionMaterialPrice" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
+								</div>
 
-								<div class="col-md-5 mb-3 ml-0">
-									<label for="price">PRECIO</label> <input class="form-control"
-										th:placeholder="Precio " th:field="*{price}" type="text"
-										onkeypress="return onlyNumberKey(event)" required
-										id="constructionMaterialPrice" />
+<!-- 								<div class="col-md-5 mb-3 ml-0"> -->
+<!-- 									<label for="price">Precio</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required -->
+<!-- 										id="constructionMaterialPrice" /> -->
+<!-- 								</div> -->
+								<div class="col-md-5 mb-3">
+									<label for="date">Fecha</label> <input id="materialItemDate" class="form-control"
+										 th:field="*{date}" type="date"
+										  required />
 								</div>
 
 							</div>

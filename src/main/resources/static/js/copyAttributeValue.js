@@ -19,6 +19,5 @@ function enabledBasedOn(elementId, dependentElementId) {
 	const  dependentElement = document.getElementById(dependentElementId);	
 	const  element = document.getElementById(elementId);
 	
-	element.disabled = dependentElement.value === ""?true:false; 
-	
+	element.disabled = dependentElement.value === ""?true:false; 	
 }

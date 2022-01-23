@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import es.jmmluna.tim.application.service.DTO;
+import es.jmmluna.tim.application.service.Util;
 import lombok.Data;
 
 @Data
@@ -26,7 +27,15 @@ public class WorkItemDTO extends DTO {
 		this.uuid = uuid;
 		this.description = description;
 		this.quantity = quantity;
-		this.price = price;
+		setPrice(price);
 		this.date = date;
+	}
+	
+	public void setPrice(Double price) {
+		this.price = Util.to2Decimal(price);
+	}
+	
+	public Double getCost() {
+		return  Util.to2Decimal(price * quantity);
 	}
 }

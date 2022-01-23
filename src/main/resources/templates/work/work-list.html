@@ -98,7 +98,7 @@
 								<td class="align-middle" th:text="${work.description}"></td>
 								<td class="align-middle" th:text="${#dates.format(work.date, 'dd/MM/yyyy')}"></td>
 								<td class="align-middle" th:text="${work.getStatusDescription}"></td>
-								<td class="align-middle" th:text="${work.cost} + '/' + ${work.budgetDTO.cost}"></td>
+								<td class="align-middle" th:text="${work.cost} + ' €/' + ${work.budgetDTO.cost} + ' €'"></td>
 
 									<td class="align-middle" th:if="${work.getStatusDescription() } eq 'FINALIZADO' "><a title="Descargar factura"
 										th:href="@{/works/print/{uuid}(uuid=${work.uuid})}"
