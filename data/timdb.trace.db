@@ -171,3 +171,7 @@ drop table `TIM`.`TIM_WORKS` [90107-200]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "TIM_WORKS_EMPLOYEES" no encontrada
 Table "TIM_WORKS_EMPLOYEES" not found; SQL statement:
 drop table `TIM`.`TIM_WORKS_EMPLOYEES` [42102-200]
+2022-01-23 19:19:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "DROP TIM[*].TIM_WORKS_EMPLOYEES"; se esperaba "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE, SYNONYM"
+Syntax error in SQL statement "DROP TIM[*].TIM_WORKS_EMPLOYEES"; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE, SYNONYM"; SQL statement:
+drop TIM.TIM_WORKS_EMPLOYEES [42001-200]
