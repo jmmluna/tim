@@ -45,7 +45,7 @@ public class WorkTest {
 
 		// when
 		var workItem = new WorkItem(WorkItemId.of(UUID.randomUUID()), "Marcos de las ventanas", 2,
-				Price.of(10.0));
+				Price.of(10.0), new Date());
 		work.add(workItem);
 
 		// then
@@ -70,8 +70,8 @@ public class WorkTest {
 	}
 
 	private List<WorkItem> getWorkItems() {
-		var wItem1 = new WorkItem(WorkItemId.of(UUID.randomUUID()), WORK_ITEM1 , 2, Price.of(5.0));
-		var wItem2 = new WorkItem(WorkItemId.of(UUID.randomUUID()), WORK_ITEM2 , 4, Price.of(50.0));
+		var wItem1 = new WorkItem(WorkItemId.of(UUID.randomUUID()), WORK_ITEM1 , 2, Price.of(5.0), new Date());
+		var wItem2 = new WorkItem(WorkItemId.of(UUID.randomUUID()), WORK_ITEM2 , 4, Price.of(50.0), new Date());
 
 		return List.of(wItem1, wItem2);
 	}

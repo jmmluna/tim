@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import es.jmmluna.tim.application.service.DTO;
+import es.jmmluna.tim.application.service.Util;
 import es.jmmluna.tim.application.service.budget.BudgetDTO;
 import es.jmmluna.tim.application.service.customer.CustomerDTO;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class WorkDTO extends DTO {
 		this.description = description;
 		this.workStatus = workStatus;
 		this.date = date;
-		this.cost = cost;
+		setCost(cost);
 		this.workItems = workItems;
 	}
 
@@ -46,15 +47,19 @@ public class WorkDTO extends DTO {
 		this.setExpirationDate(expirationDate);
 	}
 
+	public void setCost(Double cost) {
+		this.cost = Util.to2Decimal(cost);
+	}
+
 	public void add(WorkItemDTO workItemDTO) {
 		workItems.add(workItemDTO);
 	}
-	
+
 	public void remove(Integer index) {
 		workItems.remove(index.intValue());
 	}
-	
+
 	public String getStatusDescription() {
-		return this.workStatus==0?"INICIADO":"FINALIZADO";
+		return this.workStatus == 0 ? "INICIADO" : "FINALIZADO";
 	}
 }

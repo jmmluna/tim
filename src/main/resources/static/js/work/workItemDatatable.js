@@ -3,27 +3,36 @@ $(document).ready(function() {
 
 	$('#workItemDataTable').DataTable(
 		{
-			 "scrollY":        "200px",
-//        "scrollCollapse": true,
+			 
+		"scrollY":        "200px",
+        "scrollCollapse": true,
+		"scrollX":        "200px",
         "paging":         false,
 
 			"columnDefs": [
-				{//description column
+				{//date column
 					"targets": [0],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
 					"orderable": true
 				},
-				{//quantity column
+				{//description column
 					"targets": [1],
 					"visible": true,
 					"searchable": true,
 					className: "text-center",
 					"orderable": true
 				},
-				{ // Price column
+				{//quantity column
 					"targets": [2],
+					"visible": true,
+					"searchable": true,
+					className: "text-center",
+					"orderable": true
+				},
+				{ // Price column
+					"targets": [3],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
@@ -34,7 +43,7 @@ $(document).ready(function() {
 				},
 
 				{ // Total column
-					"targets": [3],
+					"targets": [4],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
@@ -44,7 +53,7 @@ $(document).ready(function() {
 					},
 				},
 				{//delete column
-					"targets": [4],
+					"targets": [5],
 					"visible": true,
 					"searchable": false,
 					className: "text-center",

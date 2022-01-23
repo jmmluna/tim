@@ -212,7 +212,7 @@ public class WorkIT {
 
 		// given
 		var workId = UUID.fromString("123e4567-e89b-12d3-a456-556642440000");
-		var workItem = new WorkItemDTO(UUID.randomUUID(), "Planchas", 2, 5.0);
+		var workItem = new WorkItemDTO(UUID.randomUUID(), "Planchas", 2, 5.0, new Date());
 
 		// when
 		var workDTO = addWorkItem.execute(workId, workItem);

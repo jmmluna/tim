@@ -24,14 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WorkEntityMapper {
 
-	@Autowired
-	private CustomerJpaRepository customerRepository;
-
-	@Autowired
-	private BudgetJpaRepository budgetRepository;
-
 	public Work toModel(WorkEntity entity) {
-// BudgetId.of(entity.getBudget().getUuid())
+
 		return new Work(WorkId.of(entity.getUuid()), BudgetId.of(entity.getBudgetId()),
 				CustomerId.of(entity.getCustomerId()), entity.getDescription(),
 				WorkStatus.of(entity.getStatus()), entity.getDate(), toWorkItemList(entity.getWorkItems()),
@@ -68,7 +62,7 @@ public class WorkEntityMapper {
 
 	private WorkItem toWorkItem(WorkItemEntity entity) {
 		return new WorkItem(WorkItemId.of(entity.getUuid()), entity.getDescription(), entity.getAmount(),
-				Price.of(entity.getPrice()));
+				Price.of(entity.getPrice()), entity.getDate());
 	}
 
 	private WorkItemEntity toWorkItemEntity(WorkEntity workEntity, WorkItem workItem) {
@@ -78,6 +72,7 @@ public class WorkEntityMapper {
 		budgetItemEntity.setDescription(workItem.getDescription());
 		budgetItemEntity.setPrice(workItem.getPrice().getValue());
 		budgetItemEntity.setAmount(workItem.getQuantity());
+		budgetItemEntity.setDate(workItem.getDate());
 		return budgetItemEntity;
 
 	}

@@ -1,8 +1,8 @@
 package es.jmmluna.tim.infrastructure.persistence.work;
 
+import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -29,4 +33,8 @@ public class WorkItemEntity {
 	private Integer amount;
 	@Column(name = "PRICE")
 	private Double price;
+	@Column(name = "DATE")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+	private Date date;
 }

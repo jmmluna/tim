@@ -49,7 +49,7 @@ public class CreateWork {
     private List<WorkItem> toWorkItemList(List<BudgetItemDTO> budgetItems) {
         var workItems = new ArrayList<WorkItem>();
         budgetItems.forEach(budgetItem -> {
-            var workItem = new WorkItem(WorkItemId.of(workRepository.getNextIdentifier()), budgetItem.getDescription(), budgetItem.getQuantity(), Price.of(budgetItem.getPrice()));
+            var workItem = new WorkItem(WorkItemId.of(workRepository.getNextIdentifier()), budgetItem.getDescription(), budgetItem.getQuantity(), Price.of(budgetItem.getPrice()), new Date());
             workItems.add(workItem);
         });
         return workItems;

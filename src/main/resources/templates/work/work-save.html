@@ -11,16 +11,24 @@
 <link th:href="@{/vendor/datatables/select.bootstrap4.min.css}"
 	rel="stylesheet">
 
+
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.select.min.js}"></script>
 
 <script type="text/javascript"
 	th:src="@{/js/work/workItemDatatable.js}"></script>
 <script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
 <script type="text/javascript" th:src="@{/js/copyAttributeValue.js}"></script>
+
+
+
+
+
+
 </head>
 <body>
 	<section layout:fragment="content">
@@ -141,6 +149,7 @@
 								<thead class="table-dark">
 
 									<tr>
+										<th class="text-center">Fecha</th>
 										<th class="text-center">Descripción</th>
 										<th class="text-center">Cantidad</th>
 										<th class="text-center">Precio <i
@@ -161,6 +170,11 @@
 											th:value="${workItemDTO.uuid}" />
 
 										<input type="hidden"
+											th:placeholder="Fecha + ' ' + ${itemStat.count}"
+											th:field="*{workItems[__${itemStat.index}__].date}"
+											required />
+											
+										<input type="hidden"
 											th:placeholder="Descripción + ' ' + ${itemStat.count}"
 											th:field="*{workItems[__${itemStat.index}__].description}"
 											required />
@@ -173,7 +187,8 @@
 											th:field="*{workItems[__${itemStat.index}__].price}"
 											required />
 
-
+										<td class="align-middle"
+											th:text="${#dates.format(workItemDTO.date, 'dd/MM/yyyy')}"></td>
 										<td class="align-middle"
 											th:text="${workItemDTO.description}"></td>
 										<td class="align-middle" th:text="${workItemDTO.quantity}"></td>
@@ -283,22 +298,29 @@
 									name="uuidSelectedCustomer" />
 
 								<div class="ml-2 mb-3">
-									<label for="description">DESCRIPCION</label> <input
+									<label for="description">Descripción</label> <input
 										class="form-control" th:placeholder="Descripción"
 										th:field="*{description}" required />
 								</div>
 
 								<div class="col-md-5 mb-3">
-									<label for="quantity">CANTIDAD</label> <input
+									<label for="quantity">Cantidad</label> <input
 										class="form-control" value="1" th:field="*{quantity}"
 										type="number" onkeypress="return onlyNumberKey(event)"
 										required />
 								</div>
 
 								<div class="col-md-5 mb-3">
-									<label for="price">PRECIO</label> <input class="form-control"
+									<label for="price">Precio</label> <input class="form-control"
 										th:placeholder="Precio " th:field="*{price}" type="text"
 										onkeypress="return onlyNumberKey(event)" required />
+								</div>
+								
+<!-- 								onload="getDate()" -->
+								<div class="col-md-5 mb-3">
+									<label for="date">Fecha</label> <input id="workItemDate" class="form-control"
+										th:placeholder="Precio " th:field="*{date}" type="date"
+										  required />
 								</div>
 
 							</div>

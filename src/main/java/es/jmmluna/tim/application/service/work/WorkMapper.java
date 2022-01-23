@@ -44,12 +44,12 @@ public class WorkMapper {
 
     public WorkItem toWorkItem(WorkItemDTO workItemDTO) {
         return new WorkItem(WorkItemId.of(workItemDTO.getUuid()), workItemDTO.getDescription(),
-                workItemDTO.getQuantity(), Price.of(workItemDTO.getPrice()));
+                workItemDTO.getQuantity(), Price.of(workItemDTO.getPrice()), workItemDTO.getDate());
     }
 
     private WorkItemDTO toWorkItemDTO(WorkItem workItem) {
         return new WorkItemDTO(workItem.getWorkItemId().getValue(), workItem.getDescription(), workItem.getQuantity(),
-                workItem.getPrice().getValue());
+                workItem.getPrice().getValue(), workItem.getDate());
     }
 
     private List<WorkItem> toWorkItemList(List<WorkItemDTO> workItemsDTO) {
