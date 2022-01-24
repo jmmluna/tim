@@ -1,8 +1,9 @@
-package es.jmmluna.tim.domain.model.employee;
+package es.jmmluna.tim.domain.model.employee.hour;
 
 import java.util.Date;
 
 import es.jmmluna.tim.domain.model.Price;
+import es.jmmluna.tim.domain.model.employee.EmployeeId;
 import es.jmmluna.tim.domain.model.work.WorkId;
 
 public class EmployeeHour {

@@ -1,4 +1,4 @@
-package es.jmmluna.tim.domain.model.employee;
+package es.jmmluna.tim.domain.model.employee.hour;
 
 import java.util.Objects;
 import java.util.UUID;

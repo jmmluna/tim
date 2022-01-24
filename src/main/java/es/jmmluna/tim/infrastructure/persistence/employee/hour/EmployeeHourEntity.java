@@ -1,4 +1,4 @@
-package es.jmmluna.tim.infrastructure.persistence.employee;
+package es.jmmluna.tim.infrastructure.persistence.employee.hour;
 
 import java.util.Date;
 import java.util.UUID;
@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity()
 @Table(name = "TIM_WORKS_EMPLOYEES", schema = "TIM")
 @Data
-public class EmployeeHourJpaEntity {
+public class EmployeeHourEntity {
 
 	@Id
 	private UUID uuid;
