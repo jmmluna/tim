@@ -103,15 +103,6 @@ public class EmployeeController {
 		return "employee/employee-save";
 	}
 	
-	@GetMapping("/hours/list")
-	public String addHours(Model model) {
-//		model.addAttribute("isEmployees", true);
-//		model.addAttribute("isAddEmployee", true);
-//		model.addAttribute("employee", new EmployeeDTO());
-
-		return "employee/employee-hours-list";
-	}
-
 	@PostMapping("save")
 	public String save(EmployeeDTO employee, BindingResult result, Model model) {
 		if (result.hasErrors()) {

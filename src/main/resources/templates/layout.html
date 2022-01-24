@@ -89,10 +89,18 @@
 							class="fas fa-fw fa-table"></i> Listado</a> <a class="collapse-item"
 							th:classappend="${isEmployees} and ${isAddEmployee} ? 'active' : ''"
 							th:href="@{/employees/save}"><i
-							class="fas fa-fw fa-user-plus"></i> Nuevo</a> <a
+							class="fas fa-fw fa-user-plus"></i> Nuevo</a>
+							
+							 <a
 							class="collapse-item"
-							th:classappend="${isEmployees} and ${isHourEmployee} ? 'active' : ''"
+							th:classappend="${isEmployees} and ${isEmployeeHourList} ? 'active' : ''"
 							th:href="@{/employees/hours/list}"><i
+							class="fas fa-fw fa-table" aria-hidden="true"></i> Listado de Horas</a>
+							
+							 <a
+							class="collapse-item"
+							th:classappend="${isEmployees} and ${isEmployeeHour} ? 'active' : ''"
+							th:href="@{/employees/hours/add}"><i
 							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Horas</a>
 					</div>
 				</div>
