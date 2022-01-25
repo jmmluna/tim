@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="utf-8">
+<title>Hora empleado</title>
+<link th:href="@{/css/app.css}" rel="stylesheet" />
+<link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
+	rel="stylesheet">
+<link th:href="@{/vendor/datatables/select.bootstrap4.min.css}"
+	rel="stylesheet">
+
+
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.select.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
+<script type="text/javascript" th:src="@{/js/employee/employeeHour.js}"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+
+		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditEmployeeHour}">
+			<i class="fas fa-user-edit ml-2" aria-hidden="true"></i> Editar
+			hora de empleado
+		</h1>
+		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditEmployeeHour}">
+			<i class="fa fa-user-plus" aria-hidden="true"></i> Nueva hora de empleado
+		</h1>
+
+		<form action="#" th:action="@{/employees/hours/save}"
+			th:object="${employeeHour}" method="post">
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						<i class="fa fa-file-text-o" aria-hidden="true"></i> <i
+							class="fa fa-address-card" aria-hidden="true"
+							th:text="${isEditEmployeeHour}?'Formulario de edición':'Formulario de alta'"></i>
+					</h6>
+				</div>
+				<div class="card-body">
+					<div class="form-row">
+
+
+						<input type="hidden" class="form-control" th:field="*{uuid}" id="uuid">
+
+						<input type="hidden" class="form-control" th:field="*{employeeDTO.id}"
+							id="employeeId">
+
+
+						<div  class="col-md-5 mb-3">
+									<label for="employee">Empleado</label> <select
+
+										class="form-control" id="selectedEmployee" 
+										onchange="copyValueFromEmployee();enableSaveButtonBasedOn()">
+										<option selected value="">Selecciona un empleado...</option>
+										<option 
+											th:each="employee : ${employees}"
+											th:value="${employee.id} + ' | ' + ${employee.customerHourPrice}"
+											th:text="${employee.name} + ' ' + ${employee.surnames}"
+											th:selected="${employee.id} == ${employeeHour.employeeDTO.id}"></option>
+
+										
+									</select>
+								</div>
+								
+						<div  class="col-md-5 mb-3">
+									<label for="work">Trabajo</label> <select
+									th:field="*{workDTO.uuid}"
+										class="form-control" id="selectedWork"
+										onchange="enableSaveButtonBasedOn()">
+										<option selected value="">Selecciona un trabajo...</option>
+										<option 
+											th:each="work : ${works}"
+											th:value="${work.uuid}"
+											th:text="${work.description}"
+											th:selected="${work.uuid} == ${employeeHour.workDTO.uuid}"></option>
+
+										
+									</select>
+								</div>	
+						</div>	
+				<div class="form-row">
+						<div class="col-md-2 mb-3 ml-0">
+									<label for="quantity">Nº horas</label> <input
+										class="form-control" th:field="*{hours}" type="text"
+										value="1" onkeypress="return onlyNumberKey(event)" required
+										id="hours" />
+								</div>
+
+
+						<div class="col-md-2 mb-3">
+									<label for="price">Precio/hora </label>
+		
+									<div class="input-group">
+										<input  id="employeePrice" th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
+								</div>
+
+						<div class="col-md-2 mb-3">
+									<label for="date">Fecha</label> <input id="date" class="form-control"
+										 th:field="*{date}" type="date"
+										 required />
+								</div>
+
+					</div>
+
+					<button th:if="${isEditEmployeeHour}" class="btn btn-success float-right " type="submit" id="employeeHourSaveButton">Guardar</button>
+					<button th:unless="${isEditEmployeeHour}" disabled class="btn btn-success float-right " type="submit" id="employeeHourSaveButton">Guardar</button>
+					<a class="btn btn-primary float-right mr-1"
+						href="javascript: history.go(-1)">Cancelar</a>
+				</div>
+			</div>
+		</form>
+
+	</section>
+
+</body>
+</html>

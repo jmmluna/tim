@@ -129,13 +129,13 @@
 												</button>
 											</div>
 											<div class="modal-body font-weight-bold"
-												th:text="'¿Estás seguro de borrar las horas del empleado ' + ${employeeHour.name} + '?'">¿Estás
+												th:text="'¿Estás seguro de borrar las horas del empleado ' + ${employeeHour.employeeDTO.name} + '?'">¿Estás
 												seguro de borrar las horas del empleado?</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">Cancelar</button>
 												<a type="button" class="btn btn-primary"
-													th:href="@{/employees/hours/delete/{id}(id=${employeeHour.uuid})}">Borrar</a>
+													th:href="@{/employees/hours/delete/{uuid}(uuid=${employeeHour.uuid})}">Borrar</a>
 											</div>
 										</div>
 									</div>

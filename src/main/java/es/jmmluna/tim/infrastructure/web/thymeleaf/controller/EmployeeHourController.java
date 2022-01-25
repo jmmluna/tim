@@ -2,18 +2,26 @@ package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import es.jmmluna.tim.application.service.EElementList;
+import es.jmmluna.tim.application.service.employee.EmployeeListingService;
 import es.jmmluna.tim.application.service.employee.hour.EmployeeHourDTO;
+import es.jmmluna.tim.application.service.employee.hour.useCase.CreateEmployeeHour;
+import es.jmmluna.tim.application.service.employee.hour.useCase.DeleteEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourList;
+import es.jmmluna.tim.application.service.work.useCase.GetWorkList;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Controller
@@ -23,7 +31,18 @@ public class EmployeeHourController {
 
 	@Autowired
 	private GetEmployeeHourList getEmployeeHourList; 
-
+	
+	@Autowired
+	private EmployeeListingService getEmployeeList;
+	
+	@Autowired
+	private CreateEmployeeHour createEmployeeHour;
+	
+	@Autowired
+	private GetWorkList getWorkList;
+	
+	@Autowired
+	private DeleteEmployeeHour deleteEmployeeHour;
 	
 	@GetMapping("/list")
 	public String getHours(Model model) {
@@ -64,43 +83,31 @@ public class EmployeeHourController {
 //		return "employee/employee-save";
 //	}
 //
-//	@GetMapping("/save")
-//	public String create(Model model) {
-//		model.addAttribute("isEmployees", true);
-//		model.addAttribute("isAddEmployee", true);
-//		model.addAttribute("employee", new EmployeeDTO());
-//
-//		return "employee/employee-save";
-//	}
-//	
-//	@GetMapping("/hours/list")
-//	public String addHours(Model model) {
-////		model.addAttribute("isEmployees", true);
-////		model.addAttribute("isAddEmployee", true);
-////		model.addAttribute("employee", new EmployeeDTO());
-//
-//		return "employee/employee-hours-list";
-//	}
-//
-//	@PostMapping("save")
-//	public String save(EmployeeDTO employee, BindingResult result, Model model) {
-//		if (result.hasErrors()) {
-//			LOG.error("####################" + result);
-//			
-//			return "employee/employee-save";
-//		}
-//
-//		employeeSaveService.execute(employee);
-//		return "redirect:/employees/list/actives";
-//	}
-//
-//	@GetMapping("/delete/{id}")
-//	public String delete(@PathVariable Long id, Model model) {
-//		var employeeDTO = employeeByIdService.execute(id);
-//		employeeDeletionService.execute(employeeDTO);
-//
-//		return "redirect:/employees/list/actives";
-//	}
+	@GetMapping("/save")
+	public String create(Model model) {
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isAddEmployeeHour", true);
+		model.addAttribute("employees", getEmployeeList.execute(EElementList.ACTIVE));
+		model.addAttribute("works", getWorkList.execute(EElementList.ACTIVE));
+		model.addAttribute("employeeHour", new EmployeeHourDTO());
+
+		return "employee/employee-hours-save";
+	}
+	
+
+	@PostMapping("save")
+	public String save(EmployeeHourDTO employeeHour, BindingResult result, Model model) {
+		createEmployeeHour.execute(employeeHour);
+		return "redirect:/employees/hours/list/initiated";
+	}
+
+	@GetMapping("/delete/{uuid}")
+	public String delete(@PathVariable String uuid, Model model) {
+		
+		deleteEmployeeHour.execute(UUID.fromString(uuid));
+
+		return "redirect:/employees/hours/list/initiated";
+	}
 //
 //	@GetMapping("print")
 //	public ResponseEntity<ByteArrayResource> print(Model model) {

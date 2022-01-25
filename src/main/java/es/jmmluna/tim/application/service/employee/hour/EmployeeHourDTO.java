@@ -21,6 +21,11 @@ public class EmployeeHourDTO extends DTO {
 	private Date date;
 	
 
+	public EmployeeHourDTO() {
+		this.employeeDTO = new EmployeeDTO();
+		this.workDTO = new WorkDTO();
+	}
+	
 	public EmployeeHourDTO(UUID uuid, EmployeeDTO employeeDTO,  WorkDTO workDTO, Double price, Double hours, Date date) {
 		this.uuid = uuid;
 		this.employeeDTO = employeeDTO;

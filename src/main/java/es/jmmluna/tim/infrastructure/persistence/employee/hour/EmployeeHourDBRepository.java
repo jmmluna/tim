@@ -3,6 +3,7 @@ package es.jmmluna.tim.infrastructure.persistence.employee.hour;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,4 +58,8 @@ public class EmployeeHourDBRepository implements EmployeeHourRepository {
 		return employeeHours;
 	}
 
+	@Override
+	public UUID getNextIdentifier() {		
+		return UUID.randomUUID();
+	}
 }

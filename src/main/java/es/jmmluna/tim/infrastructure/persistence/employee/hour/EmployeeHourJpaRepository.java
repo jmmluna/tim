@@ -13,7 +13,7 @@ import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 @Repository
 public interface EmployeeHourJpaRepository extends JpaRepository<EmployeeHourEntity, UUID> {
 	
-	@Query("SELECT e FROM EmployeeHourEntity e, WorkEntity w WHERE e.workId = w.uuid and w.status = :status ")
+	@Query("SELECT e FROM EmployeeHourEntity e, WorkEntity w WHERE e.workId = w.uuid and w.status = :status AND w.expirationDate is null")
 	public List<EmployeeHourEntity> findAllByWorkStatus(@Param("status") Integer status);
 }
 
