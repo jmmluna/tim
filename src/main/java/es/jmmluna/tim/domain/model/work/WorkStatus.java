@@ -1,7 +1,7 @@
 package es.jmmluna.tim.domain.model.work;
 
 public enum WorkStatus {
-	INITIATED, FINALIZED;
+	INITIATED, FINALIZED, ALL;
 
 	private static Integer INITIATED_CODE = 0;
 	private static Integer FINALIZED_CODE = 1;

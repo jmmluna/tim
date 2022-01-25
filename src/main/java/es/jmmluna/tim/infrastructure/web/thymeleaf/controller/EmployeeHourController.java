@@ -1,40 +1,20 @@
 package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import com.lowagie.text.DocumentException;
-
-import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.employee.EmployeeByIdService;
-import es.jmmluna.tim.application.service.employee.EmployeeDTO;
-import es.jmmluna.tim.application.service.employee.EmployeeDeletionService;
-import es.jmmluna.tim.application.service.employee.EmployeeListingService;
-import es.jmmluna.tim.application.service.employee.EmployeeSaveService;
+import es.jmmluna.tim.application.service.employee.hour.EmployeeHourDTO;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourList;
+import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Controller
 @RequestMapping("/employees/hours")
@@ -49,32 +29,32 @@ public class EmployeeHourController {
 	public String getHours(Model model) {
 		model.addAttribute("isEmployees", true);
 		model.addAttribute("isEmployeeHourList", true);
-		
-		model.addAttribute("employeeHours", getEmployeeHourList.execute());
+		model.addAttribute("isEmployeeHourAllList", true);
+		model.addAttribute("employeeHours", getEmployeeHourList.execute(WorkStatus.ALL));
 		return "employee/employee-hours-list";
 	}
 
-//	@GetMapping("/list/{filter}")
-//	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
-//		List<EmployeeDTO> employees = new ArrayList<EmployeeDTO>();
-//		switch (filter) {
-//
-//		case "actives":
-//			employees = employeeListingService.execute(EElementList.ACTIVE);
-//			model.addAttribute("isActiveEmployeeList", true);
-//			break;
-//		case "inactives":
-//			employees = employeeListingService.execute(EElementList.INACTIVE);
-//			model.addAttribute("isInactiveEmployeeList", true);
-//			break;
-//		}
-//
-//		model.addAttribute("isEmployees", true);
-//		model.addAttribute("isEmployeeList", true);
-//		model.addAttribute("employees", employees);
-//
-//		return "employee/employee-list";
-//	}
+	@GetMapping("/list/{filter}")
+	public String getEmployeesFilter(@PathVariable("filter") String filter, Model model) {
+		List<EmployeeHourDTO> employeeHours = new ArrayList<>();
+		switch (filter) {
+
+		case "initiated":
+			employeeHours = getEmployeeHourList.execute(WorkStatus.INITIATED);
+			model.addAttribute("isInitiatedWorkEmployeeHourList", true);
+			break;
+		case "finalized":
+			employeeHours = getEmployeeHourList.execute(WorkStatus.FINALIZED);
+			model.addAttribute("isFinalizedWorkEmployeeHourList", true);
+			break;
+		}
+
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isEmployeeHourList", true);
+		model.addAttribute("employeeHours", employeeHours);
+
+		return "employee/employee-hours-list";
+	}
 //
 //	@GetMapping("/save/{id}")
 //	public String edit(@PathVariable("id") Long id, Model model) {

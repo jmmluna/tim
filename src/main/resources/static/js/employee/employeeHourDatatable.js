@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
 //	const table = $('#employeeDataTable').DataTable(
-	$('#employeeDataTable').DataTable(
+	$('#employeeHourDataTable').DataTable(
 		{
 
 			"columnDefs": [
@@ -17,14 +17,14 @@ $(document).ready(function() {
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					render: $.fn.dataTable.render.number(',', '.', 2)
+					render: $.fn.dataTable.render.number(',', '.', 2, '', ' €')
 				}
 				, {
 					"targets": [4],
 					"visible": true,
 					"searchable": true,
 					className: "text-right",
-					render: $.fn.dataTable.render.number(',', '.', 2)
+					render: $.fn.dataTable.render.number(',', '.', 2, '', ' h')
 				},
 				{//state column
 					"targets": [5],

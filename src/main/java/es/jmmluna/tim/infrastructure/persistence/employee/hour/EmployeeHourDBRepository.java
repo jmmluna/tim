@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourId;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourRepository;
+import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Component
 public class EmployeeHourDBRepository implements EmployeeHourRepository {
@@ -41,6 +42,12 @@ public class EmployeeHourDBRepository implements EmployeeHourRepository {
 	@Override
 	public List<EmployeeHour> findAll() {
 		var entities = employeeHourRepository.findAll();
+		return toEmployeeHourList(entities);
+	}
+	
+	@Override
+	public List<EmployeeHour> findAll(WorkStatus workStatus) {
+		var entities = employeeHourRepository.findAllByWorkStatus(WorkStatus.getCode(workStatus));
 		return toEmployeeHourList(entities);
 	}
 

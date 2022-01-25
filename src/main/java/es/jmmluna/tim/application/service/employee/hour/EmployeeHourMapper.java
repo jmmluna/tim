@@ -1,18 +1,15 @@
 package es.jmmluna.tim.application.service.employee.hour;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import es.jmmluna.tim.application.service.employee.EmployeeByIdService;
 import es.jmmluna.tim.application.service.work.useCase.GetWork;
 import es.jmmluna.tim.domain.model.Price;
 import es.jmmluna.tim.domain.model.employee.EmployeeId;
+import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourId;
 import es.jmmluna.tim.domain.model.work.WorkId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import es.jmmluna.tim.domain.model.Dni;
-import es.jmmluna.tim.domain.model.customer.Customer;
-import es.jmmluna.tim.domain.model.customer.CustomerId;
-import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 
 @Component
 public class EmployeeHourMapper {

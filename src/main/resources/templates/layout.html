@@ -91,17 +91,18 @@
 							th:href="@{/employees/save}"><i
 							class="fas fa-fw fa-user-plus"></i> Nuevo</a>
 							
+						<h6 class="collapse-header">Tiempo dedicado:</h6>
 							 <a
 							class="collapse-item"
 							th:classappend="${isEmployees} and ${isEmployeeHourList} ? 'active' : ''"
-							th:href="@{/employees/hours/list}"><i
-							class="fas fa-fw fa-table" aria-hidden="true"></i> Listado de Horas</a>
+							th:href="@{/employees/hours/list/initiated}"><i
+							class="fas fa-fw fa-table" aria-hidden="true"></i> Bolsa de Horas</a>
 							
 							 <a
 							class="collapse-item"
 							th:classappend="${isEmployees} and ${isEmployeeHour} ? 'active' : ''"
 							th:href="@{/employees/hours/add}"><i
-							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Horas</a>
+							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Añadir Horas</a>
 					</div>
 				</div>
 			</li>

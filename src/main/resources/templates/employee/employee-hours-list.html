@@ -30,26 +30,23 @@
 
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h1 class="h3 mb-2 text-gray-800">
-				<i class="fas fa-fw fa-users"></i> Horas de empleados
+				<i class="fas fa-fw fa-users"></i> Bolsa de horas de empleados
 			</h1>
 
 			<div class="align-items-right ">
 				<a class="btn "
-					th:classappend="${isActiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list/actives}">Activos</a> <a class="btn "
-					th:classappend="${isInactiveEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list/inactives}">Inactivos</a> <a
+					th:classappend="${isInitiatedWorkEmployeeHourList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/employees/hours/list/initiated}">Iniciados</a> <a class="btn "
+					th:classappend="${isFinalizedWorkEmployeeHourList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/employees/hours/list/finalized}">Finalizados</a> <a
 					class="btn "
-					th:classappend="${isAllEmployeeList} ? 'btn-success' : 'btn-outline-success'"
-					th:href="@{/employees/list}">Todos</a> 
-<!-- 					<a -->
-<!-- 					th:href="@{/employees/print}" -->
-<!-- 					class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i> -->
-<!-- 				</a>  -->
+					th:classappend="${isEmployeeHourAllList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/employees/hours/list}">Todos</a> 
+
 				
-				<a th:href="@{/employees/save}"
+				<a title="Añadir horas de empleado" th:href="@{/employees/hours/save}"
 					class="btn btn-primary btn-circle btn"> <i
-					class="fas fa-user-plus"></i>
+					class="fas fa-user-clock"></i>
 				</a>
 			</div>
 		</div>
@@ -59,12 +56,12 @@
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">
-					<span th:if="${isAllEmployeeList} "> <i
-						class="fas fa-fw fa-table"></i> Todos los empleados registrados
-					</span> <span th:if="${isActiveEmployeeList} "> <i
-						class="fas fa-fw fa-table"></i> Listado de empleados activos
-					</span> <span th:if="${isInactiveEmployeeList} "> <i
-						class="fas fa-fw fa-table"></i> Listado de empleados inactivos
+					<span th:if="${isEmployeeHourAllList} "> <i
+						class="fas fa-fw fa-table"></i> Todas las horas imputadas
+					</span> <span th:if="${isInitiatedWorkEmployeeHourList} "> <i
+						class="fas fa-fw fa-table"></i> Horas en trabajos iniciados
+					</span> <span th:if="${isFinalizedWorkEmployeeHourList} "> <i
+						class="fas fa-fw fa-table"></i> Horas en trabajos finalizados
 					</span>
 				</h6>
 			</div>
@@ -118,7 +115,7 @@
 
 
 
-								<div class="modal fade" th:id="'deleteConfirm' + ${employee.id}"
+								<div class="modal fade" th:id="'deleteConfirm' + ${employeeHour.uuid}"
 									data-backdrop="static" data-keyboard="false" tabindex="-1"
 									aria-labelledby="staticBackdropLabel" aria-hidden="true">
 									<div class="modal-dialog">
@@ -132,13 +129,13 @@
 												</button>
 											</div>
 											<div class="modal-body font-weight-bold"
-												th:text="'¿Estás seguro de borrar el empleado ' + ${employee.name} + '?'">¿Estás
-												seguro de borrar el empleado ?</div>
+												th:text="'¿Estás seguro de borrar las horas del empleado ' + ${employeeHour.name} + '?'">¿Estás
+												seguro de borrar las horas del empleado?</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">Cancelar</button>
 												<a type="button" class="btn btn-primary"
-													th:href="@{/employees/delete/{id}(id=${employee.id})}">Borrar</a>
+													th:href="@{/employees/hours/delete/{id}(id=${employeeHour.uuid})}">Borrar</a>
 											</div>
 										</div>
 									</div>
