@@ -20,7 +20,9 @@ import es.jmmluna.tim.application.service.employee.EmployeeListingService;
 import es.jmmluna.tim.application.service.employee.hour.EmployeeHourDTO;
 import es.jmmluna.tim.application.service.employee.hour.useCase.CreateEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.DeleteEmployeeHour;
+import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourList;
+import es.jmmluna.tim.application.service.employee.hour.useCase.UpdateEmployeeHour;
 import es.jmmluna.tim.application.service.work.useCase.GetWorkList;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
 
@@ -30,6 +32,9 @@ public class EmployeeHourController {
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeHourController.class);
 
 	@Autowired
+	private GetEmployeeHour getEmployeeHour;
+	
+	@Autowired
 	private GetEmployeeHourList getEmployeeHourList; 
 	
 	@Autowired
@@ -37,6 +42,9 @@ public class EmployeeHourController {
 	
 	@Autowired
 	private CreateEmployeeHour createEmployeeHour;
+	
+	@Autowired
+	private UpdateEmployeeHour updateEmployeeHour;
 	
 	@Autowired
 	private GetWorkList getWorkList;
@@ -74,15 +82,7 @@ public class EmployeeHourController {
 
 		return "employee/employee-hours-list";
 	}
-//
-//	@GetMapping("/save/{id}")
-//	public String edit(@PathVariable("id") Long id, Model model) {
-//		model.addAttribute("isEmployees", true);
-//		model.addAttribute("isEditEmployee", true);
-//		model.addAttribute("employee", id != null && id != 0 ? employeeByIdService.execute(id) : new EmployeeDTO());
-//		return "employee/employee-save";
-//	}
-//
+	
 	@GetMapping("/save")
 	public String create(Model model) {
 		model.addAttribute("isEmployees", true);
@@ -93,11 +93,25 @@ public class EmployeeHourController {
 
 		return "employee/employee-hours-save";
 	}
-	
+
+	@GetMapping("/save/{uuid}")
+	public String edit(@PathVariable("uuid") String uuid, Model model) {
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isEditEmployeeHour", true);				
+		model.addAttribute("employees", getEmployeeList.execute(EElementList.ACTIVE));
+		model.addAttribute("works", getWorkList.execute(EElementList.ACTIVE));
+		model.addAttribute("employeeHour", getEmployeeHour.execute(UUID.fromString(uuid)));
+		
+		return "employee/employee-hours-save";
+	}
 
 	@PostMapping("save")
 	public String save(EmployeeHourDTO employeeHour, BindingResult result, Model model) {
-		createEmployeeHour.execute(employeeHour);
+		
+		if(employeeHour.getUuid() == null)
+			createEmployeeHour.execute(employeeHour);
+		else
+			updateEmployeeHour.execute(employeeHour);
 		return "redirect:/employees/hours/list/initiated";
 	}
 

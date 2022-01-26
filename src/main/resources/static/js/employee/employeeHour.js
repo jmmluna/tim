@@ -1,5 +1,11 @@
 $(document).ready(function() {
-	document.getElementById('date').valueAsDate = new Date();
+	
+	const date = document.getElementById('date').value;
+	if(date === "")
+		document.getElementById('date').valueAsDate = new Date();
+	
+		
+	
 });
 
 function copyValueFromEmployee() {

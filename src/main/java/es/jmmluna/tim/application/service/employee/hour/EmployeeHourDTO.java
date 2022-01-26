@@ -26,7 +26,7 @@ public class EmployeeHourDTO extends DTO {
 		this.workDTO = new WorkDTO();
 	}
 	
-	public EmployeeHourDTO(UUID uuid, EmployeeDTO employeeDTO,  WorkDTO workDTO, Double price, Double hours, Date date) {
+	public EmployeeHourDTO(UUID uuid, EmployeeDTO employeeDTO,  WorkDTO workDTO, Double hours, Double price, Date date) {
 		this.uuid = uuid;
 		this.employeeDTO = employeeDTO;
 		this.workDTO = workDTO;
