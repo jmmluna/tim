@@ -22,6 +22,7 @@ import es.jmmluna.tim.application.service.employee.hour.useCase.CreateEmployeeHo
 import es.jmmluna.tim.application.service.employee.hour.useCase.DeleteEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourList;
+import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourSummary;
 import es.jmmluna.tim.application.service.employee.hour.useCase.UpdateEmployeeHour;
 import es.jmmluna.tim.application.service.work.useCase.GetWorkList;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
@@ -51,6 +52,9 @@ public class EmployeeHourController {
 	
 	@Autowired
 	private DeleteEmployeeHour deleteEmployeeHour;
+	
+	@Autowired
+	private GetEmployeeHourSummary getEmployeeHourSummary;
 	
 	@GetMapping("/list")
 	public String getHours(Model model) {
@@ -122,71 +126,12 @@ public class EmployeeHourController {
 
 		return "redirect:/employees/hours/list/initiated";
 	}
-//
-//	@GetMapping("print")
-//	public ResponseEntity<ByteArrayResource> print(Model model) {
-//
-//		ByteArrayOutputStream byteArrayOutputStreamPDF = generatePdfFromHtml(parseThymeleafTemplate());
-//		ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
-//
-//		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=informe.pdf")
-//				.contentType(MediaType.APPLICATION_PDF).contentLength(inputStreamResourcePDF.contentLength())
-//				.body(inputStreamResourcePDF);
-//
-//	}
-//
-//	private String parseThymeleafTemplate() {
-//		Context context = new Context();
-//		context.setVariable("to", "Baeldung");
-//
-//		return templateEngine.process("printTemplate", context);
-//	}
-//
-//	public void generatePdfFromHtmlToFile(String html) {
-//		try {
-//			String outputFolder = System.getProperty("user.home") + File.separator + "thymeleaf.pdf";
-//			LOG.info("###### PDF Generado en: " + outputFolder);
-//			OutputStream outputStream = new FileOutputStream(outputFolder);
-//
-//			ITextRenderer renderer = new ITextRenderer();
-//			renderer.setDocumentFromString(html);
-//			renderer.layout();
-//			renderer.createPDF(outputStream);
-//
-//			outputStream.close();
-//		} catch (IOException | DocumentException e) {
-//
-//			throw new RuntimeException();
-//		}
-//
-//	}
-//
-//	public ByteArrayOutputStream generatePdfFromHtml(String html) {
-//		String urlBase = "http://localhost:9080";
-//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//		try {
-//
-//			ITextRenderer renderer = new ITextRenderer();
-//			renderer.setDocumentFromString(html, urlBase);
-//
-//			renderer.layout();
-//			renderer.createPDF(bos, false);
-//			renderer.finishPDF();
-//			LOG.info("PDF created correctamente");
-//
-//			return bos;
-//		} catch (DocumentException e) {
-//
-//			throw new RuntimeException();
-//		} finally {
-//			if (bos != null) {
-//				try {
-//					bos.close();
-//				} catch (IOException e) {
-//					LOG.error("Error creando pdf", e);
-//				}
-//			}
-//		}
-//
-//	}
+
+	@GetMapping("/summary")
+	public String getSummary(Model model) {
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isEmployeeHourSummary", true);		
+		model.addAttribute("employeeHours", getEmployeeHourSummary.execute());
+		return "employee/employee-hours-summary";
+	}
 }

@@ -103,6 +103,12 @@
 							th:classappend="${isEmployees} and ${isAddEmployeeHour} ? 'active' : ''"
 							th:href="@{/employees/hours/save}"><i
 							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Añadir Horas</a>
+							
+							<a
+							class="collapse-item"
+							th:classappend="${isEmployees} and ${isEmployeeHourSummary} ? 'active' : ''"
+							th:href="@{/employees/hours/summary}"><i
+							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Resumen mensual</a>
 					</div>
 				</div>
 			</li>

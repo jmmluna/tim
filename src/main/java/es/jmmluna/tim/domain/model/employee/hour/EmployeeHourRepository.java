@@ -11,4 +11,6 @@ public interface EmployeeHourRepository extends CommonRepository<EmployeeHour, E
 	public List<EmployeeHour> findAll(WorkStatus workStatus);
 
 	public UUID getNextIdentifier();
+	
+	public List<EmployeeHourSummary> getHourSummary();
 }

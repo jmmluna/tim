@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourId;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourRepository;
+import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourSummary;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Component
@@ -61,5 +62,10 @@ public class EmployeeHourDBRepository implements EmployeeHourRepository {
 	@Override
 	public UUID getNextIdentifier() {		
 		return UUID.randomUUID();
+	}
+
+	@Override
+	public List<EmployeeHourSummary> getHourSummary() {
+		return employeeHourRepository.getHourSummary();
 	}
 }
