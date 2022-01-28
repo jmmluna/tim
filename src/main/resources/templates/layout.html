@@ -104,11 +104,17 @@
 							th:href="@{/employees/hours/save}"><i
 							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Añadir Horas</a>
 							
+							<h6 class="collapse-header">Resumen mensual:</h6>
 							<a
 							class="collapse-item"
 							th:classappend="${isEmployees} and ${isEmployeeHourSummary} ? 'active' : ''"
 							th:href="@{/employees/hours/summary}"><i
-							class="fas fa-fw fa-user-clock" aria-hidden="true"></i> Resumen mensual</a>
+							class="fas fa-fw fa-search-dollar" aria-hidden="true"></i> Empleado</a>
+							<a
+							class="collapse-item"
+							th:classappend="${isEmployees} and ${isEmployeeWorkHourSummary} ? 'active' : ''"
+							th:href="@{/employees/hours/work/summary}"><i
+							class="fas fa-fw fa-search-dollar" aria-hidden="true"></i> Empleado y trabajo</a>
 					</div>
 				</div>
 			</li>

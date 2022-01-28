@@ -23,6 +23,7 @@ import es.jmmluna.tim.application.service.employee.hour.useCase.DeleteEmployeeHo
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHour;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourList;
 import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeHourSummary;
+import es.jmmluna.tim.application.service.employee.hour.useCase.GetEmployeeWorkHourSummary;
 import es.jmmluna.tim.application.service.employee.hour.useCase.UpdateEmployeeHour;
 import es.jmmluna.tim.application.service.work.useCase.GetWorkList;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
@@ -55,6 +56,9 @@ public class EmployeeHourController {
 	
 	@Autowired
 	private GetEmployeeHourSummary getEmployeeHourSummary;
+	
+	@Autowired
+	private GetEmployeeWorkHourSummary getEmployeeWorkHourSummary;
 	
 	@GetMapping("/list")
 	public String getHours(Model model) {
@@ -133,5 +137,13 @@ public class EmployeeHourController {
 		model.addAttribute("isEmployeeHourSummary", true);		
 		model.addAttribute("employeeHours", getEmployeeHourSummary.execute());
 		return "employee/employee-hours-summary";
+	}
+	
+	@GetMapping("/work/summary")
+	public String getWorkSummary(Model model) {
+		model.addAttribute("isEmployees", true);
+		model.addAttribute("isEmployeeWorkHourSummary", true);		
+		model.addAttribute("employeeHours", getEmployeeWorkHourSummary.execute());
+		return "employee/employee-work-hours-summary";
 	}
 }

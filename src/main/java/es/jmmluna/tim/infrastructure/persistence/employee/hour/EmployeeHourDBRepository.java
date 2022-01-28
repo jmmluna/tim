@@ -12,6 +12,7 @@ import es.jmmluna.tim.domain.model.employee.hour.EmployeeHour;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourId;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourRepository;
 import es.jmmluna.tim.domain.model.employee.hour.EmployeeHourSummary;
+import es.jmmluna.tim.domain.model.employee.hour.EmployeeWorkHourSummary;
 import es.jmmluna.tim.domain.model.work.WorkStatus;
 
 @Component
@@ -67,5 +68,10 @@ public class EmployeeHourDBRepository implements EmployeeHourRepository {
 	@Override
 	public List<EmployeeHourSummary> getHourSummary() {
 		return employeeHourRepository.getHourSummary();
+	}
+	
+	@Override
+	public List<EmployeeWorkHourSummary> getWorkHourSummary() {
+		return employeeHourRepository.getWorkHourSummary();
 	}
 }
