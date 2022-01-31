@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `TIM`.`TIM_BUDGET_ITEMS` (
   CONSTRAINT `fk_TIM_WORK_ITEMS_TIM_WORKS1` FOREIGN KEY (`WORK_UUID`) REFERENCES `TIM`.`TIM_WORKS` (`UUID`));
 
 
-  -- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Table `TIM`.`TIM_WORKS_EMPLOYEES`
 -- -----------------------------------------------------
 
@@ -147,7 +147,47 @@ CREATE TABLE IF NOT EXISTS `TIM`.`TIM_WORKS_EMPLOYEES` (
     FOREIGN KEY (`EMPLOYEES_ID`)
     REFERENCES `TIM`.`TIM_EMPLOYEES` (`ID`));
 
+-- -----------------------------------------------------
+-- Table `TIM`.`TIM_INVOICES`
+-- -----------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_INVOICES` (
+  `UUID` UUID NOT NULL,
+  `CUSTOMER_UUID` UUID NOT NULL,
+  `WORK_UUID` UUID NOT NULL,
+  `INVOICE_NUMBER` INT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `DATE` DATE NULL,
+  `EXPIRATION_DATE` DATE NULL,
+  `DISCOUNT_RATE` DOUBLE NULL,
+  `IVA_RATE` DOUBLE NULL,
+  `RE_RATE` DOUBLE NULL,
+  `IRPF_RATE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+
+  CONSTRAINT `fk_TIM_INVOICES_TIM_CUSTOMERS`
+    FOREIGN KEY (`CUSTOMER_UUID`)
+    REFERENCES `TIM`.`TIM_CUSTOMERS` (`UUID`),
+
+  CONSTRAINT `fk_TIM_INVOICES_TIM_WORKS`
+    FOREIGN KEY (`WORK_UUID`)
+    REFERENCES `TIM`.`TIM_WORKS` (`UUID`))
+
+-- -----------------------------------------------------
+-- Table `TIM`.`TIM_INVOICE_ITEMS`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `TIM`.`TIM_INVOICE_ITEMS` (
+  `UUID` UUID NOT NULL,
+  `INVOICE_UUID` UUID NOT NULL,
+  `DESCRIPTION` VARCHAR(245) NULL,
+  `AMOUNT` INT NULL,
+  `PRICE` DOUBLE NULL,
+  PRIMARY KEY (`UUID`),
+
+  CONSTRAINT `fk_TIM_INVOICE_ITEMS_TIM_INVOICES`
+    FOREIGN KEY (`INVOICE_UUID`)
+    REFERENCES `TIM`.`TIM_INVOICES` (`UUID`))
 
 
   
