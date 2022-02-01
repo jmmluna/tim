@@ -113,6 +113,18 @@ public class Invoice {
 		return irpfRate;
 	}
 
+	public Boolean isActive() {
+		return expirationDate == null;
+	}
+
+	public void activate() {
+		this.expirationDate = null;
+	}
+
+	public void deactivate() {
+		this.expirationDate = new Date();
+	}
+
 	public void add(InvoiceItem invoiceItem) {
 		invoiceItems.add(invoiceItem);
 		totalCost = totalCost.plus(invoiceItem.getCost());

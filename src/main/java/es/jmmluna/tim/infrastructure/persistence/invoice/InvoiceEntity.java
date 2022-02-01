@@ -26,11 +26,11 @@ public class InvoiceEntity {
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID uuid;
 	@Column(name = "CUSTOMER_UUID")
-	private String customerId;
+	private UUID customerId;
 	@Column(name = "WORK_UUID")
-	private String workId;
+	private UUID workId;
 	@Column(name = "INVOICE_NUMBER")
-	private Integer budgetNumber;
+	private Integer invoiceNumber;
 	@Column(name = "DESCRIPTION")
 	private String description;
 	@Column(name = "DATE")
