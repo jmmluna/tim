@@ -7,98 +7,127 @@ import java.util.List;
 
 import es.jmmluna.tim.domain.model.NotFoundItemException;
 import es.jmmluna.tim.domain.model.Price;
-import es.jmmluna.tim.domain.model.budget.BudgetId;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
+import es.jmmluna.tim.domain.model.work.WorkId;
 
 public class Invoice {
 	private InvoiceId invoiceId;
+	private WorkId workId;
 	private CustomerId customerId;
-	private BudgetId budgetId;	
-	private String description;		
+	private Integer invoiceNumber;
+	private String description;
 	private Date date;
-//	private final List<WorkItem> workItems;
+	private Integer year;	
+	private final List<InvoiceItem> invoiceItems;
 	private Date expirationDate;
 	private Price totalCost;
-		
-//	public Invoice(InvoiceId invoiceId, BudgetId budgetId, CustomerId customerId, String description, WorkStatus workStatus, Date date, List<WorkItem> workItems) {
-//		this.workId = workId;
-//		this.budgetId = budgetId;
-//		this.customerId = customerId;
-//		this.description = description;		
-//		this.date = date;	
-//		this.workStatus = workStatus;
-//		this.workItems = new ArrayList<>(workItems);
-//		totalCost = calculateTotalCost();
-//	}
-//	
-//	public Invoice(WorkId workId, BudgetId budgetId, CustomerId customerId, String description, WorkStatus workStatus, Date date, List<WorkItem> workItems, Date expirationDate) {
-//		this(workId,  budgetId,  customerId, description,  workStatus,  date,  workItems);
-//		this.expirationDate = expirationDate;
-//	}
-//	
-//	public WorkId getWorkId() {
-//		return workId;
-//	}
-//	
-//	public BudgetId getBudgetId() {
-//		return budgetId;
-//	}
-//
-//	public CustomerId getCustomerId() {
-//		return customerId;
-//	}
-//
-//	public String getDescription() {
-//		return description;
-//	}
-//	
-//	public Date getDate() {
-//		return date;
-//	}
-//
-//	public Date getExpirationDate() {
-//		return expirationDate;
-//	}
-//
-//	public List<WorkItem> getWorkItems() {
-//		return Collections.unmodifiableList(workItems);
-//	}
-//
-//	public Boolean isActive() {
-//		return expirationDate == null;
-//	}
-//
-//	public void activate() {
-//		this.expirationDate = null;
-//	}
-//
-//	public void deactivate() {
-//		this.expirationDate = new Date();
-//	}
-//	
-//	public WorkStatus getStatus() {
-//		return workStatus;
-//	}
-//
-//	public Price getTotalCost() {
-//		return totalCost;
-//	}
-//
-//	public void add(WorkItem workItem) {
-//		workItems.add(workItem);
-//		totalCost = totalCost.plus(workItem.getCost());
-//	}
-//
-//	public void remove(WorkItem workItem) {
-//		if (workItems.remove(workItem))
-//			totalCost = totalCost.minus(workItem.getCost());
-//		else
-//			throw new NotFoundItemException("No se ha encontrado el elemento del trabajo");
-//	}
-//
-//	private Price calculateTotalCost() {
-//		if (workItems.isEmpty())
-//			return Price.of(0.0);
-//		return workItems.stream().map(WorkItem::getCost).reduce(Price::plus).get();
-//	}
+	private Double discountRate;
+	private Double ivaRate;
+	private Double reRate;
+	private Double irpfRate;
+
+	public Invoice(InvoiceId invoiceId, WorkId workId, CustomerId customerId, Integer invoiceNumber, String description,
+			Date date, Integer year, List<InvoiceItem> invoiceItems, Double discountRate, Double ivaRate, Double reRate,
+			Double irpfRate) {
+		this.invoiceId = invoiceId;
+		this.workId = workId;
+		this.customerId = customerId;
+		this.invoiceNumber = invoiceNumber;
+		this.description = description;
+		this.date = date;
+		this.year = year;
+		this.invoiceItems = new ArrayList<>(invoiceItems);
+		this.discountRate = discountRate;
+		this.ivaRate = ivaRate;
+		this.reRate = reRate;
+		this.irpfRate = irpfRate;
+
+		totalCost = calculateTotalCost();
+	}
+
+	public Invoice(InvoiceId invoiceId, WorkId workId, CustomerId customerId, Integer invoiceNumber, String description,
+			Date date, Integer year, List<InvoiceItem> invoiceItems, Date expirationDate, Double discountRate, Double ivaRate,
+			Double reRate, Double irpfRate) {
+
+		this(invoiceId, workId, customerId, invoiceNumber, description, date, year, invoiceItems, discountRate, ivaRate,
+				reRate, irpfRate);
+
+		this.expirationDate = expirationDate;
+
+	}
+
+	public WorkId getWorkId() {
+		return workId;
+	}
+
+	public CustomerId getCustomerId() {
+		return customerId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+	
+	public Integer getYear() {
+		return year;
+	}
+
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public List<InvoiceItem> getInvoiceItems() {
+		return Collections.unmodifiableList(invoiceItems);
+	}
+
+	public Price getTotalCost() {
+		return totalCost;
+	}
+
+	public InvoiceId getInvoiceId() {
+		return invoiceId;
+	}
+
+	public Integer getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public Double getDiscountRate() {
+		return discountRate;
+	}
+
+	public Double getIvaRate() {
+		return ivaRate;
+	}
+
+	public Double getReRate() {
+		return reRate;
+	}
+
+	public Double getIrpfRate() {
+		return irpfRate;
+	}
+
+	public void add(InvoiceItem invoiceItem) {
+		invoiceItems.add(invoiceItem);
+		totalCost = totalCost.plus(invoiceItem.getCost());
+	}
+
+	public void remove(InvoiceItem invoiceItem) {
+		if (invoiceItems.remove(invoiceItem))
+			totalCost = totalCost.minus(invoiceItem.getCost());
+		else
+			throw new NotFoundItemException("No se ha encontrado el elemento en la factura");
+	}
+
+	private Price calculateTotalCost() {
+		if (invoiceItems.isEmpty())
+			return Price.of(0.0);
+		return invoiceItems.stream().map(InvoiceItem::getCost).reduce(Price::plus).get();
+	}
 }
