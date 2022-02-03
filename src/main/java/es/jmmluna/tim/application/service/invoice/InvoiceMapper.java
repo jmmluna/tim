@@ -12,6 +12,8 @@ import es.jmmluna.tim.domain.model.budget.BudgetItemId;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.invoice.Invoice;
 import es.jmmluna.tim.domain.model.invoice.InvoiceId;
+import es.jmmluna.tim.domain.model.invoice.InvoiceItem;
+import es.jmmluna.tim.domain.model.invoice.InvoiceItemId;
 import es.jmmluna.tim.domain.model.work.WorkId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,31 +43,31 @@ public class InvoiceMapper {
 	public Invoice toModel(InvoiceDTO invoiceDTO) {
 
 		return new Invoice(InvoiceId.of(invoiceDTO.getUuid()), WorkId.of(invoiceDTO.getWorkDTO().getUuid()), CustomerId.of(invoiceDTO.getCustomerDTO().getUuid()),
-				invoiceDTO.getInvoiceNumber(), invoiceDTO.getDescription(), invoiceDTO.getYear(), invoiceDTO.getDate(),
+				invoiceDTO.getInvoiceNumber(), invoiceDTO.getDescription(), invoiceDTO.getDate(), invoiceDTO.getYear(),
 				toInvoiceItemList(invoiceDTO.getInvoiceItems()), invoiceDTO.getExpirationDate(), invoiceDTO.getDiscountRate(), invoiceDTO.getIvaRate(), invoiceDTO.getReRate(), invoiceDTO.getIrpfRate());
 	}
 
-	public BudgetItem toBudgetItem(BudgetItemDTO budgetItemDTO) {
-		return new BudgetItem(BudgetItemId.of(budgetItemDTO.getUuid()), budgetItemDTO.getDescription(),
-				budgetItemDTO.getQuantity(), Price.of(budgetItemDTO.getPrice()));
+	public InvoiceItem toInvoiceItem(InvoiceItemDTO invoiceItemDTO) {
+		return new InvoiceItem(InvoiceItemId.of(invoiceItemDTO.getUuid()), invoiceItemDTO.getDescription(),
+				invoiceItemDTO.getQuantity(), Price.of(invoiceItemDTO.getPrice()));
 	}
 
-	private BudgetItemDTO toBudgetItemDTO(BudgetItem budgetItem) {
-		return new BudgetItemDTO(budgetItem.getBudgetItemId().getValue(), budgetItem.getDescription(),
-				budgetItem.getQuantity(), budgetItem.getPrice().getValue());
+	private InvoiceItemDTO toInvoiceItemDTO(InvoiceItem invoiceItem) {
+		return new InvoiceItemDTO(invoiceItem.getInvoiceItemId().getValue(), invoiceItem.getDescription(),
+				invoiceItem.getQuantity(), invoiceItem.getPrice().getValue());
 	}
 
-	private List<BudgetItem> toBudgetItemList(List<BudgetItemDTO> budgetItemsDTO) {
-		var budgetItems = new ArrayList<BudgetItem>();
+	private List<InvoiceItem> toInvoiceItemList(List<InvoiceItemDTO> invoiceItemsDTO) {
+		var invoiceItems = new ArrayList<InvoiceItem>();
 
-		budgetItemsDTO.forEach(budgetItemDTO -> budgetItems.add(toBudgetItem(budgetItemDTO)));
-		return budgetItems;
+		invoiceItemsDTO.forEach(invoiceItemDTO -> invoiceItems.add(toInvoiceItem(invoiceItemDTO)));
+		return invoiceItems;
 	}
 
-	private List<BudgetItemDTO> toBudgetItemDTOList(List<BudgetItem> budgetItems) {
-		var budgetItemsDTO = new ArrayList<BudgetItemDTO>();
+	private List<InvoiceItemDTO> toInvoiceItemDTOList(List<InvoiceItem> invoiceItems) {
+		var invoiceItemsDTO = new ArrayList<InvoiceItemDTO>();
 
-		budgetItems.forEach(budgetItem -> budgetItemsDTO.add(toBudgetItemDTO(budgetItem)));
-		return budgetItemsDTO;
+		invoiceItems.forEach(invoiceItem -> invoiceItemsDTO.add(toInvoiceItemDTO(invoiceItem)));
+		return invoiceItemsDTO;
 	}
 }
