@@ -197,12 +197,28 @@
 							th:href="@{/works/list/actives}"><i
 							class="fas fa-fw fa-table"></i> Listado</a> 
 							
-<!-- 							<a class="collapse-item" -->
-<!-- 							th:classappend="${isWorks} and ${isAddWork} ? 'active' : ''" -->
-<!-- 							th:href="@{/works/save}"><i -->
-<!-- 							class="fas fa-fw fa-briefcase">+ &nbsp;</i> &nbsp;Nuevo</a> -->
+
+					</div>
+				</div>
+			</li>
+			<li class="nav-item" th:classappend="${isInvoices} ? 'active' : ''">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse"
+				data-target="#collapseInvoice" aria-expanded="true"
+				aria-controls="collapseWork">
+				
+					<i class="fas fa-fw fa-file-invoice-dollar"></i> <span>Facturas</span>
+			</a>
+				<div id="collapseInvoice" class="collapse"
+					th:classappend="${isInvoices} ? 'show' : ''"
+					aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Facturas:</h6>
+						<a class="collapse-item"
+							th:classappend="${isInvoices} and ${isInvoiceList}? 'active' : ''"
+							th:href="@{/invoices/list/actives}"><i
+							class="fas fa-fw fa-table"></i> Listado</a> 
 							
-							 
+
 					</div>
 				</div>
 			</li>

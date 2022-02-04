@@ -12,6 +12,7 @@ import es.jmmluna.tim.application.service.budget.useCase.GetActiveBudgetCount;
 import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialCountService;
 import es.jmmluna.tim.application.service.customer.useCase.GetActiveCustomerCount;
 import es.jmmluna.tim.application.service.employee.EmployeeCountService;
+import es.jmmluna.tim.application.service.invoice.useCase.GetActiveInvoiceCount;
 import es.jmmluna.tim.application.service.work.useCase.GetActiveWorkCount;
 import es.jmmluna.tim.application.service.work.useCase.GetFinalizedWorkCount;
 import es.jmmluna.tim.application.service.work.useCase.GetInitiatedWorkCount;
@@ -35,6 +36,10 @@ public class DashboardController {
 	@Autowired
 	private GetInitiatedWorkCount getInitiatedWorkCount;
 	
+	@Autowired
+	private GetActiveInvoiceCount getActiveInvoiceCount;
+	
+	
 	@GetMapping
 	public String home(Model model) {
 		Dashboard dashboard = new Dashboard();
@@ -45,6 +50,7 @@ public class DashboardController {
 		dashboard.setWorkTotal(getActiveWorkCount.execute());
 		dashboard.setFinalizedWorkTotal(getFinalizedWorkCount.execute());
 		dashboard.setInitiatedWorkTotal(getInitiatedWorkCount.execute());
+		dashboard.setInvoiceTotal(getActiveInvoiceCount.execute());
 		
 		model.addAttribute("isDashboard",true);		
 		model.addAttribute("dashboard", dashboard);						

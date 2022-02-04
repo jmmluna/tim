@@ -12,4 +12,5 @@ public class Dashboard {
 	private Long workTotal;
 	private Long finalizedWorkTotal;
 	private Long initiatedWorkTotal;
+	private Long invoiceTotal;
 }
