@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class InvoiceItemDTO extends DTO {
-	private UUID invoicetId;
+	private UUID invoiceId;
 	private String description;
 	private Integer quantity;
 	private Double price;

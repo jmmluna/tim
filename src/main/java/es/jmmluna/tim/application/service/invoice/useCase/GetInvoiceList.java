@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class GetInvoiceList {
 
+	@Autowired
 	private InvoiceRepository repository;
 	@Autowired
 	private InvoiceMapper mapper;

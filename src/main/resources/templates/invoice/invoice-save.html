@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="utf-8">
+<title>Presupuesto</title>
+<link th:href="@{/css/app.css}" rel="stylesheet" />
+<link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
+	rel="stylesheet">
+<link th:href="@{/vendor/datatables/select.bootstrap4.min.css}"
+	rel="stylesheet">
+
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+
+<script type="text/javascript"
+	th:src="@{/js/budget/budgetItemDatatable.js}"></script>
+<script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
+<script type="text/javascript" th:src="@{/js/copyAttributeValue.js}"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+
+		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditBudget}">
+			<i class="fas fa-edit ml-2" aria-hidden="true"></i> Editar
+			Presupuesto
+		</h1>
+		<h1 class="h3 mb-2 text-gray-800" th:unless="${isEditBudget}">
+			<i class="fa fa-file-invoice-dollar" aria-hidden="true">+</i> Nuevo
+			Presupuesto
+		</h1>
+
+		<form action="#" th:action="@{/budgets/save}" th:object="${budget}"
+			method="post">
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">
+						<i class="fa fa-file-text-o" aria-hidden="true"></i> <i
+							class="fa fa-address-card" aria-hidden="true"
+							th:text="${isEditBudget}?'Formulario de edición':'Formulario de alta'"></i>
+					</h6>
+				</div>
+
+
+				<div class="card-body">
+					<div class="form-row">
+
+						<input type="hidden" class="form-control" th:field="*{uuid}"
+							id="uuid">
+
+						<div class="col-md-2 mb-3" th:if="${isEditBudget}">
+							<label for="budgetNumber">Nº</label> <input readonly type="text"
+								class="form-control" th:field="*{budgetNumber}" id="name"
+								required>
+						</div>
+						<div class="col-md-2 mb-3" th:if="${isEditBudget}">
+							<label for="year">Año</label> <input type="text" readonly
+								class="form-control" th:field="*{year}" id="year" value=""
+								required>
+						</div>
+
+						<div class="col-md-2 mb-3" th:if="${isEditBudget}">
+							<label for="date">Fecha</label> <input type="text" readonly
+								class="form-control" th:field="*{date}" id="date" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-5 mb-3">
+
+							<label for="name">CLIENTE</label> <select class="form-control"
+								th:field="*{customerDTO.uuid}" id="customer"
+								onchange="copyValue('customer', 'uuidSelectedCustomer'); enabledBasedOn('budgetSaveButton', 'customer')">
+								
+								<option  value=""  selected>Selecciona un cliente...</option>
+								
+								<option  th:each="customer : ${customers}"
+									th:value="${customer.uuid}"
+									th:text="${customer.name} + ' ' + ${customer.surnames}"
+									 th:selected="${customer.uuid} == ${budget.customerDTO.uuid}"></option>
+								
+								
+								
+								
+									
+									
+							</select>
+						</div>
+
+						<div class="col-md-5 mb-3">
+							<label for="name">DESCRIPCIÓN</label> <input type="text"
+								class="form-control" th:field="*{description}" id="description"
+								required
+								onkeyUp="copyValue('description', 'selectedBudgetDescription')">
+						</div>
+
+
+
+
+
+						<div class="col-md-2 mb-3 text-danger" th:if="*{expirationDate}">
+							<label for="surnames">Fecha de baja</label>
+							<div class="input-group">
+
+								<input type="text" readonly class="form-control"
+									th:field="*{expirationDate}" id="expirationDate"> <a
+									class="btn bg-transparent"
+									onclick="document.getElementById('expirationDate').value = ''"
+									style="margin-left: -40px; z-index: 100;"> <i
+									class="fa fa-times"></i>
+								</a>
+							</div>
+						</div>
+
+					</div>
+
+					<div th:if="${budgetItemMessage}" th:utext="${budgetItemMessage}"
+						class="alert alert-success text-center"></div>
+
+					<div class="card-body">
+
+						<div class="table-responsive">
+
+							<table
+								class="table display hover table-striped table-bordered dt-responsive nowrap"
+								id="budgetItemDataTable" width="100%" cellspacing="0">
+								<thead class="table-dark">
+
+									<tr>
+										<th class="text-center">Descripción</th>
+										<th class="text-center">Cantidad</th>
+										<th class="text-center">Precio <i
+											class="fas fa-euro-sign"></i>
+										</th>
+										<th class="text-center">Total <i class="fas fa-euro-sign"></i>
+										</th>
+										<th class="text-center">Eliminar</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr th:each="budgetItemDTO, itemStat : *{budgetItems}"
+										th:style="${budgetItemDTO.uuid} ? '' : 'background: #fcb7a9'">
+										<!-- 										<td > -->
+										<input type="hidden"
+											th:name="|budgetItems[${itemStat.index}].uuid|"
+											th:value="${budgetItemDTO.uuid}" />
+
+										<input type="hidden"
+											th:placeholder="Descripción + ' ' + ${itemStat.count}"
+											th:field="*{budgetItems[__${itemStat.index}__].description}"
+											required />
+										<input type="hidden" size="2"
+											th:placeholder="Cantidad + ' ' + ${itemStat.count}"
+											th:field="*{budgetItems[__${itemStat.index}__].quantity}"
+											required />
+										<input type="hidden"
+											th:placeholder="Precio + ' ' + ${itemStat.count}"
+											th:field="*{budgetItems[__${itemStat.index}__].price}"
+											required />
+
+
+										<td class="align-middle"
+											th:text="${budgetItemDTO.description}"></td>
+										<td class="align-middle" th:text="${budgetItemDTO.quantity}"></td>
+										<td class="align-middle" th:text="${budgetItemDTO.price}"></td>
+
+<!-- 										<td class="align-middle" -->
+<!-- 											th:text="${budgetItemDTO.price * budgetItemDTO.quantity}"></td> -->
+
+										<td class="align-middle"
+											th:text="${budgetItemDTO.getCost()}"></td>
+										<td class="align-middle"><a class="btn btn-danger"
+											data-toggle="modal"
+											th:attr="data-target='#deleteConfirm'+${itemStat.index}"><i
+												class="fas fa-trash-alt ml-1"></i></a></td>
+
+										<!--  **********************************Begin delete budget item -->
+
+										<div class="modal fade"
+											th:id="'deleteConfirm' + ${itemStat.index}"
+											data-backdrop="static" data-keyboard="false" tabindex="-1"
+											aria-labelledby="deleteBudgetItem" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title font-italic font-weight-bold"
+															id="deleteBudgetItem">Confirmación de borrado</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body font-weight-bold"
+														th:text="'¿Estás seguro de borrar el elemento ' + ${budgetItemDTO.description} + '?'">¿Estás
+														seguro de borrar el elemento del presupuesto ?</div>
+
+
+
+													<!-- 	String uuidSelectedCustomer, String selectedBudgetDescription, String elementId, UUID budgetId, -->
+
+													<!-- 														<input type="text" name="budgetId" -->
+													<!-- 															th:value="${budget.uuid}" /> -->
+
+													<!-- 									<input type="hidden" -->
+													<!-- 									th:value="${budget.description}" id="selectedBudgetDescription" -->
+													<!-- 									name="selectedBudgetDescription" />  -->
+
+													<!-- 									<input type="hidden" -->
+													<!-- 									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer" -->
+													<!-- 									name="uuidSelectedCustomer" /> -->
+
+													<!-- 														<input type="text" th:value="${itemStat.index}"															 -->
+													<!-- 															name="elementId" /> -->
+
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Cancelar</button>
+
+														<!-- 															<button class="btn btn-success float-right " -->
+														<!-- 																type="submit" th:form="'deleteConfirm' + ${itemStat.index} + 'Form'">Borrar</button> -->
+														<!-- 														<a type="button" class="btn btn-primary" -->
+														<!-- 															th:href="@{/budgets/delete/item/{id}(id=${itemStat.index})/budget/{uuid}(uuid=${budget.uuid})}">Borrar</a> -->
+
+														<!-- 															<a type="button" class="btn btn-primary" -->
+														<!-- 															th:href="@{/budgets/delete/item/{index}/budget/{uuid}(index=${itemStat.index}, uuid=${budget.uuid})}">Borrar</a> -->
+
+														<a type="button" class="btn btn-primary"
+															th:href="@{/budgets/item/delete(itemIndex = ${itemStat.index}, budgetId = ${budget.uuid})}">Borrar</a>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
+										<!--********************************* End delete budget item -->
+									</tr>
+
+
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+
+					<a title="Añadir elemento" data-toggle="modal"
+						th:attr="data-target='#addBudgetItem'+${budget.uuid}"
+						class="btn btn-primary btn-circle btn ml-4"> <i
+						class="fas fa-file-invoice">+</i>
+					</a> 
+					
+					<a title="Añadir material de construcción" data-toggle="modal"
+						th:attr="data-target='#addConstructionMaterialItem'+${budget.uuid}"
+						class="btn btn-primary btn-circle btn ml-4"> <i
+						class="fas fa-gavel">+</i>
+					</a>
+					
+					<a title="Añadir empleado" data-toggle="modal"
+						th:attr="data-target='#addEmployeeItem'+${budget.uuid}"
+						class="btn btn-primary btn-circle btn ml-4"> <i
+						class="fas fa-user">+</i>
+					</a>
+
+					<button th:if="${isEditBudget}" class="btn btn-success float-right " type="submit" id="budgetSaveButton">Guardar</button>
+					<button th:unless="${isEditBudget}" disabled class="btn btn-success float-right " type="submit" id="budgetSaveButton">Guardar</button>
+					<a class="btn btn-primary float-right mr-1"
+						href="javascript: history.go(-1)">Cancelar</a>
+				</div>
+			</div>
+		</form>
+
+		<!--  **********************************Begin add budget item -->
+
+		<form id="budgetItemForm" action="#" th:action="@{/budgets/item/add}"
+			th:object="${budgetItem}" method="post">
+
+			<div class="modal fade" th:id="'addBudgetItem' + ${budget.uuid}"
+				data-backdrop="static" data-keyboard="false" tabindex="-1"
+				aria-labelledby="newBudgetItem" aria-hidden="true">
+
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-italic font-weight-bold"
+								id="newBudgetItem"><i class="fa fa-file-invoice" aria-hidden="true">+</i> Añadir elemento</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body ">
+							<div class="card-body">
+
+								<input type="hidden" th:name="|budgetId|"
+									th:value="${budget.uuid}" /> <input type="hidden"
+									th:value="${budget.description}" id="selectedBudgetDescription"
+									name="selectedBudgetDescription" /> <input type="hidden"
+									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer"
+									name="uuidSelectedCustomer" />
+
+								<div class="ml-2 mb-3">
+									<label for="description">Descripción</label> <input
+										class="form-control" th:placeholder="Descripción"
+										th:field="*{description}" required />
+								</div>
+
+								<div class="col-md-5 mb-3">
+									<label for="quantity">Cantidad</label> <input
+										class="form-control" value="1" th:field="*{quantity}"
+										type="number" onkeypress="return onlyNumberKey(event)"
+										required />
+								</div>
+
+<!-- 								<div class="col-md-5 mb-3"> -->
+<!-- 									<label for="price">PRECIO</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required /> -->
+<!-- 								</div> -->
+
+								<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<button class="btn btn-success float-right " type="submit">Añadir</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+
+		<!--********************************* End add budget item -->
+
+
+
+		<!--  **********************************Begin add construction material item -->
+
+		<form id="constructionMaterialForm" action="#"
+			th:action="@{/budgets/item/add}" th:object="${budgetItem}"
+			method="post">
+
+			<div class="modal fade"
+				th:id="'addConstructionMaterialItem' + ${budget.uuid}"
+				data-backdrop="static" data-keyboard="false" tabindex="-1"
+				aria-labelledby="newBudgetItem" aria-hidden="true">
+				
+				
+
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-italic font-weight-bold"
+								id="newBudgetItem"><i class="fa fa-gavel" aria-hidden="true">+</i> Añadir material</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body ">
+							<div class="card-body">
+
+								<input type="hidden" th:name="|budgetId|"
+									th:value="${budget.uuid}" /> <input type="hidden"
+									th:value="${budget.description}" id="selectedBudgetDescription"
+									name="selectedBudgetDescription" /> <input type="hidden"
+									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer"
+									name="uuidSelectedCustomer" />
+
+								<div >
+									<label for="description">Material de construcción</label> <select
+										class="form-control" id="constructionMaterialId"
+										onchange="copyValueFromConstructionMaterial(); ">
+										
+										<option
+											th:each="constructionMaterial : ${constructionMaterials}"
+											th:value="${constructionMaterial.description} + ' | ' + ${constructionMaterial.price}"
+											th:text="${constructionMaterial.description}"></option>
+
+										<option disabled selected>Selecciona un material...</option>
+									</select>
+								</div>
+								
+							</div>
+							<hr>
+							<div class="card-body">
+								<div class=" mb-3  ml-2">
+									<label for="description">Descripción</label> <input
+										class="form-control" th:placeholder="Descripción"
+										th:field="*{description}" required
+										id="constructionMaterialDescription" />
+								</div>
+
+								<div class="col-md-5 mb-3 ml-0">
+									<label for="quantity">Cantidad</label> <input
+										class="form-control" th:field="*{quantity}" type="number"
+										value="1" onkeypress="return onlyNumberKey(event)" required
+										id="constructionMaterialQuantity" />
+								</div>
+
+<!-- 								<div class="col-md-5 mb-3 ml-0"> -->
+<!-- 									<label for="price">PRECIO</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required -->
+<!-- 										id="constructionMaterialPrice" /> -->
+<!-- 								</div> -->
+
+									<div class="col-md-4 mb-3">
+									<label for="price">Precio </label>
+		
+									<div class="input-group">
+										<input  id="constructionMaterialPrice" th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<button class="btn btn-success float-right " type="submit">Añadir</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+
+		<!--********************************* End add construction material item-->
+
+
+<!--  **********************************Begin add employee item -->
+
+		<form id="employeeForm" action="#"
+			th:action="@{/budgets/item/add}" th:object="${budgetItem}"
+			method="post">
+
+			<div class="modal fade"
+				th:id="'addEmployeeItem' + ${budget.uuid}"
+				data-backdrop="static" data-keyboard="false" tabindex="-1"
+				aria-labelledby="newBudgetItem" aria-hidden="true">
+				
+				
+
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title font-italic font-weight-bold"
+								id="newBudgetItem"><i class="fa fa-user" aria-hidden="true">+</i> Añadir empleado</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body ">
+							<div class="card-body">
+
+								<input type="hidden" th:name="|budgetId|"
+									th:value="${budget.uuid}" /> <input type="hidden"
+									th:value="${budget.description}" id="selectedBudgetDescription"
+									name="selectedBudgetDescription" /> <input type="hidden"
+									th:value="${budget.customerDTO.uuid}" id="uuidSelectedCustomer"
+									name="uuidSelectedCustomer" />
+
+								<div >
+									<label for="description">Empleado</label> <select
+										class="form-control" id="employeeId"
+										onchange="copyValueFromEmployee(); ">
+										
+										<option 
+											th:each="employee : ${employees}"
+											th:value="${employee.name} + ' ' + ${employee.surnames} + ' | ' + ${employee.customerHourPrice}"
+											th:text="${employee.name} + ' ' + ${employee.surnames}"></option>
+
+										<option disabled selected>Selecciona un empleado...</option>
+									</select>
+								</div>
+								
+							</div>
+							<hr>
+							<div class="card-body">
+								<div class=" mb-3  ml-2">
+									<label for="description">Descripción</label> <input
+										class="form-control" th:placeholder="Descripción"
+										th:field="*{description}" required
+										id="employeeDescription" />
+								</div>
+
+								<div class="col-md-5 mb-3 ml-0">
+									<label for="quantity">Nº horas estimadas</label> <input
+										class="form-control" th:field="*{quantity}" type="number"
+										value="1" onkeypress="return onlyNumberKey(event)" required
+										id="employeeQuantity" />
+								</div>
+
+<!-- 								<div class="col-md-5 mb-3 ml-0"> -->
+<!-- 									<label for="price">PRECIO</label> <input class="form-control" -->
+<!-- 										th:placeholder="Precio " th:field="*{price}" type="text" -->
+<!-- 										onkeypress="return onlyNumberKey(event)" required -->
+<!-- 										id="constructionMaterialPrice" /> -->
+<!-- 								</div> -->
+
+									<div class="col-md-4 mb-3">
+									<label for="price">Precio/hora cliente </label>
+		
+									<div class="input-group">
+										<input  id="employeePrice" th:field="*{price}"
+											type="text" class="form-control"
+											aria-label="Precio"
+											onkeypress="return onlyNumberKey(event)" required>
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="fas fa-euro-sign"></i></span> 
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<button class="btn btn-success float-right " type="submit">Añadir</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+
+		<!--********************************* End add employee item-->
+
+
+
+	</section>
+
+</body>
+</html>

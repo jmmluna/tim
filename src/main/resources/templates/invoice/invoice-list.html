@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="utf-8">
+<title>Presupuestos</title>
+<link th:href="@{/css/app.css}" rel="stylesheet" />
+<link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
+	rel="stylesheet">
+<link th:href="@{/vendor/datatables/select.bootstrap4.min.css}"
+	rel="stylesheet">
+
+
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/vendor/datatables/dataTables.select.min.js}"></script>
+
+<!-- <script type="text/javascript" -->
+<!-- 	th:src="@{/js/budget/budgetDatatable.js}"></script> -->
+</head>
+<body>
+	<section layout:fragment="content">
+
+
+
+
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-2 text-gray-800">
+				<i class="fas fa-fw fa-file-invoice-dollar"></i> Facturas
+			</h1>
+
+			<div class="align-items-right ">
+				<a class="btn "
+					th:classappend="${isActiveInvoiceList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/invoices/list/actives}">Activos</a> <a class="btn "
+					th:classappend="${isInactiveInvoiceList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/invoices/list/inactives}">Inactivos</a> <a
+					class="btn "
+					th:classappend="${isAllInvoiceList} ? 'btn-success' : 'btn-outline-success'"
+					th:href="@{/invoices/list}">Todos</a> 
+			</div>
+		</div>
+
+
+
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">
+					<span th:if="${isAllInvoiceList} "> <i
+						class="fas fa-fw fa-table"></i> Todas las facturas registradas
+					</span> 
+					
+					<span th:if="${isActiveInvoiceList} "> <i
+						class="fas fa-fw fa-table"></i> Listado de facturas activas 
+						
+					</span> 
+					
+					<span th:if="${isInactiveInvoiceList} "> <i
+						class="fas fa-fw fa-table"></i> Listado de facturas inactivas
+					</span>
+				</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table
+						class="table display hover table-striped table-bordered dt-responsive nowrap"
+						id="invoiceDataTable" width="100%" cellspacing="0">
+						<thead class="table-dark">
+
+							<tr>
+								<th>Id</th>
+								<th class="text-center">Cliente</th>
+								<th class="text-center">Descripción</th>
+								<th class="text-center">Fecha</th>
+								<th class="text-center">Total <i
+									class="fas fa-euro-sign"></i>
+								</th>
+<!-- 								<th class="text-center">Precio/trabajador <i -->
+<!-- 									class="fas fa-euro-sign"></i></th> -->
+								<th class="text-center"><i class="fas fa-download"></i></th>
+								<th class="text-center"><i class="fas fa-pencil-alt"></i></th>
+								<th class="text-center"><i class="fas fa-trash"></i></th>
+								<th class="text-center"><i class="fas fa-play"></i></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${invoices.empty}">
+								<td colspan="2">No hay facturas disponibles</td>
+							</tr>
+
+							<tr th:each="invoice : ${invoices}">
+								<td class="align-middle" th:text="${invoice.uuid}"></td>
+								<td class="align-middle" th:text="${invoice.customerDTO.name} + ' ' + ${budget.customerDTO.surnames}"></td>
+								<td class="align-middle" th:text="${invoice.description}"></td>
+								<td class="align-middle" th:text="${#dates.format(invoice.date, 'dd/MM/yyyy')}"></td>
+								<td class="align-middle" th:text="${invoice.cost}"></td>
+
+									<td class="align-middle" ><a title="Descargar factura"
+										th:href="@{/invoices/print/{uuid}(uuid=${invoice.uuid})}"
+										class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
+										</a> 
+									</td>
+									
+
+								<td class="align-middle">
+										<a title="Editar factura" class="btn btn-info"
+										th:href="@{/invoices/save/{uuid}(uuid=${invoice.uuid})}"><i
+											class="fas fa-edit ml-2"></i></a>
+										
+										
+										
+					</td>
+
+								<td class="align-middle" th:if="${invoice.expirationDate}">
+
+									&nbsp</td>
+								<td class="align-middle" th:unless="${invoice.expirationDate}">
+									<a title="Borrar factura" class="btn btn-danger" data-toggle="modal"
+									th:attr="data-target='#deleteConfirm'+${invoice.uuid }"><i
+										class="fas fa-trash-alt ml-1"></i></a>
+
+								</td>
+								
+								
+<!-- 								<td class="align-middle"> -->
+<!-- 								<a title="Comenzar trabajo" class="btn " -->
+<!-- 										th:classappend="${isActiveBudgetList} ? 'btn-success' : 'btn-outline-success'" -->
+<!-- 										th:href="@{/works/create(budgetId = ${budget.uuid})}"><i class="fas fa-briefcase"></i></a> -->
+<!-- 								</td> -->
+
+								<div class="modal fade" th:id="'deleteConfirm' + ${invoice.uuid}"
+									data-backdrop="static" data-keyboard="false" tabindex="-1"
+									aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title font-italic font-weight-bold"
+													id="staticBackdropLabel">Confirmación de borrado</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body font-weight-bold"
+												th:text="'¿Estás seguro de borrar la factura ' + ${invoice.description} + '?'">¿Estás
+												seguro de borrar la factura ?</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Cancelar</button>
+												<a type="button" class="btn btn-primary"
+													th:href="@{/invoices/delete/{uuid}(uuid=${invoice.uuid})}">Borrar</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+</html>
