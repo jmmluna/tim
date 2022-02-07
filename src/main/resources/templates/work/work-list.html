@@ -81,7 +81,7 @@
 									class="fas fa-euro-sign"></i>
 								</th>
 
-								<th class="text-center"><i class="fas fa-download"></i></th>
+								<th class="text-center"><i class="fas fa-file-invoice-dollar"></i></th>
 								<th class="text-center"><i class="fas fa-pencil-alt"></i></th>
 								<th class="text-center"><i class="fas fa-trash"></i></th>
 								
@@ -100,13 +100,15 @@
 								<td class="align-middle" th:text="${work.getStatusDescription}"></td>
 								<td class="align-middle" th:text="${work.cost} + ' €/' + ${work.budgetDTO.cost} + ' €'"></td>
 
-									<td class="align-middle" th:if="${work.getStatusDescription() } eq 'FINALIZADO' "><a title="Descargar factura"
-										th:href="@{/works/print/{uuid}(uuid=${work.uuid})}"
-										class="btn btn-primary btn-circle btn"> <i class="fas fa-print"></i>
+									<td class="align-middle" th:if="${work.getStatusDescription() } eq 'FINALIZADO' "><a title="Ir a factura"
+										th:href="@{/invoices/create(workId = ${work.uuid})}"
+										
+										
+										class="btn btn-primary btn-circle btn"> <i class="fas fa-file-invoice-dollar"></i>
 										</a> 
 									</td>
 									<td class="align-middle" th:unless="${work.getStatusDescription()} eq 'FINALIZADO'">									
-<i class="fas fa-print"></i>
+										<i class="fas fa-file-invoice-dollar"></i>
 										 
 
 								</td>

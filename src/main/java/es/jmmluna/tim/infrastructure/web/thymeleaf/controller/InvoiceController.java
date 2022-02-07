@@ -33,6 +33,7 @@ import es.jmmluna.tim.application.service.invoice.useCase.DisableInvoice;
 import es.jmmluna.tim.application.service.invoice.useCase.GetInvoice;
 import es.jmmluna.tim.application.service.invoice.useCase.GetInvoiceList;
 import es.jmmluna.tim.application.service.invoice.useCase.UpdateInvoice;
+import es.jmmluna.tim.application.service.work.useCase.GetWork;
 import es.jmmluna.tim.infrastructure.web.thymeleaf.ReportGenerator;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,6 +65,9 @@ public class InvoiceController {
 	
 	@Autowired
 	private GetCustomer getCustomer;
+	
+	@Autowired
+	private GetWork getWork;
 	
 	@Autowired
 	private ReportGenerator reportGenerator;
@@ -106,6 +110,14 @@ public class InvoiceController {
 		model.addAttribute("invoices", invoices);
 
 		return "invoice/invoice-list";
+	}
+	
+	@GetMapping("/create")
+	public RedirectView createFromWork(Model model, @RequestParam(value = "workId", required = true) String workId) {
+		var workDTO = getWork.execute(UUID.fromString(workId));
+		createInvoice.execute(workDTO);
+		
+		return new RedirectView("/invoices/list/actives", true);
 	}
 
 	@GetMapping("/save/{uuid}")

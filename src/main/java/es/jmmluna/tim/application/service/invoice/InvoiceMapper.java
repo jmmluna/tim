@@ -1,27 +1,24 @@
 package es.jmmluna.tim.application.service.invoice;
 
-import es.jmmluna.tim.application.service.budget.BudgetDTO;
-import es.jmmluna.tim.application.service.budget.BudgetItemDTO;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
 import es.jmmluna.tim.application.service.work.useCase.GetWork;
 import es.jmmluna.tim.domain.model.Price;
-import es.jmmluna.tim.domain.model.budget.Budget;
-import es.jmmluna.tim.domain.model.budget.BudgetId;
-import es.jmmluna.tim.domain.model.budget.BudgetItem;
-import es.jmmluna.tim.domain.model.budget.BudgetItemId;
 import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.invoice.Invoice;
 import es.jmmluna.tim.domain.model.invoice.InvoiceId;
 import es.jmmluna.tim.domain.model.invoice.InvoiceItem;
 import es.jmmluna.tim.domain.model.invoice.InvoiceItemId;
 import es.jmmluna.tim.domain.model.work.WorkId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class InvoiceMapper {
 
 	@Autowired
@@ -30,6 +27,8 @@ public class InvoiceMapper {
 	private GetWork getWork;
 	
 	public InvoiceDTO toDTO(Invoice invoice) {
+//		log.info("##################################### customer id: " + invoice.getCustomerId().getValue());
+		
 		var customerDTO = getCustomer.execute(invoice.getCustomerId().getValue());
 		var workDTO = getWork.execute(invoice.getWorkId().getValue());
 		

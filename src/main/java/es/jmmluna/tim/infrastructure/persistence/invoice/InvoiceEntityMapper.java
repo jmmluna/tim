@@ -29,7 +29,7 @@ public class InvoiceEntityMapper {
 	private CustomerJpaRepository customerRepository;
 
 	public Invoice toModel(InvoiceEntity entity) {
-		return new Invoice(InvoiceId.of(entity.getUuid()), WorkId.of(entity.getWorkId()),CustomerId.of(entity.getUuid()),
+		return new Invoice(InvoiceId.of(entity.getUuid()), WorkId.of(entity.getWorkId()),CustomerId.of(entity.getCustomerId()),
 				entity.getInvoiceNumber(), entity.getDescription(), entity.getDate(), entity.getYear(),
 				toInvoiceItemList(entity.getInvoiceItems()), entity.getExpirationDate(), entity.getDiscountRate(),
 				entity.getIvaRate(), entity.getReRate(), entity.getIrpfRate());

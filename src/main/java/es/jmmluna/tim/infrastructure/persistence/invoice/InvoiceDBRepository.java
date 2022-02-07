@@ -77,7 +77,7 @@ public class InvoiceDBRepository implements InvoiceRepository {
 	@Override
 	public Integer getNextInvoiceNumber() {
 		Long count = repository.countByYear(LocalDate.now().getYear());
-		return count.intValue();
+		return count.intValue() + 1;
 	}
 
 	@Override

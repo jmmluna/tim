@@ -74,6 +74,7 @@
 							<tr>
 								<th>Id</th>
 								<th class="text-center">Cliente</th>
+								<th class="text-center">Nº</th>
 								<th class="text-center">Descripción</th>
 								<th class="text-center">Fecha</th>
 								<th class="text-center">Total <i
@@ -83,8 +84,7 @@
 <!-- 									class="fas fa-euro-sign"></i></th> -->
 								<th class="text-center"><i class="fas fa-download"></i></th>
 								<th class="text-center"><i class="fas fa-pencil-alt"></i></th>
-								<th class="text-center"><i class="fas fa-trash"></i></th>
-								<th class="text-center"><i class="fas fa-play"></i></th>
+								<th class="text-center"><i class="fas fa-trash"></i></th>								
 							</tr>
 						</thead>
 						<tbody>
@@ -94,7 +94,8 @@
 
 							<tr th:each="invoice : ${invoices}">
 								<td class="align-middle" th:text="${invoice.uuid}"></td>
-								<td class="align-middle" th:text="${invoice.customerDTO.name} + ' ' + ${budget.customerDTO.surnames}"></td>
+								<td class="align-middle" th:text="${invoice.customerDTO.name} + ' ' + ${invoice.customerDTO.surnames}"></td>
+								<td class="align-middle" th:text="${invoice.invoiceNumber}"></td>
 								<td class="align-middle" th:text="${invoice.description}"></td>
 								<td class="align-middle" th:text="${#dates.format(invoice.date, 'dd/MM/yyyy')}"></td>
 								<td class="align-middle" th:text="${invoice.cost}"></td>
