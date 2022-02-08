@@ -54,11 +54,11 @@ body {
 								<div class="invoice-details mt25">
 									<div class="well">
 										<ul class="list-unstyled mb0">
-											<li><strong>PRESUPUESTO Nº:</strong> <span class="small"
-												th:text="'#' + ${budget.budgetNumber}">Nº presupuesto
+											<li><strong>FACTURA Nº:</strong> <span class="small"
+												th:text="'#' + ${invoice.invoiceNumber}">Nº factura
 													#</span></li>
 											<li><strong>FECHA:</strong> <span class="small"
-												th:text="${#dates.format(budget.date, 'dd/MM/yyyy')}">fecha</span></li>
+												th:text="${#dates.format(invoice.date, 'dd/MM/yyyy')}">fecha</span></li>
 										</ul>
 									</div>
 								</div>
@@ -68,17 +68,17 @@ body {
 											<li><strong>CLIENTE</strong></li>
 											<li><strong style="font-size: 12px">Nombre: </strong><span
 												class="small"
-												th:text="${budget.customerDTO.name} + ' ' + ${budget.customerDTO.surnames}"></span></li>
+												th:text="${invoice.customerDTO.name} + ' ' + ${invoice.customerDTO.surnames}"></span></li>
 											<li><strong style="font-size: 12px">CIF/NIF: </strong><span
-												class="small" th:text="${budget.customerDTO.dni}"></span></li>
+												class="small" th:text="${invoice.customerDTO.dni}"></span></li>
 											<li><strong style="font-size: 12px">Dirección:
-											</strong><span class="small" th:text="${budget.customerDTO.address}"></span></li>
+											</strong><span class="small" th:text="${invoice.customerDTO.address}"></span></li>
 											<li><strong style="font-size: 12px">Código Postal:
-											</strong><span class="small" th:text="${budget.customerDTO.postalCode}"></span></li>
+											</strong><span class="small" th:text="${invoice.customerDTO.postalCode}"></span></li>
 											<li><strong style="font-size: 12px">Localidad:
-											</strong><span class="small" th:text="${budget.customerDTO.town}"></span></li>
+											</strong><span class="small" th:text="${invoice.customerDTO.town}"></span></li>
 											<li><strong style="font-size: 12px">teléfono: </strong><span
-												class="small" th:text="${budget.customerDTO.phone}"></span></li>
+												class="small" th:text="${invoice.customerDTO.phone}"></span></li>
 										</ul>
 									</div>
 								</div>
@@ -97,19 +97,19 @@ body {
 											</thead>
 											<tbody>
 												<tr
-													th:each="budgetItemDTO, itemStat : ${budget.budgetItems}"
-													th:style="${budgetItemDTO.uuid} ? 'background: #fcb7a9' : 'background: #fcb7a9'">
+													th:each="invoiceItemDTO, itemStat : ${invoice.invoiceItems}"
+													th:style="${invoiceItemDTO.uuid} ? 'background: #fcb7a9' : 'background: #fcb7a9'">
 
 													<td class="align-middle"
-														th:text="${budgetItemDTO.description}"></td>
-													<td class="text-center" th:text="${budgetItemDTO.quantity}"></td>
+														th:text="${invoiceItemDTO.description}"></td>
+													<td class="text-center" th:text="${invoiceItemDTO.quantity}"></td>
 													<td class="text-right"
-														th:text="${budgetItemDTO.price} + ' €'"></td>
+														th:text="${invoiceItemDTO.price} + ' €'"></td>
 
 <!-- 													<td class="text-right" -->
 <!-- 														th:text="${budgetItemDTO.price * budgetItemDTO.quantity}+ ' €'"></td> -->
 													<td class="text-right"
-														th:text="${budgetItemDTO.getCost()}+ ' €'"></td>
+														th:text="${invoiceItemDTO.getCost()}+ ' €'"></td>
 												</tr>
 												<!--<tr> -->
 												<!-- 													<td>1024MB Cloud 2.0 Server - elisium.dynamic.com -->
@@ -144,7 +144,7 @@ body {
 												<!-- 												</tr> -->
 												<tr>
 													<th colspan="3" class="text-right">Total</th>
-													<th class="text-right" th:text="${budget.cost} + ' €'">$284.4.40
+													<th class="text-right" th:text="${invoice.cost} + ' €'">$284.4.40
 														USD</th>
 												</tr>
 											</tfoot>

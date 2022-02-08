@@ -1,38 +1,32 @@
 package es.jmmluna.tim.infrastructure.persistence.invoice;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+import es.jmmluna.tim.domain.model.Price;
+import es.jmmluna.tim.domain.model.customer.CustomerId;
 import es.jmmluna.tim.domain.model.invoice.Invoice;
 import es.jmmluna.tim.domain.model.invoice.InvoiceId;
 import es.jmmluna.tim.domain.model.invoice.InvoiceItem;
 import es.jmmluna.tim.domain.model.invoice.InvoiceItemId;
 import es.jmmluna.tim.domain.model.work.WorkId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import es.jmmluna.tim.domain.model.Price;
-import es.jmmluna.tim.domain.model.budget.Budget;
-import es.jmmluna.tim.domain.model.budget.BudgetId;
-import es.jmmluna.tim.domain.model.budget.BudgetItem;
-import es.jmmluna.tim.domain.model.budget.BudgetItemId;
-import es.jmmluna.tim.domain.model.customer.CustomerId;
-import es.jmmluna.tim.infrastructure.persistence.customer.CustomerJpaRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class InvoiceEntityMapper {
 
-	@Autowired
-	private CustomerJpaRepository customerRepository;
-
 	public Invoice toModel(InvoiceEntity entity) {
-		return new Invoice(InvoiceId.of(entity.getUuid()), WorkId.of(entity.getWorkId()),CustomerId.of(entity.getCustomerId()),
-				entity.getInvoiceNumber(), entity.getDescription(), entity.getDate(), entity.getYear(),
-				toInvoiceItemList(entity.getInvoiceItems()), entity.getExpirationDate(), entity.getDiscountRate(),
-				entity.getIvaRate(), entity.getReRate(), entity.getIrpfRate());
+		if (entity == null)
+			return null;
+		else
+			return new Invoice(InvoiceId.of(entity.getUuid()), WorkId.of(entity.getWorkId()),
+					CustomerId.of(entity.getCustomerId()), entity.getInvoiceNumber(), entity.getDescription(),
+					entity.getDate(), entity.getYear(), toInvoiceItemList(entity.getInvoiceItems()),
+					entity.getExpirationDate(), entity.getDiscountRate(), entity.getIvaRate(), entity.getReRate(),
+					entity.getIrpfRate());
 	}
 
 	public InvoiceEntity toEntity(Invoice model) {
@@ -60,7 +54,8 @@ public class InvoiceEntityMapper {
 		return invoiceItems;
 	}
 
-	private List<InvoiceItemEntity> toInvoiceItemEntityList(InvoiceEntity invoiceEntity, List<InvoiceItem> invoiceItems) {
+	private List<InvoiceItemEntity> toInvoiceItemEntityList(InvoiceEntity invoiceEntity,
+			List<InvoiceItem> invoiceItems) {
 		var invoiceItemEntities = new ArrayList<InvoiceItemEntity>();
 
 		invoiceItems.forEach(invoiceItem -> invoiceItemEntities.add(toInvoiceItemEntity(invoiceEntity, invoiceItem)));

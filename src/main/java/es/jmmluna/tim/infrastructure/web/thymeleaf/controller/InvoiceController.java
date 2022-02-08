@@ -114,8 +114,12 @@ public class InvoiceController {
 	
 	@GetMapping("/create")
 	public RedirectView createFromWork(Model model, @RequestParam(value = "workId", required = true) String workId) {
+		
 		var workDTO = getWork.execute(UUID.fromString(workId));
-		createInvoice.execute(workDTO);
+		var invoice = getInvoice.execute(workDTO);
+		
+		if(invoice == null) 
+			createInvoice.execute(workDTO);
 		
 		return new RedirectView("/invoices/list/actives", true);
 	}

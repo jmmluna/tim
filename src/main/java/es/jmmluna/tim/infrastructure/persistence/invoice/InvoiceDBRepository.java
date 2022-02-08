@@ -1,25 +1,22 @@
 package es.jmmluna.tim.infrastructure.persistence.invoice;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import es.jmmluna.tim.domain.model.invoice.Invoice;
-import es.jmmluna.tim.domain.model.invoice.InvoiceId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import es.jmmluna.tim.domain.model.budget.Budget;
-import es.jmmluna.tim.domain.model.budget.BudgetId;
-import es.jmmluna.tim.domain.model.budget.BudgetRepository;
+import es.jmmluna.tim.domain.model.invoice.Invoice;
+import es.jmmluna.tim.domain.model.invoice.InvoiceId;
 import es.jmmluna.tim.domain.model.invoice.InvoiceRepository;
+import es.jmmluna.tim.domain.model.work.WorkId;
 
 @Repository
 public class InvoiceDBRepository implements InvoiceRepository {
-	
+
 	@Autowired
 	private InvoiceEntityMapper mapper;
 
@@ -73,7 +70,7 @@ public class InvoiceDBRepository implements InvoiceRepository {
 		invoiceEntities.forEach(entity -> invoices.add(mapper.toModel(entity)));
 		return invoices;
 	}
-	
+
 	@Override
 	public Integer getNextInvoiceNumber() {
 		Long count = repository.countByYear(LocalDate.now().getYear());
@@ -81,7 +78,13 @@ public class InvoiceDBRepository implements InvoiceRepository {
 	}
 
 	@Override
-	public UUID getNextIdentifier() {		
+	public UUID getNextIdentifier() {
 		return UUID.randomUUID();
+	}
+
+	@Override
+	public Invoice findByWork(WorkId workId) {
+		var invoiceEntity = repository.findByWorkId(workId.getValue());
+		return mapper.toModel(invoiceEntity);
 	}
 }

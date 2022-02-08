@@ -17,15 +17,15 @@
 	th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 
-<!-- <script type="text/javascript" -->
-<!-- 	th:src="@{/js/budget/budgetItemDatatable.js}"></script> -->
+<script type="text/javascript"
+	th:src="@{/js/invoice/invoiceItemDatatable.js}"></script>
 <script type="text/javascript" th:src="@{/js/onlyNumberKey.js}"></script>
 <script type="text/javascript" th:src="@{/js/copyAttributeValue.js}"></script>
 </head>
 <body>
 	<section layout:fragment="content">
 
-		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditBudget}">
+		<h1 class="h3 mb-2 text-gray-800" th:if="${isEditInvoice}">
 			<i class="fas fa-edit ml-2" aria-hidden="true"></i> Editar
 			Factura
 		</h1>		
@@ -49,11 +49,11 @@
 						<input type="hidden" class="form-control" th:field="*{uuid}"
 							id="uuid">
 							
-						<input type="hidden" class="form-control" th:field="*{workDTO}"
-							id="workDTO">	
+						<input type="hidden" class="form-control" th:field="*{workDTO.uuid}"
+							id="work">	
 
 						<div class="col-md-2 mb-3" th:if="${isEditInvoice}">
-							<label for="InvoiceNumber">Nº</label> <input readonly type="text"
+							<label for="InvoiceNumber">Nº</label> <input  type="text"
 								class="form-control" th:field="*{invoiceNumber}" id="name"
 								required>
 						</div>
@@ -63,17 +63,22 @@
 								required>
 						</div>
 
-						<div class="col-md-2 mb-3" th:if="${isEditInvoice}">
-							<label for="date">Fecha</label> <input type="text" readonly
-								class="form-control" th:field="*{date}" id="date" required>
-						</div>
+<!-- 						<div class="col-md-2 mb-3" th:if="${isEditInvoice}"> -->
+<!-- 							<label for="date">Fecha</label> <input type="text" readonly -->
+<!-- 								class="form-control" th:field="*{date}" id="date" required> -->
+<!-- 						</div> -->
+						<div class="col-md-2 mb-3">
+									<label for="date">Fecha</label> <input id="date" class="form-control"
+										 th:field="*{date}" type="date"
+										  required />
+								</div>
 					</div>
 					<div class="form-row">
 						<div class="col-md-5 mb-3">
 
 							<label for="name">CLIENTE</label> <select class="form-control"
 								th:field="*{customerDTO.uuid}" id="customer"
-								onchange="copyValue('customer', 'uuidSelectedCustomer'); enabledBasedOn('budgetSaveButton', 'customer')">
+								onchange="copyValue('customer', 'uuidSelectedCustomer'); enabledBasedOn('invoiceSaveButton', 'customer')">
 								
 								<option  value=""  selected>Selecciona un cliente...</option>
 								
@@ -82,11 +87,6 @@
 									th:text="${customer.name} + ' ' + ${customer.surnames}"
 									 th:selected="${customer.uuid} == ${invoice.customerDTO.uuid}"></option>
 								
-								
-								
-								
-									
-									
 							</select>
 						</div>
 
@@ -94,11 +94,65 @@
 							<label for="name">DESCRIPCIÓN</label> <input type="text"
 								class="form-control" th:field="*{description}" id="description"
 								required
-								onkeyUp="copyValue('description', 'selectedBudgetDescription')">
+								onkeyUp="copyValue('description', 'selectedInvoiceDescription')">
 						</div>
-
-
-
+					</div>
+					<div class="form-row">
+								<div class="col-md-2 mb-2">
+									<label for="discountRate">Descuento </label>
+		
+									<div class="input-group">
+										<input  id="discountRate" th:field="*{discountRate}"
+											type="text" class="form-control"
+											aria-label="discountRate"
+											onkeypress="return onlyNumberKey(event)" >
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="fas fa-percentage"></i></span> 
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-2 mb-2">
+									<label for="ivaRate">IVA </label>
+		
+									<div class="input-group">
+										<input  id="ivaRate" th:field="*{ivaRate}"
+											type="text" class="form-control"
+											aria-label="ivaRate"
+											onkeypress="return onlyNumberKey(event)" >
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="fas fa-percentage"></i></span> 
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-2 mb-2">
+									<label for="reRate">RE </label>
+		
+									<div class="input-group">
+										<input  id="reRate" th:field="*{reRate}"
+											type="text" class="form-control"
+											aria-label="reRate"
+											onkeypress="return onlyNumberKey(event)" >
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="fas fa-percentage"></i></span> 
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-2 mb-2">
+									<label for="irpfRate">IRPF </label>
+		
+									<div class="input-group">
+										<input  id="irpfRate" th:field="*{irpfRate}"
+											type="text" class="form-control"
+											aria-label="irpfRate"
+											onkeypress="return onlyNumberKey(event)" >
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="fas fa-percentage"></i></span> 
+										</div>
+									</div>
+								</div>
 
 
 						<div class="col-md-2 mb-3 text-danger" th:if="*{expirationDate}">

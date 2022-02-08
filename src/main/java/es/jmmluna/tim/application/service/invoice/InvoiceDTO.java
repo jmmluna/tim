@@ -20,7 +20,8 @@ public class InvoiceDTO extends DTO {
 	private String description;
 	private Integer invoiceNumber;
 	private Integer year;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+//	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	private Double cost = 0.0;
 	private List<InvoiceItemDTO> invoiceItems;

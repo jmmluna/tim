@@ -28,6 +28,8 @@ public class InvoiceMapper {
 	
 	public InvoiceDTO toDTO(Invoice invoice) {
 //		log.info("##################################### customer id: " + invoice.getCustomerId().getValue());
+		if(invoice == null)
+			return null;
 		
 		var customerDTO = getCustomer.execute(invoice.getCustomerId().getValue());
 		var workDTO = getWork.execute(invoice.getWorkId().getValue());

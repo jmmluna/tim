@@ -9,4 +9,5 @@ import es.jmmluna.tim.infrastructure.persistence.JpaGenericRepository;
 @Repository
 public interface InvoiceJpaRepository  extends JpaGenericRepository<InvoiceEntity, UUID> {
 	long countByYear(Integer year);
+	InvoiceEntity findByWorkId(UUID workId);
 }

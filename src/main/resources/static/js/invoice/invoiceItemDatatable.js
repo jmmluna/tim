@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
 
-	$('#budgetItemDataTable').DataTable(
+	$('#invoiceItemDataTable').DataTable(
 		{
 			 "scrollY":        "200px",
 //        "scrollCollapse": true,
