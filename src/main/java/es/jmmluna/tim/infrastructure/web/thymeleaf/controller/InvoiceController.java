@@ -192,9 +192,9 @@ public class InvoiceController {
 	@PostMapping("save")
 	public RedirectView save(InvoiceDTO invoice, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 				
-		if (invoice.getUuid() == null) {			
-			createInvoice.execute(invoice.getWorkDTO());
-		}else 
+//		if (invoice.getUuid() == null) {			
+//			createInvoice.execute(invoice.getWorkDTO());
+//		}else 
 			updateInvoice.execute(invoice);		
 		
 		
