@@ -77,6 +77,7 @@
 							<tr>
 								<th>Id</th>
 								<th class="text-center">Cliente</th>
+								<th class="text-center">Nº</th>
 								<th class="text-center">Descripción</th>
 								<th class="text-center">Fecha</th>
 								<th class="text-center">Total <i
@@ -98,9 +99,10 @@
 							<tr th:each="budget : ${budgets}">
 								<td class="align-middle" th:text="${budget.uuid}"></td>
 								<td class="align-middle" th:text="${budget.customerDTO.name} + ' ' + ${budget.customerDTO.surnames}"></td>
+								<td class="align-middle" th:text="${budget.budgetNumber}"></td>
 								<td class="align-middle" th:text="${budget.description}"></td>
 								<td class="align-middle" th:text="${#dates.format(budget.date, 'dd/MM/yyyy')}"></td>
-								<td class="align-middle" th:text="${budget.cost}"></td>
+								<td class="align-middle" th:text="${budget.cost} + ' €'"></td>
 
 									<td class="align-middle" ><a title="Descargar presupuesto"
 										th:href="@{/budgets/print/{uuid}(uuid=${budget.uuid})}"

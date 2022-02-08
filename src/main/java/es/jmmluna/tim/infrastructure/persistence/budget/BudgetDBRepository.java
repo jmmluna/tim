@@ -74,7 +74,7 @@ public class BudgetDBRepository implements BudgetRepository {
 	@Override
 	public Integer getNextBudgetNumber() {
 		Long count = budgetRepository.countByYear(LocalDate.now().getYear());
-		return count.intValue();
+		return count.intValue() + 1;
 	}
 
 	@Override

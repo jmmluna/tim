@@ -19,8 +19,8 @@
 <script type="text/javascript"
 	th:src="@{/vendor/datatables/dataTables.select.min.js}"></script>
 
-<!-- <script type="text/javascript" -->
-<!-- 	th:src="@{/js/budget/budgetDatatable.js}"></script> -->
+<script type="text/javascript"
+	th:src="@{/js/invoice/invoiceDatatable.js}"></script>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -98,7 +98,7 @@
 								<td class="align-middle" th:text="${invoice.invoiceNumber}"></td>
 								<td class="align-middle" th:text="${invoice.description}"></td>
 								<td class="align-middle" th:text="${#dates.format(invoice.date, 'dd/MM/yyyy')}"></td>
-								<td class="align-middle" th:text="${invoice.cost}"></td>
+								<td class="align-middle" th:text="${invoice.cost} + ' €'"></td>
 
 									<td class="align-middle" ><a title="Descargar factura"
 										th:href="@{/invoices/print/{uuid}(uuid=${invoice.uuid})}"

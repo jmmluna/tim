@@ -2,9 +2,7 @@
 $(document).ready(function() {
 
 
-		const table = $('#budgetDataTable').DataTable(
-
-//	 $('#budgetDataTable').DataTable(
+		const table = $('#invoiceDataTable').DataTable(
 
 		{
 
@@ -21,7 +19,7 @@ $(document).ready(function() {
 					className: "text-left",
 					orderable: true
 				},
-				{ //budget number column
+				{ //invoice number column
 					"targets": [2],
 					"visible": true,
 					"searchable": true,
@@ -53,7 +51,7 @@ $(document).ready(function() {
 					},
 				}
 				,
-				{//state column
+				{//download column
 					"targets": [6],
 					"visible": true,
 					"searchable": false,
@@ -73,16 +71,7 @@ $(document).ready(function() {
 					"searchable": false,
 					className: "text-center",
 					orderable: false
-				},
-				{//work column
-					"targets": [9],
-					"visible": true,
-					"searchable": false,
-					className: "text-center",
-					orderable: false
 				}
-
-
 
 			],
 			select: true,
