@@ -34,8 +34,9 @@ public class InvoiceDTO extends DTO {
 		this.invoiceItems = new ArrayList<InvoiceItemDTO>();
 	}
 
-	public InvoiceDTO(UUID uuid, WorkDTO workDTO, CustomerDTO customerDTO, String description, Integer invoiceNumber, Integer year,
-                      Date date, Double cost, List<InvoiceItemDTO> invoiceItems, Double discountRate, Double ivaRate, Double reRate, Double irpfRate) {
+	public InvoiceDTO(UUID uuid, WorkDTO workDTO, CustomerDTO customerDTO, String description, Integer invoiceNumber,
+			Integer year, Date date, Double cost, List<InvoiceItemDTO> invoiceItems, Double discountRate,
+			Double ivaRate, Double reRate, Double irpfRate) {
 		this.uuid = uuid;
 		this.workDTO = workDTO;
 		this.customerDTO = customerDTO;
@@ -45,27 +46,63 @@ public class InvoiceDTO extends DTO {
 		this.date = date;
 		this.setCost(cost);
 		this.invoiceItems = new ArrayList<>(invoiceItems);
-		this.discountRate = discountRate;
-		this.ivaRate = ivaRate;
-		this.reRate = reRate;
-		this.irpfRate = irpfRate;
+		this.discountRate = discountRate==null?0.0:discountRate;
+		this.ivaRate = ivaRate==null?0.0:ivaRate;
+		this.reRate = reRate==null?0.0:reRate;
+		this.irpfRate = irpfRate==null?0.0:irpfRate;
 	}
 
-	public InvoiceDTO(UUID uuid, WorkDTO workDTO, CustomerDTO customerDTO, String description, Integer invoiceNumber, Integer year,
-                      Date date, Double cost, List<InvoiceItemDTO> invoiceItems, Double discountRate, Double ivaRate, Double reRate, Double irpfRate, Date expirationDate) {
-		this(uuid, workDTO, customerDTO, description, invoiceNumber, year, date, cost, invoiceItems, discountRate, ivaRate, reRate, irpfRate);
+	public InvoiceDTO(UUID uuid, WorkDTO workDTO, CustomerDTO customerDTO, String description, Integer invoiceNumber,
+			Integer year, Date date, Double cost, List<InvoiceItemDTO> invoiceItems, Double discountRate,
+			Double ivaRate, Double reRate, Double irpfRate, Date expirationDate) {
+		this(uuid, workDTO, customerDTO, description, invoiceNumber, year, date, cost, invoiceItems, discountRate,
+				ivaRate, reRate, irpfRate);
 		this.setExpirationDate(expirationDate);
 	}
 
 	public void add(InvoiceItemDTO invoiceItemDTO) {
 		invoiceItems.add(invoiceItemDTO);
 	}
-	
+
 	public void remove(Integer index) {
 		invoiceItems.remove(index.intValue());
 	}
-	
+
 	public void setCost(Double cost) {
 		this.cost = Util.to2Decimal(cost);
+	}
+
+	public Double getSubtotal() {
+		return this.cost;
+	}
+
+	public Double getDiscount() {
+		return Util.to2Decimal(this.cost * (this.discountRate / 100));
+	}
+
+	// Base imponible: Sin impuestos ni retenciones
+	public Double getTaxBase() {
+		return Util.to2Decimal(getSubtotal() - getDiscount());
+	}
+
+	public Double getIvaTotal() {
+		return Util.to2Decimal(getTaxBase() * (this.ivaRate / 100));
+	}
+
+	public Double getReTotal() {
+		return Util.to2Decimal(getTaxBase() * (this.reRate / 100));
+	}
+
+	public Double getIrpfTotal() {
+		return Util.to2Decimal(getTaxBase() * (this.irpfRate / 100));
+	}
+
+	public Double getTotal() {
+		var total = getTaxBase() + getIvaTotal() + getIrpfTotal() + getReTotal();
+		return Util.to2Decimal(total);
+	}
+	
+	public Boolean isTaxBase() {
+		return !((ivaRate == 0.0) && (irpfRate == 0.0) && (reRate == 0.0)); 
 	}
 }
