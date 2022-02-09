@@ -1,15 +1,10 @@
 package es.jmmluna.tim.infrastructure.web.thymeleaf.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.jmmluna.tim.application.service.EElementList;
-import es.jmmluna.tim.application.service.budget.BudgetDTO;
 import es.jmmluna.tim.application.service.budget.useCase.GetBudget;
 import es.jmmluna.tim.application.service.construction_material.ConstructionMaterialListingService;
 import es.jmmluna.tim.application.service.customer.useCase.GetCustomer;
@@ -65,9 +59,6 @@ public class WorkController {
 	
 	@Autowired
 	private GetBudget getBudget;
-	
-	@Autowired
-	private ReportGenerator reportGenerator;
 	
 	@Autowired
 	private ConstructionMaterialListingService constructionMaterialListingService;
@@ -123,9 +114,11 @@ public class WorkController {
 
 	@GetMapping("/create")
 	public RedirectView createFromBudget(Model model, @RequestParam(value = "budgetId", required = true) String budgetId) {
-		var budgetDTO = getBudget.execute(UUID.fromString(budgetId));
-		createWork.execute(budgetDTO);
-
+		var budgetDTO = getBudget.execute(UUID.fromString(budgetId));		
+		var work = getWork.execute(budgetDTO);
+		
+		if(work == null) 			
+			createWork.execute(budgetDTO);
 		
 		return new RedirectView("/works/list/actives", true);
 	}
@@ -192,18 +185,6 @@ public class WorkController {
 		return "redirect:/works/list/actives";
 	}
 	
-//	@GetMapping("print/{uuid}")
-//	public ResponseEntity<ByteArrayResource> print(@PathVariable String uuid, Model model) {
-//		
-//		var budget = getBudget.execute(UUID.fromString(uuid));
-//		ByteArrayOutputStream byteArrayOutputStreamPDF = reportGenerator.generatePdfFromHtml("work/budget-report", budget, "budget");
-//		ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
-//		String fileName = "tim-presupuesto-" + budget.getBudgetNumber() + ".pdf";
-//		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
-//				.contentType(MediaType.APPLICATION_PDF).contentLength(inputStreamResourcePDF.contentLength())
-//				.body(inputStreamResourcePDF);
-//
-//	}
 	
 	private void checkAddItem(Model model, String uuid) {
 		if (workDTOForAddItem == null)

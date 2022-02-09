@@ -27,6 +27,9 @@ public class WorkMapper {
     private GetCustomer getCustomer;
 
     public WorkDTO toDTO(Work work) {
+    	if(work == null)
+			return null;
+    	
     	var budgetDTO = getBudget.execute( work.getBudgetId().getValue());
     	var customerDTO = getCustomer.execute( work.getCustomerId().getValue());
     	

@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import es.jmmluna.tim.domain.model.budget.BudgetId;
+import es.jmmluna.tim.domain.model.invoice.Invoice;
 import es.jmmluna.tim.domain.model.work.Work;
 import es.jmmluna.tim.domain.model.work.WorkId;
 import es.jmmluna.tim.domain.model.work.WorkRepository;
@@ -80,4 +82,10 @@ public class WorkDBRepository implements WorkRepository {
     public UUID getNextIdentifier() {
         return UUID.randomUUID();
     }
+    
+    @Override
+	public Work findByBudget(BudgetId budgetId) {
+		var workEntity = workRepository.findByBudgetId(budgetId.getValue());
+		return mapper.toModel(workEntity);
+	}
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import es.jmmluna.tim.domain.model.CommonRepository;
+import es.jmmluna.tim.domain.model.budget.BudgetId;
+import es.jmmluna.tim.domain.model.invoice.Invoice;
 
 public interface WorkRepository extends CommonRepository<Work, WorkId> {
 
@@ -16,5 +18,7 @@ public interface WorkRepository extends CommonRepository<Work, WorkId> {
     List<Work> getInactives();
 
     UUID getNextIdentifier();
+    
+    public Work findByBudget(BudgetId budgetId);
 
 }

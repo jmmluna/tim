@@ -25,7 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class WorkEntityMapper {
 
 	public Work toModel(WorkEntity entity) {
-
+		if(entity == null)
+			return null;
+		
 		return new Work(WorkId.of(entity.getUuid()), BudgetId.of(entity.getBudgetId()),
 				CustomerId.of(entity.getCustomerId()), entity.getDescription(),
 				WorkStatus.of(entity.getStatus()), entity.getDate(), toWorkItemList(entity.getWorkItems()),
