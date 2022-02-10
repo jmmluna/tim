@@ -121,4 +121,15 @@ docker image prune -a
 #eliminar imágenes <none>
 docker rmi $(docker images dangling=true -q)
 docker images --quiet --filter=dangling=true | xargs --no-run-if-empty docker rmi
+
+#crear imagen tim:1.0
+docker build -t tim:1.0 .
+
+#ejecutar imagen tim:1.0. Crear contenedor
+docker run -d -p 9000:9000 -t tim:1.0
+#acceder http://localhost:9000
+
+#detener contenedor
+docker ps
+docker stop <CONTAINER ID>
 ```
