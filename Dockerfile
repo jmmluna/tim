@@ -1,5 +1,5 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
-
+#FROM adoptopenjdk/openjdk11:alpine-jre
+FROM openjdk:17-alpine
 
 ARG JAR_FILE=target/tim-1.0.0.jar
 ARG DATA=data/timdb.mv.db
