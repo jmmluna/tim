@@ -121,6 +121,7 @@ jlink --compress=2 --no-man-pages --no-header-files --module-path "${path}\jdk-1
 ```
 
 ## Dockerize
+Para ejecutar la aplicación TIM en un entorno dockerizado, es necesario tener previamente el empaquetado de la aplicación en la carpeta **target** (ejecutando mvn clean package)  
 ```
 #elimina todas las imágenes que no se esten usando
 docker image prune -a 
